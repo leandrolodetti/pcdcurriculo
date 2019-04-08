@@ -1,0 +1,121 @@
+#btnCabecalho {
+  margin-right: 14%;
+  margin-left: 14%;
+  overflow: hidden;
+  padding: 20px 15px;
+}
+
+#btnCabecalhoRight {
+  float: right;
+}
+
+@media screen and (max-width: 500px) {
+  #btnCabecalho a {
+    float: none;
+    display: block;
+    text-align: center;
+    margin: 10px;
+  }
+  #btnCabecalhoRight {
+    float: none;
+  }
+}
+
+#containerCabecalho {
+	/*background-color: rgb(60, 179, 125);*/
+  background-color: #5EC998;
+}
+
+form.txtBuscaVaga {
+  margin:auto;
+  max-width:400px;
+  padding-bottom:10px;
+}
+
+/* Style the search field */
+form.txtBuscaVaga input[type=text] {
+  padding: 10px;
+  font-size: 17px;
+  border: 1px solid transparent;
+  float: left;
+  width: 80%;
+  /*background: #f1f1f1;*/
+  background-color: white;
+}
+
+/* Style the submit button */
+form.txtBuscaVaga button {
+  float: left;
+  width: 20%;
+  padding: 10px;
+  background: #2196F3;
+  color: white;
+  font-size: 17px;
+  border: 1px solid transparent;
+  border-left: none; /* Prevent double borders */
+  cursor: pointer;
+}
+
+#txtEmprego {
+  padding: 25px;
+  color: white;
+}
+
+#btnEntrar {
+  background: transparent;
+  /*border: 1px solid transparent;*/
+  color: white;
+  border-color: white;
+}
+
+#btnEntrar:hover {
+  color: black;
+  background: white;
+}
+
+#btnCadastreSe:hover {
+  color: black;
+  background: white;
+  border-color: white;
+}
+
+form.txtBuscaVaga button:hover {
+  background: #0b7dda;
+}
+
+/* Clear floats */
+form.txtBuscaVaga::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+#txtContratacoes {
+	padding-top: 40px;
+}
+
+#containerContratacoes {
+	background-color: #D8D8D8;
+  padding: 20px;
+}
+
+#containerRecentes {
+  /*background-color: #F4F4F4;*/
+}
+
+#cardVagas {
+	padding: 10px;
+}
+
+#containerCadastro {
+	background-color: #5EC998;
+}
+
+#txtCadastro {
+	padding: 30px;
+	color: white;
+}
+
+#idFormResponsavel {
+  visibility: hidden;
+}
