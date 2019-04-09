@@ -5,7 +5,7 @@
     <div class="container">
       <div id="btnCabecalho">
         <div id="btnCabecalhoRight">
-          <a class="btn btn-lg" id="btnEntrar" role="button" href="">Entrar</a>
+          <a class="btn btn-lg" id="btnEntrar" role="button" href="form-login-candidato.php">Entrar</a>
           <a class="btn btn-lg btn-primary" role="button" id="btnCadastreSe" href="form-cadastro-candidato.php">Cadastre-se</a>
         </div>
       </div>

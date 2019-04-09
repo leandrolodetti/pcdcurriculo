@@ -12,7 +12,7 @@
 	</div>
 </div>
 
-<div class="container-fluid border-bottom" style="padding-bottom: 20px;"></div>
+<div class="container-fluid border-bottom border-primary" style="padding-bottom: 20px;"></div>
 
 <div class="container" style="padding-top: 30px;">
     <div class="row">

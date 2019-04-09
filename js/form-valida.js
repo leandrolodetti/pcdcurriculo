@@ -127,7 +127,7 @@ function validaForm() {
 	    var dataNascimento = new Date(parseInt(nascimento[2], 10),
 	    parseInt(nascimento[1], 10) - 1,
 	    parseInt(nascimento[0], 10));
-	    //var strResponsavel = "style='visibility: hidden'";
+	    //var strResponsavel = "input type="text" class="form-control" id="idNomeResponsavel" name="NomeResponsavel" placeholder="Nome"";
 	    var diferenca = Date.now() -  dataNascimento.getTime();
 	    var idade = new Date(diferenca);
 
@@ -138,7 +138,7 @@ function validaForm() {
 			//document.getElementById("myModal").modal("show");
 			//$("#myModal").modal();
 			//$('#myModal').modal({show:true});
-			//document.getElementById("idFormResponsavel").innerHTML = strResponsavel;
+			//document.getElementById("idFormCadastroCandidatoNomeResponsavel").innerHTML = strResponsavel;
 			document.getElementById("idFormResponsavel").style.visibility = "visible";
 			if (!validarNomeResponsavel()) {
 				return false;

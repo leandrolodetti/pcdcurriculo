@@ -119,7 +119,7 @@
 			</div>
 
 			<button type="submit" id="btnEnviar" class="btn btn-primary">Continuar</button>
-
+			<a class="btn btn-success" href="index.php">Voltar</a>
 		</form>
 	</div>
 </body>
