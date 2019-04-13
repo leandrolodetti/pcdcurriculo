@@ -31,7 +31,7 @@
 		      	<div class="col">
 		      		<ul class="nav justify-content-end">
   						<li class="nav-item">
-    						<a class="nav-link active" href="#">Candidato</a>
+    						<a class="nav-link active" href="candidato.php">Candidato</a>
   						</li>
 
   						<!-- Exemplo de único botão -->
