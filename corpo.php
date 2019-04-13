@@ -14,7 +14,7 @@
         <h2 class="text-center">Procurando Uma Oportunidade de Emprego ?</h2>
       </div>
 
-      <form class="txtBuscaVaga" action="/action_page.php">
+      <form class="txtBuscaVaga" action="resultado-vagas.php">
         <input type="text" placeholder="Digite um Cargo" name="">
         <button type="submit"><i class="fa fa-search"></i></button>
       </form>
@@ -70,11 +70,15 @@
           }
         ?>
       </div-->
-      <a class="badge badge-pill badge-secondary" style="font-size: 14px; padding: 12px; margin: 10px;" href="">Desenvolvedor de Sistemas Sênior / Arquitetura</a>
-      <a class="badge badge-pill badge-secondary" style="font-size: 14px; padding: 12px; margin: 10px;" href="">Desenvolvedor de Sistemas</a>
-      <a class="badge badge-pill badge-secondary" style="font-size: 14px; padding: 12px; margin: 10px;" href="">Gerente de RH</a>
-      <a class="badge badge-pill badge-secondary" style="font-size: 14px; padding: 12px; margin: 10px;" href="">Estágio em Administração</a>
-      <a class="badge badge-pill badge-secondary" style="font-size: 14px; padding: 12px; margin: 10px;" href="">Analista de Negócios</a>
+    <div class="row" style="padding-bottom: 30px;">
+      <div class="col-sm">
+      <a class="badge badge-pill badge-secondary" style="/*font-size: 14px; */padding: 12px; margin-right: 10px; margin-top: 10px;" href="">Desenvolvedor de Sistemas Sênior / Arquitetura</a>
+      <a class="badge badge-pill badge-secondary" style="/*font-size: 14px; */padding: 12px; margin-right: 10px; margin-top: 10px;" href="">Desenvolvedor de Sistemas</a>
+      <a class="badge badge-pill badge-secondary" style="padding: 12px; margin-right: 10px; margin-top: 10px;" href="">Gerente de RH</a>
+      <a class="badge badge-pill badge-secondary" style="padding: 12px; margin-right: 10px; margin-top: 10px;" href="">Estágio em Administração</a>
+      <a class="badge badge-pill badge-secondary" style="padding: 12px; margin-right: 10px; margin-top: 10px;" href="">Analista de Negócios</a>
+      </div>
+      </div>
     </div>
 
   </div>

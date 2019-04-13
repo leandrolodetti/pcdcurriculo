@@ -35,7 +35,7 @@
   						</li>
 
   						<!-- Exemplo de único botão -->
-						<div class=" dropdown">
+						<div class="dropleft">
 						  	<button id="dLabel" type="button" class="btn btn-outline-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 						    	<i class="fas fa-align-justify"></i>
 						  	</button>

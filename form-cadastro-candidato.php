@@ -59,15 +59,15 @@
 		      		</div>
 		      		<div class="form-group col-md-2">
 			      		<label for="idCpf">CPF</label>
-			      		<input type="txt" class="form-control" name="cpf" id="idCpf">
+			      		<input type="text" class="form-control" name="cpf" id="idCpf">
 			    	</div>
 			    	<div class="form-group col-md-3">
 			      		<label for="idEmail">E-mail</label>
-			      		<input type="txt" class="form-control" id="idEmail">
+			      		<input type="text" class="form-control" id="idEmail">
 			    	</div>
 			    	<div class="form-group col-md-3">
 			      		<label for="idConfirmarEmail">Confirmar E-mail</label>
-			      		<input type="txt" class="form-control" id="idConfirmarEmail">
+			      		<input type="text" class="form-control" id="idConfirmarEmail">
 			    	</div>
 			    </div>
 		  	<!--/fieldset-->

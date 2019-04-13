@@ -4,6 +4,7 @@ $("#idCpf").mask("000.000.000-00");
 $("#idContato").mask("(00)000000000");
 $("#idContatoResponsavel").mask("(00)000000000");
 $("#idAlteraContatoCandidato").mask("(00)000000000");
+//$("#idCurriculoPretSalarial").mask('R$ 00.999,99');
 /*
 function phpinfo(id) {
 	var checkBox = document.getElementById(id);
