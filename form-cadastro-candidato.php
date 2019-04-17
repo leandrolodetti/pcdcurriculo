@@ -3,7 +3,6 @@
 <div class="container-fluid" id="containerCadastro">
 	<h2 id="txtCadastro" class="text-center">Cadastre-se!</h2>
 </div>
-<body style="background: #F4F4F4;">
 	<div class="container">
 		<form name="form-cadastro-candidato" method="post" style="padding-top: 20px; padding-bottom: 20px;" onsubmit="return validaForm(this.value);">
 
@@ -25,12 +24,13 @@
 			<div class="form-row">
 			    <div class="form-group col-md-4">
 			      	<label for="idNome">Candidato</label>
-			      	<input type="text" class="form-control" id="idNome" name="nome" placeholder="Nome">
+			      	<input type="text" class="form-control" id="idNome" name="nome" placeholder="Nome" maxlength="20">
 			      	<small id="idSmallNome" class="form-text text-muted"></small>
 			    </div>
 			    <div class="form-group col-md-3">
 			      	<label for="idSobrenome">Sobrenome</label>
-			      	<input type="text" class="form-control" name="sobrenome" id="idSobrenome">
+			      	<input type="text" class="form-control" name="sobrenome" id="idSobrenome" maxlength="20">
+			      	<small id="idSmallSobrenome" class="form-text text-muted"></small>
 			    </div>
 			    
 			    <div class="form-group col-md-3">
@@ -122,7 +122,6 @@
 			<a class="btn btn-success" href="index.php">Voltar</a>
 		</form>
 	</div>
-</body>
 <script src="js/form-cadastro-candidato.js" type="text/javascript"></script>
 <script src="js/form-valida.js" type="text/javascript"></script>
 

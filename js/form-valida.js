@@ -15,9 +15,58 @@ function phpinfo(id) {
 	//window.location.href = "teste.php";
 }
 */
+function validaNumCaracteres(id, idErro, caracteres, msg) {
+	var x = document.getElementById(id);
+	var y = document.getElementById(idErro);
+	if (x.value < caracteres) {
+	  		x.value = "";
+	  		x.style.backgroundColor = "#F08080";
+	    	x.focus();
+	    	y.innerHTML = msg;
+	    	return false;
+	  	}
+	  	y.innerHTML = "";
+	  	x.style.backgroundColor = "white";
+	  	return true;	
+}
+
+function validaVazio(id, idErro, msg){
+	var x = document.getElementById(id);
+	var y = document.getElementById(idErro);
+	if (x.value == "") {
+	  		x.value = "";
+	  		x.style.backgroundColor = "#F08080";
+	    	x.focus();
+	    	y.innerHTML = msg;
+	    	return false;
+	  	}
+	  	y.innerHTML = "";
+	  	x.style.backgroundColor = "white";
+	  	return true;	
+}
+
+function validarNome() {
+	if (!validaVazio("idNome","idSmallNome","Nome é obrigatório") || !validaNumCaracteres("idNome","idSmallNome",3,"Nome inválido")) {
+		return false;
+	}
+}
+
+function validarSobrenome() {
+	if (!validaVazio("idSobrenome","idSmallSobrenome","Sobrenome é obrigatório") || !validaNumCaracteres("idSobrenome","idSmallSobrenome",3,"Sobrenome inválido")) {
+		return false;
+	}
+}
+
 function validaForm() {
-	
-	function validarNome() {
+	validarNome();
+	validarSobrenome();
+	//function validarNome() {
+	//	if (!validaVazio("idNome","idSmallNome","Nome é obrigatório") || !validaNumCaracteres("idNome","idSmallNome",3,"Nome inválido")) {
+	//		return false;
+	//	}
+		//validaVazio("idNome","idSmallNome","Nome é obrigatório");
+		//validaNumCaracteres("idNome","idSmallNome",3,"Nome inválido");
+		/*
 	 	var x = document.forms["form-cadastro-candidato"]["nome"].value;
 	  	if (x == "" || x.length<3) {
 	  		//alert("Nome Deve ser Preenchido!");
@@ -31,7 +80,8 @@ function validaForm() {
 	  	document.getElementById("idSmallNome").innerHTML = "";
 	  	document.getElementById("idNome").style.backgroundColor = "white";
 	  	return true;
- 	}
+	  	*/
+ 	//}
 
  	function validarNomeResponsavel() {
  		//var x = document.forms["form-cadastro-candidato"]["testeRespo"].value;
@@ -46,7 +96,7 @@ function validaForm() {
 	  	document.getElementById("idNomeResponsavel").style.backgroundColor = "white";
 	  	return true;
  	}
-
+/*
  	function validarSobrenome() {
 	 	var x = document.forms["form-cadastro-candidato"]["sobrenome"].value;
 	  	if (x == "" || x.length<3) {
@@ -59,7 +109,7 @@ function validaForm() {
 	  	document.getElementById("idSobrenome").style.backgroundColor = "white";
 	  	return true;
  	}
-
+*/
  	function validarCPF() {
  		var cpf = document.forms["form-cadastro-candidato"]["cpf"].value;
 		cpf = cpf.replace(/[^\d]+/g,'');	
@@ -151,7 +201,7 @@ function validaForm() {
 	    return true;
 	}
 	
-	if (!calcularIdade() || !validarNome() || !validarSobrenome() || !validarCPF()) {
+	if (!calcularIdade() || !validarCPF()) {
 		return false;
 	}
 }
