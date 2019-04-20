@@ -3,13 +3,14 @@
 <div class="container-fluid" id="containerCadastro">
 	<h2 id="txtCadastro" class="text-center">Cadastre-se!</h2>
 </div>
-	<div class="container">
+	<div class="container" style="padding-left: 15%; padding-right: 15%;">
 		<form name="form-cadastro-candidato" method="post" style="padding-top: 20px; padding-bottom: 20px;" onsubmit="return validaForm(this.value);">
 
 			<div class="form-row" id="idFormResponsavel">
 				<div class="form-group col-md-4">
 			      	<label for="idNomeResponsavel">Responsável</label>
 			      	<input type="text" class="form-control" id="idNomeResponsavel" name="NomeResponsavel" placeholder="Nome">
+			      	<small id="idSmallNomeResponsavel" class="form-text text-muted"></small>
 			    </div>
 			    <div class="form-group col-md-2">
 			      	<label for="idCpfResponsavel">CPF</label>
@@ -36,11 +37,13 @@
 			    <div class="form-group col-md-3">
 			      	<label for="inputDataNascimento">Data de Nascimento</label>
 			      	<input type="text" class="form-control" id="inputDataNascimento" name="dataNascimento">
+			      	<small id="idSmallNascimento" class="form-text text-muted"></small>
 			    </div>
 
 			    <div class="form-group col-md-2">
 			      	<label for="idContato">Contato</label>
 			      	<input type="text" class="form-control" id="idContato" name="contato" placeholder="Fixo ou celular">
+			      	<small id="idSmallContato" class="form-text text-muted"></small>
 			    </div>
 		  	</div>
 
@@ -60,6 +63,7 @@
 		      		<div class="form-group col-md-2">
 			      		<label for="idCpf">CPF</label>
 			      		<input type="text" class="form-control" name="cpf" id="idCpf">
+			      		<small id="idSmallCpf" class="form-text text-muted"></small>
 			    	</div>
 			    	<div class="form-group col-md-3">
 			      		<label for="idEmail">E-mail</label>
