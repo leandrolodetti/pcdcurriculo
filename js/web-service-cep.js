@@ -1,3 +1,19 @@
+function validaNumCaracteres(id, idErro, caracteres, msg) {
+    var x = document.getElementById(id);
+    var y = document.getElementById(idErro);
+    if (x.value.length < caracteres) {
+            //x.value = "";
+            x.style.backgroundColor = "#F08080";
+            x.focus();
+            y.innerHTML = msg;
+            return false;
+        }
+        //y.innerHTML = x.value.length;
+        y.innerHTML = "";
+        x.style.backgroundColor = "white";
+        return true;    
+}
+
 function limpa_formulário_cep() {
     //Limpa valores do formulário de cep.
     document.getElementById('rua').value=("");
@@ -8,6 +24,7 @@ function limpa_formulário_cep() {
 }
 
 function meu_callback(conteudo) {
+
     if (!("erro" in conteudo)) {
         //Atualiza os campos com os valores.
         document.getElementById('rua').value=(conteudo.logradouro);
@@ -17,9 +34,12 @@ function meu_callback(conteudo) {
         //document.getElementById('ibge').value=(conteudo.ibge);
     }   //end if.
     else {
+        var y = document.getElementById("idSmallCep");
         //CEP não Encontrado.
         limpa_formulário_cep();
-        alert("CEP não encontrado.");
+        y.innerHTML = "CEP não encontrado.";
+        //alert("CEP não encontrado.");
+        return false;
     }
 }
       
@@ -30,7 +50,6 @@ function pesquisacep(valor) {
 
     //Verifica se campo cep possui valor informado.
     if (cep != "") {
-
         //Expressão regular para validar o CEP.
         var validacep = /^[0-9]{8}$/;
 
@@ -52,16 +71,20 @@ function pesquisacep(valor) {
 
             //Insere script no documento e carrega o conteúdo.
             document.body.appendChild(script);
-
+            validaNumCaracteres("cep","idSmallCep",9,"CEP Inválido");
         } //end if.
+        /*
         else {
             //cep é inválido.
             limpa_formulário_cep();
             alert("Formato de CEP inválido.");
         }
+        */
     } //end if.
+    /*
     else {
         //cep sem valor, limpa formulário.
         limpa_formulário_cep();
     }
+    */
 }

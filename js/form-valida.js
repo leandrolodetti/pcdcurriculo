@@ -1,20 +1,198 @@
 $("#inputDataNascimento").mask("00/00/0000");
 $("#cep").mask("00000-000");
 $("#idCpf").mask("000.000.000-00");
+$("#idCpfResponsavel").mask("000.000.000-00");
 $("#idContato").mask("(00)000000000");
 $("#idContatoResponsavel").mask("(00)000000000");
 $("#idAlteraContatoCandidato").mask("(00)000000000");
-//$("#idCurriculoPretSalarial").mask('R$ 00.999,99');
-/*
-function phpinfo(id) {
-	var checkBox = document.getElementById(id);
+$("#inputNumero").mask("00000");
 
-	if (checkBox.checked == true){
-    	window.location.href = 'resultado-vagas.php?'+id;
-  	}
-	//window.location.href = "teste.php";
+var erroCep = "";
+var erroSenha = "";
+var erroEmail = "";
+
+function validaNumCaracteres(id, idErro, caracteres, msg) {
+	var x = document.getElementById(id);
+	var y = document.getElementById(idErro);
+	if (x.value.length < caracteres) {
+	  		//x.value = "";
+	  		x.style.backgroundColor = "#F08080";
+	    	x.focus();
+	    	y.innerHTML = msg;
+	    	return false;
+	  	}
+	//y.innerHTML = x.value.length;
+	y.innerHTML = "";
+	x.style.backgroundColor = "white";
+	return true;
 }
-*/
+
+function limpa_formulário_cep() {
+    //Limpa valores do formulário de cep.
+    document.getElementById("rua").value="";
+    document.getElementById("bairro").value="";
+    document.getElementById("cidade").value="";
+    document.getElementById("uf").value="";
+    //document.getElementById('ibge').value=("");
+}
+
+function meu_callback(conteudo) {
+	var y = document.getElementById("idSmallCep");
+    if (!("erro" in conteudo)) {
+
+        //Atualiza os campos com os valores.
+        if (document.getElementById("rua").value == "...") {document.getElementById("rua").value=(conteudo.logradouro);}
+        if (document.getElementById("bairro").value == "...") {document.getElementById("bairro").value=(conteudo.bairro);}
+        //document.getElementById("rua").value=(conteudo.logradouro);
+        //document.getElementById("bairro").value=(conteudo.bairro);
+        document.getElementById("cidade").value=(conteudo.localidade);
+        document.getElementById("uf").value=(conteudo.uf);
+        //document.getElementById('ibge').value=(conteudo.ibge);
+        y.innerHTML = "";
+        erroCep = "";
+        //return true;
+    }   //end if.
+    else {
+    	//var x = document.getElementById("cep");
+        //var y = document.getElementById("idSmallCep");
+        //CEP não Encontrado.
+        limpa_formulário_cep();
+        erroCep = "true";
+        y.innerHTML = "CEP não encontrado.";
+        //x.focus();
+        //alert("CEP não encontrado.");
+        //return false;
+    }
+}
+      
+function pesquisacep() {
+	var x = document.getElementById("cep");
+	var y = document.getElementById("idSmallCep");
+	var valor = document.getElementById("cep").value;
+    //Nova variável "cep" somente com dígitos.
+    var cep = valor.replace(/\D/g, '');
+
+	    //Verifica se campo cep possui valor informado.
+	    if (cep != "") {
+	        //Expressão regular para validar o CEP.
+	        var validacep = /^[0-9]{8}$/;
+
+	        //Valida o formato do CEP.
+	        if(validacep.test(cep)) {
+	        	//var y = document.getElementById("idSmallCep");
+	            //Preenche os campos com "..." enquanto consulta webservice.
+	            if (document.getElementById("rua").value == "") {document.getElementById("rua").value="...";}
+	            if (document.getElementById("bairro").value == "") {document.getElementById("bairro").value="...";}
+	            //document.getElementById('rua').value="...";
+	            //document.getElementById('bairro').value="...";
+	            document.getElementById('cidade').value="...";
+	            document.getElementById('uf').value="...";
+	            //document.getElementById('ibge').value="...";
+
+	            //Cria um elemento javascript.
+	            var script = document.createElement('script');
+
+	            //Sincroniza com o callback.
+	            script.src = 'https://viacep.com.br/ws/'+ cep + '/json/?callback=meu_callback';
+
+	            //Insere script no documento e carrega o conteúdo.
+	            document.body.appendChild(script);
+	            y.innerHTML = "";
+	            erroCep = "";
+	        } //end if.   
+	        else {
+	            //cep é inválido.
+	            limpa_formulário_cep();
+	            //x.focus();
+	            erroCep = "true";
+	            y.innerHTML = "CEP Inválido";
+	            //return false;
+	            //alert("Formato de CEP inválido.");
+	        }
+	    } //end if.
+	    
+	    else {
+	        //cep sem valor, limpa formulário.
+	        limpa_formulário_cep();
+	        //x.focus();
+	        erroCep = "true";
+	        y.innerHTML = "CEP Inválido";
+	        //return false;
+	    }
+}
+
+function validarGenero(idM,idF,idErro,msg) {
+	var idM = document.getElementById(idM);
+	var idF = document.getElementById(idF);
+	var y = document.getElementById(idErro);
+
+	if ((idM.checked == true) || (idF.checked == true)) {
+		y.innerHTML = "";
+		return true;
+	}
+	else{
+		y.innerHTML = msg;
+		return false;
+	}
+}
+
+function diferencaCampo(id1, id2, idErro, msg) {
+	var id2 = document.getElementById(id2);
+	var id1 = document.getElementById(id1);
+	var y = document.getElementById(idErro);
+	if (id1.value == id2.value) {
+		id2.style.backgroundColor = "#F08080";
+		id2.focus();
+		y.innerHTML = msg;
+		return false;
+	}
+	else{
+		y.innerHTML = "";
+		id2.style.backgroundColor = "white";
+		return true;
+	}
+}
+
+function validarEmail(id, idErro, msg) {
+	var y = document.getElementById(idErro);
+	var field = document.getElementById(id);
+	usuario = field.value.substring(0, field.value.indexOf("@"));
+	dominio = field.value.substring(field.value.indexOf("@")+ 1, field.value.length);
+	 
+	if ((usuario.length >=1) &&
+	    (dominio.length >=3) && 
+	    (usuario.search("@")==-1) && 
+	    (dominio.search("@")==-1) &&
+	    (usuario.search(" ")==-1) && 
+	    (dominio.search(" ")==-1) &&
+	    (dominio.search(".")!=-1) &&      
+	    (dominio.indexOf(".") >=1)&& 
+	    (dominio.lastIndexOf(".") < dominio.length - 1)) {
+		y.innerHTML = "";
+		field.style.backgroundColor = "white";
+		erroEmail="";
+		return true;
+		//document.getElementById("msgemail").innerHTML="E-mail válido";
+		//alert("E-mail valido");
+	}
+	else{
+		
+		field.style.backgroundColor = "#F08080";
+		field.focus();
+		y.innerHTML = msg;
+		erroEmail="true";
+		return false;
+		//document.getElementById("msgemail").innerHTML="<font color='red'>E-mail inválido </font>";
+		//alert("E-mail invalido");
+	}
+}
+
+function confirmarEmail() {
+	if (erroEmail == "" && confirmarCampo("idEmail","idConfirmarEmail","idSmallConfirmaEmail","E-mails não conferem!")) {
+		return true;
+	}
+	return false;
+}
 
 function validarCPF(id, idErro, msg) {
  	var cpf = document.getElementById(id).value;
@@ -80,33 +258,44 @@ function validarCPF(id, idErro, msg) {
 		y.innerHTML = msg;
 		return false;		
 	}
+	y.innerHTML = "";
 	document.getElementById(id).style.backgroundColor = "white";
 	return true;
 }
 
-function validaNumCaracteres(id, idErro, caracteres, msg) {
-	var x = document.getElementById(id);
+function confirmarCampo(id1, id2, idErro, msg) {
+	var id2 = document.getElementById(id2);
+	var id1 = document.getElementById(id1);
 	var y = document.getElementById(idErro);
-	if (x.value.length < caracteres) {
-	  		//x.value = "";
-	  		x.style.backgroundColor = "#F08080";
-	    	x.focus();
-	    	y.innerHTML = msg;
-	    	return false;
-	  	}
-	  	//y.innerHTML = x.value.length;
-	  	//y.innerHTML = "";
-	  	x.style.backgroundColor = "white";
-	  	return true;	
-}
-
-function validarNomeResponsavel() {
-	if (!validaNumCaracteres("idNomeResponsavel","idSmallNomeResponsavel",3,"Nome inválido")) {
+	if (id1.value != id2.value) {
+		id2.style.backgroundColor = "#F08080";
+		id2.focus();
+		y.innerHTML = msg;
 		return false;
+	}
+	else{
+		y.innerHTML = "";
+		id2.style.backgroundColor = "white";
+		return true;
 	}
 }
 
+function validarNomeResponsavel() {
+	if (validaNumCaracteres("idNomeResponsavel","idSmallNomeResponsavel",3,"Nome inválido")) {
+		return true;
+	}
+	return false;
+}
+
+function validarContatoResponsavel() {
+	if (validaNumCaracteres("idContatoResponsavel","idSmallContatoResponsavel",12,"Número inválido")) {
+		return true;
+	}
+	return false;
+}
+
 function calcularIdade(id) {
+		
 		var nascimento = document.getElementById(id).value.split("/");
 		document.getElementById("idFormResponsavel").style.visibility = "hidden";
 	    var dataNascimento = new Date(parseInt(nascimento[2], 10),
@@ -116,62 +305,169 @@ function calcularIdade(id) {
 	    var idade = new Date(diferenca);
 
 	    if (Math.abs(idade.getUTCFullYear() - 1970) < 16) {
+	    	document.getElementById("idFormResponsavel").style.visibility = "hidden";
+
+	    	document.getElementById("idLabelNomeResponsavel").innerHTML = "";
+	    	document.getElementById("idNomeResponsavel").setAttribute("type", "hidden");
+
+	    	document.getElementById("idLabelCpfResponsavel").innerHTML = "";
+	    	document.getElementById("idCpfResponsavel").setAttribute("type", "hidden");
+
+	    	document.getElementById("idLabelContatoResponsavel").innerHTML = "";
+	    	document.getElementById("idContatoResponsavel").setAttribute("type", "hidden");
+
+	    	document.getElementById("idLabelEmailResponsavel").innerHTML = "";
+	    	document.getElementById("idEmailResponsavel").setAttribute("type", "hidden");
 	    	alert("Você ainda não tem idade para trabalhar!");
 	    	return false;
 	    }
 	    else
 	    if (Math.abs(idade.getUTCFullYear() - 1970) < 18) {
 	    	document.getElementById("idFormResponsavel").style.visibility = "visible";
-	    	if (!validarNomeResponsavel()) {
+
+	    	document.getElementById("idLabelNomeResponsavel").innerHTML = "Responsável";
+	    	document.getElementById("idNomeResponsavel").setAttribute("type", "text");
+
+	    	document.getElementById("idLabelCpfResponsavel").innerHTML = "CPF";
+	    	document.getElementById("idCpfResponsavel").setAttribute("type", "text");
+
+	    	document.getElementById("idLabelContatoResponsavel").innerHTML = "Contato";
+	    	document.getElementById("idContatoResponsavel").setAttribute("type", "text");
+
+			document.getElementById("idLabelEmailResponsavel").innerHTML = "E-mail Responsável";
+	    	document.getElementById("idEmailResponsavel").setAttribute("type", "text");
+
+	    	validarNomeResponsavel();
+	    	validarContatoResponsavel();
+	    	validarCPF("idCpfResponsavel","idSmallCpfResponsavel","CPF Inválido");
+	    	diferencaCampo("idCpf","idCpfResponsavel","idSmallCpfResponsavel","CPF igual do candidato");
+
+	    	validarEmail("idEmailResponsavel", "idSmallEmailResponsavel", "E-mail Inválido");
+	    	diferencaCampo("idEmail","idEmailResponsavel","idSmallEmailResponsavel","E-mail igual do candidato");
+
+	    	if (!validarNomeResponsavel() ||
+	    	 	!validarContatoResponsavel() ||
+	    	 	!validarCPF("idCpfResponsavel","idSmallCpfResponsavel","CPF Inválido") ||
+	    	 	!diferencaCampo("idCpf","idCpfResponsavel","idSmallCpfResponsavel","CPF igual do candidato") ||
+	    	 	!validarEmail("idEmailResponsavel", "idSmallEmailResponsavel", "E-mail Inválido") ||
+	    	 	!diferencaCampo("idEmail","idEmailResponsavel","idSmallEmailResponsavel","E-mail igual do candidato")
+	    	 	) {
 	    		return false;
 	    	}
+	    	return true;
 	    }
 	    return true;
-	}
+}
 
 function validarNome() {
-	if (!validaNumCaracteres("idNome","idSmallNome",3,"Nome inválido")) {
-		return false;
+	if (validaNumCaracteres("idNome","idSmallNome",3,"Nome inválido")) {
+		return true;
 	}
+	return false;
 }
 
 function validarSobrenome() {
 	if (!validaNumCaracteres("idSobrenome","idSmallSobrenome",3,"Sobrenome inválido")) {
 		return false;
 	}
+	return true;
 }
 
 function validarNascimento() {
-	if (!validaNumCaracteres("inputDataNascimento","idSmallNascimento",10,"Data Inválida")) {
-		return false;
+	//validaNumCaracteres("inputDataNascimento","idSmallNascimento",10,"Data Inválida");
+	if (calcularIdade("inputDataNascimento")) {
+		return true;
 	}
-	if (!calcularIdade("inputDataNascimento")) {
-		return false;
-	}
+	return false;
 }
 
 function validarContato() {
 	if (!validaNumCaracteres("idContato","idSmallContato",12,"Número inválido")) {
 		return false;
 	}
+	return true;
+}
+
+function validarCep() {
+	pesquisacep();
+	if (erroCep == "") {
+		return true;
+	}
+	return false;
+}
+
+function validarRua() {
+	if (validaNumCaracteres("rua", "idSmallEndereco", 3, "Endereço Inválido")) {
+		return true;
+	}
+	return false;
+}
+
+function validarNumero() {
+	if (validaNumCaracteres("inputNumero", "idSmallNumero", 1, "Número Inválido")) {
+		return true;
+	}
+	return false;
+}
+
+function validarBairro() {
+	if (validaNumCaracteres("bairro", "idSmallBairro", 3, "Campo Inválido")) {
+		return true;
+	}
+	return false;
+}
+
+function validarSenha() {
+	if (validaNumCaracteres("idSenha1", "idSmallSenha", 6, "Campo Inválido")) {
+		erroSenha="";
+		return true;
+	}
+	erroSenha="true";
+	return false;
+}
+
+function confirmarSenha() {
+	if (erroSenha == "" && confirmarCampo("idSenha1","idConfirmarSenha","idSmallConfirmaSenha","Senhas não conferem!")) {
+		return true;
+	}
+	return false;
 }
 
 function validaForm() {
 
 	validarNome();
-	validarCPF("idCpf","idSmallCpf","CPF Inválido");
-	validarContato();
-	validarNascimento();
 	validarSobrenome();
+	validaNumCaracteres("inputDataNascimento","idSmallNascimento",10,"Data Inválida");
+	validarContato();
+	validarCPF("idCpf","idSmallCpf","CPF Inválido");
+	validarEmail("idEmail","idSmallEmail","E-mail Inválido");
+	confirmarEmail();
+	validarCep();
+	validarRua();
+	validarNumero();
+	validarBairro();
+	validarSenha();
+	confirmarSenha();
+	validarGenero("idMasculino","idFeminino","idSmallGenero","Selecione uma opção!");
+	//validarNascimento();
 
 	if (!validarNome() ||
 		!validarSobrenome() ||
-		!validarNascimento() ||
+		!validaNumCaracteres("inputDataNascimento","idSmallNascimento",10,"Data Inválida") ||
 		!validarContato() ||
-		!validarCPF("idCpf","idSmallCpf","CPF Inválido")
+		!validarCPF("idCpf","idSmallCpf","CPF Inválido") ||
+		!validarEmail("idEmail","idSmallEmail","E-mail Inválido") ||
+		!confirmarEmail() ||
+		!validarCep() ||
+		!validarGenero("idMasculino","idFeminino","idSmallGenero","Selecione uma opção!") ||
+		!validarRua() ||
+		!validarNumero() ||
+		!validarBairro() ||
+		!validarSenha() ||
+		!confirmarSenha() ||
+		!validarNascimento()
 		) {
 		return false;
 	}
-	else
-		return true;
+	return true;
 }
