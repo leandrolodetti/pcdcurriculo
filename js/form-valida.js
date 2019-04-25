@@ -97,15 +97,16 @@ function pesquisacep() {
 
 	            //Insere script no documento e carrega o conteúdo.
 	            document.body.appendChild(script);
-	            y.innerHTML = "";
-	            erroCep = "";
+	            //y.innerHTML = "";
+	            //erroCep = "";
 	        } //end if.   
 	        else {
 	            //cep é inválido.
 	            limpa_formulário_cep();
-	            //x.focus();
+	            x.focus();
 	            erroCep = "true";
 	            y.innerHTML = "CEP Inválido";
+	            //x.blur();
 	            //return false;
 	            //alert("Formato de CEP inválido.");
 	        }
@@ -114,11 +115,13 @@ function pesquisacep() {
 	    else {
 	        //cep sem valor, limpa formulário.
 	        limpa_formulário_cep();
-	        //x.focus();
+	        x.focus();
 	        erroCep = "true";
 	        y.innerHTML = "CEP Inválido";
+	        //x.blur();
 	        //return false;
 	    }
+	x.blur();
 }
 
 function validarGenero(idM,idF,idErro,msg) {
@@ -127,6 +130,25 @@ function validarGenero(idM,idF,idErro,msg) {
 	var y = document.getElementById(idErro);
 
 	if ((idM.checked == true) || (idF.checked == true)) {
+		y.innerHTML = "";
+		return true;
+	}
+	else{
+		y.innerHTML = msg;
+		return false;
+	}
+}
+
+function validarDeficiencia(idErro,msg) {
+	var a = document.getElementById("idDefFisica");
+	var b = document.getElementById("idDefAuditiva");
+	var c = document.getElementById("idDefFala");
+	var d = document.getElementById("idDefMental");
+	var e = document.getElementById("idDefVisual");
+
+	var y = document.getElementById(idErro);
+
+	if (a.checked == true || b.checked == true || c.checked == true || d.checked == true || e.checked == true){
 		y.innerHTML = "";
 		return true;
 	}
@@ -318,7 +340,7 @@ function calcularIdade(id) {
 
 	    	document.getElementById("idLabelEmailResponsavel").innerHTML = "";
 	    	document.getElementById("idEmailResponsavel").setAttribute("type", "hidden");
-	    	alert("Você ainda não tem idade para trabalhar!");
+	    	alert("Idade Inferior a 16 anos!");
 	    	return false;
 	    }
 	    else
@@ -336,19 +358,20 @@ function calcularIdade(id) {
 
 			document.getElementById("idLabelEmailResponsavel").innerHTML = "E-mail Responsável";
 	    	document.getElementById("idEmailResponsavel").setAttribute("type", "text");
-
+	    	/*
 	    	validarNomeResponsavel();
-	    	validarContatoResponsavel();
 	    	validarCPF("idCpfResponsavel","idSmallCpfResponsavel","CPF Inválido");
 	    	diferencaCampo("idCpf","idCpfResponsavel","idSmallCpfResponsavel","CPF igual do candidato");
 
+	    	validarContatoResponsavel();
+
 	    	validarEmail("idEmailResponsavel", "idSmallEmailResponsavel", "E-mail Inválido");
 	    	diferencaCampo("idEmail","idEmailResponsavel","idSmallEmailResponsavel","E-mail igual do candidato");
-
+			*/
 	    	if (!validarNomeResponsavel() ||
-	    	 	!validarContatoResponsavel() ||
 	    	 	!validarCPF("idCpfResponsavel","idSmallCpfResponsavel","CPF Inválido") ||
 	    	 	!diferencaCampo("idCpf","idCpfResponsavel","idSmallCpfResponsavel","CPF igual do candidato") ||
+	    	 	!validarContatoResponsavel() ||
 	    	 	!validarEmail("idEmailResponsavel", "idSmallEmailResponsavel", "E-mail Inválido") ||
 	    	 	!diferencaCampo("idEmail","idEmailResponsavel","idSmallEmailResponsavel","E-mail igual do candidato")
 	    	 	) {
@@ -427,14 +450,16 @@ function validarSenha() {
 }
 
 function confirmarSenha() {
-	if (erroSenha == "" && confirmarCampo("idSenha1","idConfirmarSenha","idSmallConfirmaSenha","Senhas não conferem!")) {
-		return true;
+	if (erroSenha == "") {
+		if (confirmarCampo("idSenha1","idConfirmarSenha","idSmallConfirmaSenha","Senhas não conferem!")) {
+			return true;
+		}
 	}
 	return false;
 }
 
 function validaForm() {
-
+/*
 	validarNome();
 	validarSobrenome();
 	validaNumCaracteres("inputDataNascimento","idSmallNascimento",10,"Data Inválida");
@@ -450,19 +475,22 @@ function validaForm() {
 	confirmarSenha();
 	validarGenero("idMasculino","idFeminino","idSmallGenero","Selecione uma opção!");
 	//validarNascimento();
-
+*/
 	if (!validarNome() ||
 		!validarSobrenome() ||
 		!validaNumCaracteres("inputDataNascimento","idSmallNascimento",10,"Data Inválida") ||
 		!validarContato() ||
+		!validarGenero("idMasculino","idFeminino","idSmallGenero","Selecione uma opção!") ||
 		!validarCPF("idCpf","idSmallCpf","CPF Inválido") ||
 		!validarEmail("idEmail","idSmallEmail","E-mail Inválido") ||
 		!confirmarEmail() ||
 		!validarCep() ||
-		!validarGenero("idMasculino","idFeminino","idSmallGenero","Selecione uma opção!") ||
+		/*!validarGenero("idMasculino","idFeminino","idSmallGenero","Selecione uma opção!") ||*/
 		!validarRua() ||
 		!validarNumero() ||
 		!validarBairro() ||
+		!validarDeficiencia("idSmallDeficiencia","Selecione uma opção") ||
+		!validaNumCaracteres("idCid","idSmallCid",3,"Código inválido") ||
 		!validarSenha() ||
 		!confirmarSenha() ||
 		!validarNascimento()

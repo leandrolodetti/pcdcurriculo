@@ -125,6 +125,49 @@
 			</div>
 
 			<div class="form-row">
+				<legend class="col-form-label col-sm-2 pt-0">Tipo(s) Deficiência</legend>
+			    <div class="form-group col-md-2">
+			   		<div class="form-check">
+				        <input class="form-check-input" type="checkbox" name="" id="idDefFisica" value="DefFisica">
+				        <label class="form-check-label" for="idDefFisica">Física</label>
+		       		</div>
+		        	<div class="form-check">
+				        <input class="form-check-input" type="checkbox" name="" id="idDefAuditiva" value="DefAuditiva">
+				        <label class="form-check-label" for="idDefAuditiva">Auditiva</label>
+		        	</div>
+		        	<div class="form-check">
+				        <input class="form-check-input" type="checkbox" name="" id="idDefFala" value="DefFala">
+				        <label class="form-check-label" for="idDefFala">Fala</label>
+		        	</div>
+		        	<div class="form-check">
+				        <input class="form-check-input" type="checkbox" name="" id="idDefMental" value="DefMental">
+				       	<label class="form-check-label" for="idDefMental">Intelectual/Mental</label>
+		        	</div>
+		        	<div class="form-check">
+				        <input class="form-check-input" type="checkbox" name="" id="idDefVisual" value="DefVisual">
+				        <label class="form-check-label" for="idDefVisual">Visual</label>
+		        	</div>
+		        	<small id="idSmallDeficiencia" class="form-text text-danger"></small>
+		      	</div>
+	      		<div class="form-group col-md-2">
+		      		<label for="idCid">CID10</label>
+		      		<input type="text" class="form-control" name="cid" id="idCid">
+		      		<small id="idSmallCid" class="form-text text-muted"></small>
+		    	</div>
+		    	<div class="form-group col-md-3">
+		    		<label for="idSenha1">Senha</label>
+		    		<input type="password" class="form-control" name="senha1" id="idSenha1">
+		    		<small class="form-text text-muted">Use de 6 a 15 caracteres.</small>
+		    		<small id="idSmallSenha" class="form-text text-muted"></small>
+		    	</div>
+		    	<div class="form-group col-md-3">
+		    		<label for="idConfirmarSenha">Confirmar Senha</label>
+		    		<input type="password" name="senha2" class="form-control" id="idConfirmarSenha">
+		    		<small id="idSmallConfirmaSenha" class="form-text text-muted"></small>
+		    	</div>     	
+			</div>
+
+			<!--div class="form-row">
 				<div class="form-group col-md-4">
 					<label for="idSenha1">Senha</label>
 					<input type="password" class="form-control" name="senha1" id="idSenha1">
@@ -136,7 +179,7 @@
 					<input type="password" name="senha2" class="form-control" id="idConfirmarSenha">
 					<small id="idSmallConfirmaSenha" class="form-text text-muted"></small>
 				</div>
-			</div>
+			</div-->
 
 			<button type="submit" id="btnEnviar" class="btn btn-primary">Continuar</button>
 			<a class="btn btn-success" href="index.php">Voltar</a>
