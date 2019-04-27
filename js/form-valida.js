@@ -1,4 +1,5 @@
 $("#inputDataNascimento").mask("00/00/0000");
+$("#idNascResponsavel").mask("00/00/0000");
 $("#cep").mask("00000-000");
 $("#idCpf").mask("000.000.000-00");
 $("#idCpfResponsavel").mask("000.000.000-00");
@@ -45,8 +46,8 @@ function meu_callback(conteudo) {
         if (document.getElementById("bairro").value == "...") {document.getElementById("bairro").value=(conteudo.bairro);}
         //document.getElementById("rua").value=(conteudo.logradouro);
         //document.getElementById("bairro").value=(conteudo.bairro);
-        document.getElementById("cidade").value=(conteudo.localidade);
-        document.getElementById("uf").value=(conteudo.uf);
+       	if (document.getElementById("cidade").value == "...") {document.getElementById("cidade").value=(conteudo.localidade);}
+        if (document.getElementById("uf").value == "...") {document.getElementById("uf").value=(conteudo.uf);}
         //document.getElementById('ibge').value=(conteudo.ibge);
         y.innerHTML = "";
         erroCep = "";
@@ -85,8 +86,8 @@ function pesquisacep() {
 	            if (document.getElementById("bairro").value == "") {document.getElementById("bairro").value="...";}
 	            //document.getElementById('rua').value="...";
 	            //document.getElementById('bairro').value="...";
-	            document.getElementById('cidade').value="...";
-	            document.getElementById('uf').value="...";
+	            if (document.getElementById("cidade").value == "") {document.getElementById("cidade").value="...";}
+	            if (document.getElementById("uf").value == "") {document.getElementById("uf").value="...";}
 	            //document.getElementById('ibge').value="...";
 
 	            //Cria um elemento javascript.
@@ -136,6 +137,28 @@ function validarGenero(idM,idF,idErro,msg) {
 	else{
 		y.innerHTML = msg;
 		return false;
+	}
+}
+
+function calcularIdadeResponsavel(id) {
+	var id1 = document.getElementById(id);
+	var nascimento = document.getElementById(id).value.split("/");
+	//document.getElementById("idFormResponsavel").style.visibility = "hidden";
+    var dataNascimento = new Date(parseInt(nascimento[2], 10),
+    parseInt(nascimento[1], 10) - 1,
+    parseInt(nascimento[0], 10));
+    var diferenca = Date.now() -  dataNascimento.getTime();
+    var idade = new Date(diferenca);
+
+    if (Math.abs(idade.getUTCFullYear() - 1970) < 18) {
+    	id1.style.backgroundColor = "#F08080";
+    	id1.focus();
+    	alert("Idade do responsável inferior a 18 anos!");
+    	return false;
+    }
+    else{
+		id1.style.backgroundColor = "white";
+		return true;
 	}
 }
 
@@ -317,47 +340,55 @@ function validarContatoResponsavel() {
 }
 
 function calcularIdade(id) {
-		
-		var nascimento = document.getElementById(id).value.split("/");
-		document.getElementById("idFormResponsavel").style.visibility = "hidden";
-	    var dataNascimento = new Date(parseInt(nascimento[2], 10),
-	    parseInt(nascimento[1], 10) - 1,
-	    parseInt(nascimento[0], 10));
-	    var diferenca = Date.now() -  dataNascimento.getTime();
-	    var idade = new Date(diferenca);
+	var id1 = document.getElementById(id);
+	var nascimento = document.getElementById(id).value.split("/");
+	document.getElementById("idFormResponsavel").style.visibility = "hidden";
+    var dataNascimento = new Date(parseInt(nascimento[2], 10),
+    parseInt(nascimento[1], 10) - 1,
+    parseInt(nascimento[0], 10));
+    var diferenca = Date.now() -  dataNascimento.getTime();
+    var idade = new Date(diferenca);
 
-	    if (Math.abs(idade.getUTCFullYear() - 1970) < 16) {
-	    	document.getElementById("idFormResponsavel").style.visibility = "hidden";
+    if (Math.abs(idade.getUTCFullYear() - 1970) < 16) {
+    	document.getElementById("idFormResponsavel").style.visibility = "hidden";
+    	
+    	document.getElementById("idLabelNomeResponsavel").innerHTML = "";
+    	document.getElementById("idNomeResponsavel").setAttribute("type", "hidden");
+    	document.getElementById("idLabelCpfResponsavel").innerHTML = "";
+    	document.getElementById("idCpfResponsavel").setAttribute("type", "hidden");
 
-	    	document.getElementById("idLabelNomeResponsavel").innerHTML = "";
-	    	document.getElementById("idNomeResponsavel").setAttribute("type", "hidden");
+    	document.getElementById("idLabelContatoResponsavel").innerHTML = "";
+    	document.getElementById("idContatoResponsavel").setAttribute("type", "hidden");
 
-	    	document.getElementById("idLabelCpfResponsavel").innerHTML = "";
-	    	document.getElementById("idCpfResponsavel").setAttribute("type", "hidden");
+    	document.getElementById("idLabelEmailResponsavel").innerHTML = "";
+    	document.getElementById("idEmailResponsavel").setAttribute("type", "hidden");
 
-	    	document.getElementById("idLabelContatoResponsavel").innerHTML = "";
-	    	document.getElementById("idContatoResponsavel").setAttribute("type", "hidden");
+    	document.getElementById("idLabelNascResponsavel").innerHTML = "";
+    	document.getElementById("idNascResponsavel").setAttribute("type", "hidden");
 
-	    	document.getElementById("idLabelEmailResponsavel").innerHTML = "";
-	    	document.getElementById("idEmailResponsavel").setAttribute("type", "hidden");
-	    	alert("Idade Inferior a 16 anos!");
-	    	return false;
-	    }
-	    else
-	    if (Math.abs(idade.getUTCFullYear() - 1970) < 18) {
-	    	document.getElementById("idFormResponsavel").style.visibility = "visible";
+    	id1.style.backgroundColor = "#F08080";
+    	id1.focus();
+    	alert("Idade inferior a 16 anos!");
+    	return false;
+	}
+	else
+	if (Math.abs(idade.getUTCFullYear() - 1970) < 18) {
+	   	document.getElementById("idFormResponsavel").style.visibility = "visible";
 
-	    	document.getElementById("idLabelNomeResponsavel").innerHTML = "Responsável";
-	    	document.getElementById("idNomeResponsavel").setAttribute("type", "text");
+	   	document.getElementById("idLabelNomeResponsavel").innerHTML = "Responsável";
+	   	document.getElementById("idNomeResponsavel").setAttribute("type", "text");
 
-	    	document.getElementById("idLabelCpfResponsavel").innerHTML = "CPF";
-	    	document.getElementById("idCpfResponsavel").setAttribute("type", "text");
+    	document.getElementById("idLabelCpfResponsavel").innerHTML = "CPF";
+    	document.getElementById("idCpfResponsavel").setAttribute("type", "text");
 
-	    	document.getElementById("idLabelContatoResponsavel").innerHTML = "Contato";
-	    	document.getElementById("idContatoResponsavel").setAttribute("type", "text");
+    	document.getElementById("idLabelContatoResponsavel").innerHTML = "Contato";
+    	document.getElementById("idContatoResponsavel").setAttribute("type", "text");
 
-			document.getElementById("idLabelEmailResponsavel").innerHTML = "E-mail Responsável";
-	    	document.getElementById("idEmailResponsavel").setAttribute("type", "text");
+		document.getElementById("idLabelEmailResponsavel").innerHTML = "E-mail do responsável";
+    	document.getElementById("idEmailResponsavel").setAttribute("type", "text");
+
+    	document.getElementById("idLabelNascResponsavel").innerHTML = "Data nascimento";
+    	document.getElementById("idNascResponsavel").setAttribute("type", "text");
 	    	/*
 	    	validarNomeResponsavel();
 	    	validarCPF("idCpfResponsavel","idSmallCpfResponsavel","CPF Inválido");
@@ -368,18 +399,23 @@ function calcularIdade(id) {
 	    	validarEmail("idEmailResponsavel", "idSmallEmailResponsavel", "E-mail Inválido");
 	    	diferencaCampo("idEmail","idEmailResponsavel","idSmallEmailResponsavel","E-mail igual do candidato");
 			*/
-	    	if (!validarNomeResponsavel() ||
-	    	 	!validarCPF("idCpfResponsavel","idSmallCpfResponsavel","CPF Inválido") ||
-	    	 	!diferencaCampo("idCpf","idCpfResponsavel","idSmallCpfResponsavel","CPF igual do candidato") ||
-	    	 	!validarContatoResponsavel() ||
-	    	 	!validarEmail("idEmailResponsavel", "idSmallEmailResponsavel", "E-mail Inválido") ||
-	    	 	!diferencaCampo("idEmail","idEmailResponsavel","idSmallEmailResponsavel","E-mail igual do candidato")
-	    	 	) {
-	    		return false;
-	    	}
-	    	return true;
-	    }
-	    return true;
+	   	if (!validarNomeResponsavel() ||
+	   	 	!validarCPF("idCpfResponsavel","idSmallCpfResponsavel","CPF Inválido") ||
+	   	 	!diferencaCampo("idCpf","idCpfResponsavel","idSmallCpfResponsavel","CPF igual do candidato") ||
+	   	 	!validarContatoResponsavel() ||
+	   	 	!diferencaCampo("idContato","idContatoResponsavel","idSmallContatoResponsavel","Contato igual do candidato") ||
+	   	 	!validarEmail("idEmailResponsavel", "idSmallEmailResponsavel", "E-mail Inválido") ||
+	   	 	!diferencaCampo("idEmail","idEmailResponsavel","idSmallEmailResponsavel","E-mail igual do candidato") ||
+	   	 	!validaNumCaracteres("idNascResponsavel","idSmallNascResponsavel",10,"Data Inválida") ||
+	   	 	!calcularIdadeResponsavel("idNascResponsavel")
+	   	 	) {
+	   		return false;
+	   	}
+	   	y.innerHTML = "";
+		id2.style.backgroundColor = "white";
+	   	return true;
+	}
+	return true;
 }
 
 function validarNome() {
