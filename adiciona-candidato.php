@@ -73,6 +73,7 @@ if (!starTransaction($conexao)) {
 	<div class="container">
 	    <div class="alert alert-danger" role="alert" style="padding: 25px;">
 	  		Ocorreu um erro, tente novamente mais tarde!
+	  		<p><?php echo mysqli_error($conexao); ?></p>
 		</div>
 		<a class="btn btn-success" href="index.php">Voltar</a>
     </div>
@@ -88,6 +89,7 @@ if(!insereCandidato($conexao, $nomeCandidato, $sobrenomeCandidato, $dataNascimen
 	<div class="container">
 	    <div class="alert alert-danger" role="alert" style="padding: 25px;">
 	  		Ocorreu um erro, tente novamente mais tarde!
+	  		<p><?php echo mysqli_error($conexao); ?></p>
 		</div>
 		<a class="btn btn-success" href="index.php">Voltar</a>
     </div>
@@ -105,6 +107,7 @@ if ($DefFisica != null) {
 		<div class="container">
 		    <div class="alert alert-danger" role="alert" style="padding: 25px;">
 		  		Ocorreu um erro, tente novamente mais tarde!
+		  		<p><?php echo mysqli_error($conexao); ?></p>
 			</div>
 			<a class="btn btn-success" href="index.php">Voltar</a>
 	    </div>
@@ -120,6 +123,7 @@ if ($DefAuditiva != null) {
 		<div class="container">
 		    <div class="alert alert-danger" role="alert" style="padding: 25px;">
 		  		Ocorreu um erro, tente novamente mais tarde!
+		  		<p><?php echo mysqli_error($conexao); ?></p>
 			</div>
 			<a class="btn btn-success" href="index.php">Voltar</a>
 	    </div>
@@ -135,6 +139,7 @@ if ($DefFala != null) {
 		<div class="container">
 		    <div class="alert alert-danger" role="alert" style="padding: 25px;">
 		  		Ocorreu um erro, tente novamente mais tarde!
+		  		<p><?php echo mysqli_error($conexao); ?></p>
 			</div>
 			<a class="btn btn-success" href="index.php">Voltar</a>
 	    </div>
@@ -150,6 +155,7 @@ if ($DefMental != null) {
 		<div class="container">
 		    <div class="alert alert-danger" role="alert" style="padding: 25px;">
 		  		Ocorreu um erro, tente novamente mais tarde!
+		  		<p><?php echo mysqli_error($conexao); ?></p>
 			</div>
 			<a class="btn btn-success" href="index.php">Voltar</a>
 	    </div>
@@ -165,6 +171,7 @@ if ($DefVisual != null) {
 		<div class="container">
 		    <div class="alert alert-danger" role="alert" style="padding: 25px;">
 		  		Ocorreu um erro, tente novamente mais tarde!
+		  		<p><?php echo mysqli_error($conexao); ?></p>
 			</div>
 			<a class="btn btn-success" href="index.php">Voltar</a>
 	    </div>
@@ -181,6 +188,7 @@ if ($nomeResponsavel != "") {
 		<div class="container">
 		    <div class="alert alert-danger" role="alert" style="padding: 25px;">
 		  		Ocorreu um erro, tente novamente mais tarde!
+		  		<p><?php echo mysqli_error($conexao); ?></p>
 			</div>
 			<a class="btn btn-success" href="index.php">Voltar</a>
 	    </div>
@@ -195,6 +203,7 @@ if (!commit($conexao)) {
 	<div class="container" style="padding-top: 20px;">
 		<div class="alert alert-danger" role="alert" style="padding: 25px;">
 			Ocorreu um erro, tente novamente mais tarde!
+			<p><?php echo mysqli_error($conexao); ?></p>
 		</div>
 		<a class="btn btn-success" href="index.php">Voltar</a>
 	</div>
