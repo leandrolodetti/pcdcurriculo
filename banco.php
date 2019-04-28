@@ -25,4 +25,53 @@ function insereCandidato($conexao, $nomeCandidato, $sobrenomeCandidato, $dataNas
     return $resultadoDaInsercao;
 }
 
+function buscaCpf($conexao, $cpfCandidato) {
+	$cpf = mysqli_escape_string($conexao, $cpfCandidato);
+	//$senhaMd5 = md5($senha);
+	$query = "select * from candidato where cpf = '{$cpf}'";
+	$resultado = mysqli_query($conexao, $query);
+	return mysqli_fetch_assoc($resultado);
+}
+
+function starTransaction($conexao) {
+	$query = "START TRANSACTION";
+	$resultado = mysqli_query($conexao, $query);
+	return $resultado;
+}
+
+function rollback($conexao) {
+	$query = "ROLLBACK";
+	$resultado = mysqli_query($conexao, $query);
+	return $resultado;
+}
+
+function commit($conexao) {
+	$query = "COMMIT";
+	$resultado = mysqli_query($conexao, $query);
+	return $resultado;
+}
+
+function buscaIdCandidato($conexao, $cpfCandidato) {
+	$cpf = mysqli_escape_string($conexao, $cpfCandidato);
+	//$senhaMd5 = md5($senha);
+	$query = "select idCandidato from candidato where cpf = '{$cpf}'";
+	$resultado = mysqli_query($conexao, $query);
+	return mysqli_fetch_assoc($resultado);
+}
+
+function insereResponsavel($conexao, $nomeResponsavel, $cpfResponsavel, $contatoResponsavel,
+						   $emailResponsavel, $nascResponsavel, $idCandidato) {
+	$query = "insert into responsavel(nome, cpf, contato, email, data_nascimento, Candidato_idCandidato) 
+			  VALUES('{$nomeResponsavel}','{$cpfResponsavel}','{$contatoResponsavel}','{$emailResponsavel}',
+			  		 '{$nascResponsavel}', {$idCandidato})";
+	$resultado = mysqli_query($conexao, $query);
+	return $resultado;
+}
+
+function insereDeficiencia($conexao, $idDeficiencia, $idCandidato) {
+	$query = "insert into deficiencia(TiposDeficiencia_idTiposDeficiencia, Candidato_idCandidato) values({$idDeficiencia}, {$idCandidato})";
+	$resultado = mysqli_query($conexao, $query);
+	return $resultado;
+}
+
 ?>

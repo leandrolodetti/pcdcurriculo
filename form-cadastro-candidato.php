@@ -13,7 +13,7 @@ require_once("conecta.php");
 			<div class="form-row" id="idFormResponsavel">
 				<div class="form-group col-md-3">
 			      	<label id="idLabelNomeResponsavel" for="idNomeResponsavel"></label>
-			      	<input type="hidden" class="form-control" id="idNomeResponsavel" name="NomeResponsavel" placeholder="Nome" maxlength="50">
+			      	<input type="hidden" class="form-control" id="idNomeResponsavel" name="nomeResponsavel" placeholder="Nome" maxlength="50">
 			      	<small id="idSmallNomeResponsavel" class="form-text text-muted"></small>
 			    </div>
 			    <div class="form-group col-md-2">
@@ -23,17 +23,17 @@ require_once("conecta.php");
 			    </div>
 			    <div class="form-group col-md-2">
 			      	<label id="idLabelContatoResponsavel" for="idContatoResponsavel">Contato</label>
-			      	<input type="hidden" class="form-control" id="idContatoResponsavel" name="ContatoResponsavel" placeholder="Fixo ou celular">
+			      	<input type="hidden" class="form-control" id="idContatoResponsavel" name="contatoResponsavel" placeholder="Fixo ou celular">
 			      	<small id="idSmallContatoResponsavel" class="form-text text-muted"></small>
 			    </div>
 			    <div class="form-group col-md-3">
 			      	<label id="idLabelEmailResponsavel" for="idEmailResponsavel"></label>
-			      	<input type="hidden" class="form-control" id="idEmailResponsavel" maxlength="45">
+			      	<input type="hidden" class="form-control" id="idEmailResponsavel" name="emailResponsavel" maxlength="45">
 			      	<small id="idSmallEmailResponsavel" class="form-text text-muted"></small>
 			    </div>
 			    <div class="form-group col-md-2">
 			      	<label id="idLabelNascResponsavel" for="idNascResponsavel"></label>
-			      	<input type="hidden" class="form-control" id="idNascResponsavel">
+			      	<input type="hidden" class="form-control" name="nascResponsavel" id="idNascResponsavel">
 			      	<small id="idSmallNascResponsavel" class="form-text text-muted"></small>
 			    </div>
 			</div>
@@ -136,24 +136,24 @@ require_once("conecta.php");
 			<div class="form-row">
 				<legend class="col-form-label col-sm-2 pt-0">Tipo(s) deficiência</legend>
 			    <div class="form-group col-md-2">
-			   		<div class="form-check">
-				        <input class="form-check-input" type="checkbox" name="" id="idDefFisica" value="DefFisica">
-				        <label class="form-check-label" for="idDefFisica">Física</label>
-		       		</div>
 		        	<div class="form-check">
-				        <input class="form-check-input" type="checkbox" name="" id="idDefAuditiva" value="DefAuditiva">
+				        <input class="form-check-input" type="checkbox" name="DefAuditiva" id="idDefAuditiva" value="1">
 				        <label class="form-check-label" for="idDefAuditiva">Auditiva</label>
 		        	</div>
 		        	<div class="form-check">
-				        <input class="form-check-input" type="checkbox" name="" id="idDefFala" value="DefFala">
+				        <input class="form-check-input" type="checkbox" name="DefFala" id="idDefFala" value="2">
 				        <label class="form-check-label" for="idDefFala">Fala</label>
 		        	</div>
 		        	<div class="form-check">
-				        <input class="form-check-input" type="checkbox" name="" id="idDefMental" value="DefMental">
+				        <input class="form-check-input" type="checkbox" name="DefFisica" id="idDefFisica" value="3">
+				        <label class="form-check-label" for="idDefFisica">Física</label>
+		       		</div>
+		        	<div class="form-check">
+				        <input class="form-check-input" type="checkbox" name="DefMental" id="idDefMental" value="4">
 				       	<label class="form-check-label" for="idDefMental">Intelectual/Mental</label>
 		        	</div>
 		        	<div class="form-check">
-				        <input class="form-check-input" type="checkbox" name="" id="idDefVisual" value="DefVisual">
+				        <input class="form-check-input" type="checkbox" name="DefVisual" id="idDefVisual" value="5">
 				        <label class="form-check-label" for="idDefVisual">Visual</label>
 		        	</div>
 		        	<small id="idSmallDeficiencia" class="form-text text-danger"></small>
