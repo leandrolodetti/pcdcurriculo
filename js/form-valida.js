@@ -42,12 +42,14 @@ function meu_callback(conteudo) {
     if (!("erro" in conteudo)) {
 
         //Atualiza os campos com os valores.
-        if (document.getElementById("rua").value == "...") {document.getElementById("rua").value=(conteudo.logradouro);}
-        if (document.getElementById("bairro").value == "...") {document.getElementById("bairro").value=(conteudo.bairro);}
-        //document.getElementById("rua").value=(conteudo.logradouro);
-        //document.getElementById("bairro").value=(conteudo.bairro);
-       	if (document.getElementById("cidade").value == "...") {document.getElementById("cidade").value=(conteudo.localidade);}
-        if (document.getElementById("uf").value == "...") {document.getElementById("uf").value=(conteudo.uf);}
+	        //if (document.getElementById("rua").value == "...") {document.getElementById("rua").value=(conteudo.logradouro);}
+	        //if (document.getElementById("bairro").value == "...") {document.getElementById("bairro").value=(conteudo.bairro);}
+        document.getElementById("rua").value=(conteudo.logradouro);
+        document.getElementById("bairro").value=(conteudo.bairro);
+        document.getElementById("cidade").value=(conteudo.localidade);
+        document.getElementById("uf").value=(conteudo.uf);
+      // 	if (document.getElementById("cidade").value == "...") {document.getElementById("cidade").value=(conteudo.localidade);}
+      //  if (document.getElementById("uf").value == "...") {document.getElementById("uf").value=(conteudo.uf);}
         //document.getElementById('ibge').value=(conteudo.ibge);
         y.innerHTML = "";
         erroCep = "";
@@ -80,6 +82,7 @@ function pesquisacep() {
 
 	        //Valida o formato do CEP.
 	        if(validacep.test(cep)) {
+	        	/*
 	        	//var y = document.getElementById("idSmallCep");
 	            //Preenche os campos com "..." enquanto consulta webservice.
 	            if (document.getElementById("rua").value == "") {document.getElementById("rua").value="...";}
@@ -89,7 +92,7 @@ function pesquisacep() {
 	            if (document.getElementById("cidade").value == "") {document.getElementById("cidade").value="...";}
 	            if (document.getElementById("uf").value == "") {document.getElementById("uf").value="...";}
 	            //document.getElementById('ibge').value="...";
-
+				*/
 	            //Cria um elemento javascript.
 	            var script = document.createElement('script');
 
@@ -531,6 +534,13 @@ function validaForm() {
 		!confirmarSenha() ||
 		!validarNascimento()
 		) {
+		return false;
+	}
+	return true;
+}
+
+function validaFormAlteraContato() {
+	if (!validarCep()) {
 		return false;
 	}
 	return true;

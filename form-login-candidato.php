@@ -1,18 +1,24 @@
-<?php require_once("cabecalho.php"); ?>
+<?php
+require_once("cabecalho.php");
+?>
 
 <div class="container-fluid border-bottom border-primary"></div>
 
 <div class="container" style="padding-top: 80px;">
+	<?php 
+		mostraAlerta("invalidUser");
+		mostraAlerta("danger");
+	?>
 	<div class="row">
 		<div class="col-sm-5" style="padding-bottom: 30px;">
-			<form>
+			<form method="post" action="login-candidato.php">
 			  <div class="form-group">
 			    <label for="exampleInputEmail1">Endereço de email</label>
-			    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Seu email">
+			    <input type="email" class="form-control" name="email" id="exampleInputEmail1" placeholder="Seu email">
 			  </div>
 			  <div class="form-group">
 			    <label for="exampleInputPassword1">Senha</label>
-			    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Senha">
+			    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Senha" name="senha">
 			  </div>
 			  <button type="submit" class="btn btn-primary">Entrar</button>
 			</form>

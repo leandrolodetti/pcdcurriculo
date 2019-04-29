@@ -73,7 +73,6 @@ if (!starTransaction($conexao)) {
 	<div class="container">
 	    <div class="alert alert-danger" role="alert" style="padding: 25px;">
 	  		Ocorreu um erro, tente novamente mais tarde!
-	  		<p>Transact</p>
 	  		<p><?php echo mysqli_error($conexao); ?></p>
 		</div>
 		<a class="btn btn-success" href="index.php">Voltar</a>
@@ -90,7 +89,6 @@ if(!insereCandidato($conexao, $nomeCandidato, $sobrenomeCandidato, $dataNascimen
 	<div class="container">
 	    <div class="alert alert-danger" role="alert" style="padding: 25px;">
 	  		Ocorreu um erro, tente novamente mais tarde!
-	  		<p>Insere candidato</p>
 	  		<p><?php echo mysqli_error($conexao); ?></p>
 		</div>
 		<a class="btn btn-success" href="index.php">Voltar</a>
@@ -109,7 +107,6 @@ if ($DefFisica != null) {
 		<div class="container">
 		    <div class="alert alert-danger" role="alert" style="padding: 25px;">
 		  		Ocorreu um erro, tente novamente mais tarde!
-		  		<p>Insere defFisica</p>
 		  		<p><?php echo mysqli_error($conexao); ?></p>
 			</div>
 			<a class="btn btn-success" href="index.php">Voltar</a>
@@ -126,7 +123,6 @@ if ($DefAuditiva != null) {
 		<div class="container">
 		    <div class="alert alert-danger" role="alert" style="padding: 25px;">
 		  		Ocorreu um erro, tente novamente mais tarde!
-		  		<p>Insere defAud</p>
 		  		<p><?php echo mysqli_error($conexao); ?></p>
 			</div>
 			<a class="btn btn-success" href="index.php">Voltar</a>
@@ -192,7 +188,6 @@ if ($nomeResponsavel != "") {
 		<div class="container">
 		    <div class="alert alert-danger" role="alert" style="padding: 25px;">
 		  		Ocorreu um erro, tente novamente mais tarde!
-		  		<p>Responsavel</p>
 		  		<p><?php echo mysqli_error($conexao); ?></p>
 			</div>
 			<a class="btn btn-success" href="index.php">Voltar</a>
@@ -203,12 +198,26 @@ if ($nomeResponsavel != "") {
 	}
 }
 
+if (!insereCurriculo($conexao, $idCandidato)) {
+?>
+	<div class="container">
+		<div class="alert alert-danger" role="alert" style="padding: 25px;">
+		  	Ocorreu um erro, tente novamente mais tarde!
+		  		<p><?php echo mysqli_error($conexao); ?></p>
+		</div>
+		<a class="btn btn-success" href="index.php">Voltar</a>
+	</div>
+<?php
+	rollback($conexao);
+	die();
+}
+
+
 if (!commit($conexao)) {
 ?>	
 	<div class="container" style="padding-top: 20px;">
 		<div class="alert alert-danger" role="alert" style="padding: 25px;">
 			Ocorreu um erro, tente novamente mais tarde!
-			<p>Commit</p>
 			<p><?php echo mysqli_error($conexao); ?></p>
 		</div>
 		<a class="btn btn-success" href="index.php">Voltar</a>

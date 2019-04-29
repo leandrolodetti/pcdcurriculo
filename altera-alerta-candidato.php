@@ -1,3 +1,7 @@
+<?php
+require_once("logica-candidato.php");
+verificaCandidato();
+?>
 <div class="border-bottom border-success" style="padding-top: 25px; padding-bottom: 25px;">
   <h4 class="text-left font-weight-normal">Alerta de Vagas</h4>
   <p class="text-left font-weight-normal">O alerta de vagas envia através do seu email, as últimas vagas publicadas no pnevagas.com.br de acordo com o perfil de seu currículo.</p>

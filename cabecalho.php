@@ -1,3 +1,19 @@
+<?php
+require_once("mostra-alerta.php");
+require_once("conecta.php");
+require_once("banco.php");
+error_reporting(E_ALL ^ E_NOTICE);
+$navlink = "nav-link";
+
+if (isset($_SESSION["candidato_logado"])) {
+	$candidatoAtual = buscaCandidatoAtual($conexao, $_SESSION["candidato_logado"]);
+	$navlink = "nav-link active";
+}
+else {
+	$candidatoAtual = null;
+}
+
+?>
 <!DOCTYPE html>
 <html lang="pt-br">
 	<head>
@@ -20,21 +36,23 @@
   				<div class="col-4">
 		      		<ul class="nav nav-pills">
 				        <li class="nav-item">
-				          <a class="nav-link active" href="index.php">Candidatos</a>
+				          <a class="<?php echo $navlink; ?>" href="index.php">Candidatos</a>
 				        </li>
 				        <li class="nav-item">
 				          <a class="nav-link" href="#">Empresas</a>
 				        </li>
 		      		</ul>
 		      	</div>
-
 		      	<div class="col">
+<?php 				
+				if ($candidatoAtual != null) {
+?>	
 		      		<ul class="nav justify-content-end">
   						<li class="nav-item">
-    						<a class="nav-link active" href="candidato.php">Candidato</a>
+    						<a class="nav-link active" href="candidato.php"><?php echo $candidatoAtual ["nome"]; ?></a>
   						</li>
 
-  						<!-- Exemplo de único botão -->
+  						
 						<div class="dropleft">
 						  	<button id="dLabel" type="button" class="btn btn-outline-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 						    	<i class="fas fa-align-justify"></i>
@@ -44,14 +62,17 @@
 							   	<a class="dropdown-item" href="#">Outra ação</a>
 							   	<a class="dropdown-item" href="#">Alguma coisa aqui</a>
 								<div class="dropdown-divider"></div>
-								<a class="dropdown-item" href="#">Link separado</a>
+								<a class="dropdown-item" href="logout-candidato.php">Logout</a>
 							</div>
 						</div>
-
   					</ul>
+<?php
+				}
+?>  					
 		      	</div>
 	      	</div>
-    	</div>  
+	    <?php mostraAlerta("logout"); ?> 
+    	</div>
   	</div>
 
   	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

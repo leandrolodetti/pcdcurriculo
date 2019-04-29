@@ -1,3 +1,7 @@
+<?php
+require_once("logica-candidato.php");
+verificaCandidato();
+?>
 <div class="border-bottom border-primary" style="padding-top: 25px;">
   <h4 class="text-left font-weight-normal">Senha</h4>
   <p class="text-left font-weight-normal">Altere sua senha</p>

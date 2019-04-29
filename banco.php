@@ -59,11 +59,23 @@ function buscaIdCandidato($conexao, $cpfCandidato) {
 	return mysqli_fetch_assoc($resultado);
 }
 
+function buscaCandidatoAtual($conexao, $emailCandidato) {
+	$query = "select * from Candidato where email = '{$emailCandidato}'";
+	$resultado = mysqli_query($conexao, $query);
+	return mysqli_fetch_assoc($resultado);
+}
+
 function insereResponsavel($conexao, $nomeResponsavel, $cpfResponsavel, $contatoResponsavel,
 						   $emailResponsavel, $nascResponsavel, $idCandidato) {
 	$query = "insert into Responsavel(nome, cpf, contato, email, data_nascimento, Candidato_idCandidato) 
-			  VALUES('{$nomeResponsavel}','{$cpfResponsavel}','{$contatoResponsavel}','{$emailResponsavel}',
+			  values('{$nomeResponsavel}','{$cpfResponsavel}','{$contatoResponsavel}','{$emailResponsavel}',
 			  		 '{$nascResponsavel}', {$idCandidato})";
+	$resultado = mysqli_query($conexao, $query);
+	return $resultado;
+}
+
+function insereCurriculo($conexao, $idCandidato) {
+	$query = "insert into curriculo(Candidato_idCandidato) values({$idCandidato})";
 	$resultado = mysqli_query($conexao, $query);
 	return $resultado;
 }
@@ -72,6 +84,14 @@ function insereDeficiencia($conexao, $idDeficiencia, $idCandidato) {
 	$query = "insert into Deficiencia(TiposDeficiencia_idTiposDeficiencia, Candidato_idCandidato) values({$idDeficiencia}, {$idCandidato})";
 	$resultado = mysqli_query($conexao, $query);
 	return $resultado;
+}
+
+function buscaCandidato($conexao, $email, $senha) {
+	$email = mysqli_escape_string($conexao, $email);
+	$senhaMd5 = md5($senha);
+	$query = "select * from Candidato where email = '{$email}' and senha = '{$senhaMd5}'";
+	$resultado = mysqli_query($conexao, $query);
+	return mysqli_fetch_assoc($resultado);
 }
 
 ?>

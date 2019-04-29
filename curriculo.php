@@ -4,9 +4,8 @@
 	<div class="container">
 		<nav aria-label="breadcrumb">
 	  		<ol class="breadcrumb" id="idCandidatoBreadcrumb" style="background-color: transparent; padding-left: 0;">
-	  			<li class="breadcrumb-item active font-weight-bold" style="color: white;" aria-current="page">Área do Candidato</li>
-			    <li class="breadcrumb-item font-weight-bold"><a href="#">Home</a></li>
-				<li class="breadcrumb-item font-weight-bold"><a href="#">Biblioteca</a></li>
+	  			<li class="breadcrumb-item font-weight-bold"><a href="candidato.php">Área do Candidato</a></li>
+	  			<li class="breadcrumb-item active font-weight-bold" style="color: white;" aria-current="page">Currículo</li>
   			</ol>
 		</nav>
 	</div>
@@ -22,9 +21,9 @@
 				<h3 class="text-left text-light font-weight-bold">Dados Pessoais</h3>
 			</div>
 			<div class="container-fluid" style="margin-top: 20px;">
-				<h4 class="text-left font-weight-normal">Nome do Candidato</h4>
+				<h4 class="text-left font-weight-normal"><?php echo $candidatoAtual ["nome"]; ?></h4>
 				<p class="text-left font-weight-bold">Idade:</p>
-				<p class="text-left font-weight-bold">CPF:</p>
+				<p class="text-left font-weight-bold">CPF: <?php echo $candidatoAtual ["cpf"]; ?></p>
 				<p class="text-left font-weight-bold">Estado Civil:</p>
 			</div>
 			<div class="container-fluid rounded" style="padding: 8px; background-color: #5EC998;">
@@ -32,18 +31,18 @@
 			</div>
 			<div class="container-fluid" style="margin-top: 20px;">
 				<p class="text-left font-weight-bold">País:</p>
-				<p class="text-left font-weight-bold">CEP:</p>
-				<p class="text-left font-weight-bold">Estado:</p>
-				<p class="text-left font-weight-bold">Cidade:</p>
-				<p class="text-left font-weight-bold">Bairro:</p>
-				<p class="text-left font-weight-bold">Endereço:</p>
+				<p class="text-left font-weight-bold">CEP: <?php echo $candidatoAtual ["cep"]; ?></p>
+				<p class="text-left font-weight-bold">Estado: <?php echo $candidatoAtual ["estado"]; ?></p>
+				<p class="text-left font-weight-bold">Cidade: <?php echo $candidatoAtual ["cidade"]; ?></p>
+				<p class="text-left font-weight-bold">Bairro: <?php echo $candidatoAtual ["bairro"]; ?></p>
+				<p class="text-left font-weight-bold">Endereço: <?php echo $candidatoAtual ["logradouro"]; ?></p>
 			</div>
 			<div class="container-fluid rounded" style="padding: 8px; background-color: #5EC998;">
 				<h3 class="text-left text-light font-weight-bold">Contato</h3>
 			</div>
 			<div class="container-fluid" style="margin-top: 20px;">
-				<p class="text-left font-weight-bold">E-mail:</p>
-				<p class="text-left font-weight-bold">Telefone:</p>
+				<p class="text-left font-weight-bold">E-mail: <?php echo $candidatoAtual ["email"]; ?></p>
+				<p class="text-left font-weight-bold">Telefone: <?php echo $candidatoAtual ["contato"]; ?></p>
 			</div>
 			<div class="container-fluid rounded" style="padding: 8px; background-color: #5EC998;">
 				<h3 class="text-left text-light font-weight-bold">Deficiência(s)</h3>
