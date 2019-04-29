@@ -1,8 +1,13 @@
 <?php
 
-function listaTiposDeficiencia ($conexao) {
+function listaDeficienciasCandidato ($conexao, $id) {
 	$deficiencias = array();
-	$resultado = mysqli_query($conexao, "select * from tiposdeficiencia");
+	$query = "SELECT Candidato.nome, Deficiencia.Candidato_idCandidato, Tiposdeficiencia.tipo_deficiencia
+			  FROM ((Candidato
+			  INNER JOIN Deficiencia ON candidato.idCandidato = deficiencia.Candidato_idCandidato)
+			  INNER JOIN Tiposdeficiencia ON deficiencia.TiposDeficiencia_idTiposDeficiencia = tiposdeficiencia.idTiposDeficiencia)
+			  WHERE Candidato_idCandidato = {$id}";
+	$resultado = mysqli_query($conexao, $query);
 
 	while ($deficiencia = mysqli_fetch_assoc($resultado)) {
 		array_push($deficiencias, $deficiencia);
@@ -75,7 +80,7 @@ function insereResponsavel($conexao, $nomeResponsavel, $cpfResponsavel, $contato
 }
 
 function insereCurriculo($conexao, $idCandidato) {
-	$query = "insert into curriculo(Candidato_idCandidato) values({$idCandidato})";
+	$query = "insert into Curriculo(Candidato_idCandidato) values({$idCandidato})";
 	$resultado = mysqli_query($conexao, $query);
 	return $resultado;
 }

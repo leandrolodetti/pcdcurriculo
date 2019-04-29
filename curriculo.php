@@ -1,4 +1,11 @@
-<?php require_once("cabecalho.php"); ?>
+<?php
+require_once("cabecalho.php");
+require_once("conecta.php");
+require_once("banco.php");
+require_once("logica-candidato.php");
+verificaCandidato();
+$deficiencias = listaDeficienciasCandidato($conexao, $candidatoAtual ["idCandidato"]);
+?>
 
 <div id="idCandidatoContainer" class="container-fluid" style="background-color: #5EC998;">
 	<div class="container">
@@ -21,7 +28,7 @@
 				<h3 class="text-left text-light font-weight-bold">Dados Pessoais</h3>
 			</div>
 			<div class="container-fluid" style="margin-top: 20px;">
-				<h4 class="text-left font-weight-normal"><?php echo $candidatoAtual ["nome"]; ?></h4>
+				<h4 class="text-left font-weight-normal"><?php echo $candidatoAtual ["nome"]." ".$candidatoAtual ["sobrenome"]; ?></h4>
 				<p class="text-left font-weight-bold">Idade:</p>
 				<p class="text-left font-weight-bold">CPF: <?php echo $candidatoAtual ["cpf"]; ?></p>
 				<p class="text-left font-weight-bold">Estado Civil:</p>
@@ -48,12 +55,14 @@
 				<h3 class="text-left text-light font-weight-bold">Deficiência(s)</h3>
 			</div>
 			<div class="container-fluid" style="margin-top: 20px;">
-				<p class="text-left font-weight-bold">Auditiva</p>
-				<p class="text-left font-weight-bold">Fala</p>
-				<p class="text-left font-weight-bold">Física</p>
-				<p class="text-left font-weight-bold">Intelectual/Mental</p>
-				<p class="text-left font-weight-bold">Visual</p>
-				<p class="text-left font-weight-bold">CID:</p>
+<?php
+			foreach ($deficiencias as $def) {
+?>				
+				<p class="text-left font-weight-bold"><?php echo $def ["tipo_deficiencia"] ?></p>
+<?php
+			}
+?>			
+				<p class="text-left font-weight-bold">CID: <?php echo $candidatoAtual ["cid10"]; ?></p>
 			</div>
 			<div class="container-fluid rounded" style="padding: 8px; background-color: #5EC998;">
 				<h3 class="text-left text-light font-weight-bold">Objetivos</h3>

@@ -26,7 +26,7 @@ verificaCandidato();
 
 			<div style="padding-top: 30px; padding-bottom: 40px;">
 				<h5 class="text-left font-weight-normal">Mantenha seu currículo atualizado!</h5>
-				<button type="button" class="btn btn-primary btn-lg">Atualizar Currículo</button>
+				<a class="btn btn-lg btn-primary btn-lg" role="button" href="curriculo.php">Atualizar Currículo</a>
 			</div>
 		
 		</div>
