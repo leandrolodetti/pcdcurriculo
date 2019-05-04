@@ -6,7 +6,7 @@ require_once("conecta.php");
 if ($candidatoAtual == null) {
 ?>
 	<div class="container-fluid" id="containerCadastro">
-		<h2 id="txtCadastro" class="text-center">Cadastre-se!</h2>
+		<h2 id="txtCadastro" class="text-center">Cadastro Candidato</h2>
 	</div>
 		<div class="container">
 			<form name="form-cadastro-candidato" action="adiciona-candidato.php" method="post" style="padding-top: 20px; padding-bottom: 20px;" onsubmit="return validaForm();">

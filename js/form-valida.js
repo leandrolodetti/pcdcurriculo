@@ -7,6 +7,8 @@ $("#idContato").mask("(00)000000000");
 $("#idContatoResponsavel").mask("(00)000000000");
 $("#idAlteraContatoCandidato").mask("(00)000000000");
 $("#inputNumero").mask("00000");
+$("#idFormLoginCnpj").mask("00.000.000/0000-00");
+$("#idCNPJ").mask("00.000.000/0000-00");
 
 var erroCep = "";
 var erroSenha = "";

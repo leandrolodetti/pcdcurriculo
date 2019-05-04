@@ -39,7 +39,7 @@ else {
 				          <a class="<?php echo $navlink; ?>" href="index.php">Candidatos</a>
 				        </li>
 				        <li class="nav-item">
-				          <a class="nav-link" href="#">Empresas</a>
+				          <a class="nav-link" href="index-empresa.php">Empresas</a>
 				        </li>
 		      		</ul>
 		      	</div>
