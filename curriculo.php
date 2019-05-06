@@ -4,7 +4,16 @@ require_once("conecta.php");
 require_once("banco.php");
 require_once("logica-candidato.php");
 verificaCandidato();
-$deficiencias = listaDeficienciasCandidato($conexao, $candidatoAtual ["idCandidato"]);
+$deficiencias = listaDeficienciasCandidato($conexao, $usuarioAtual ["idCandidato"]);
+
+$data = $usuarioAtual ["data_nascimento"];
+
+$datas = explode("/", $data);
+$dataNascimento = $datas[2].$datas[1].$datas[0];
+$date = new DateTime($dataNascimento);
+$interval = $date->diff( new DateTime( date('Y-m-d') ) ); 
+$idade = $interval->format( '%Y' );
+
 ?>
 
 <div id="idCandidatoContainer" class="container-fluid" style="background-color: #5EC998;">
@@ -28,9 +37,9 @@ $deficiencias = listaDeficienciasCandidato($conexao, $candidatoAtual ["idCandida
 				<h3 class="text-left text-light font-weight-bold">Dados Pessoais</h3>
 			</div>
 			<div class="container-fluid" style="margin-top: 20px;">
-				<h4 class="text-left font-weight-normal"><?php echo $candidatoAtual ["nome"]." ".$candidatoAtual ["sobrenome"]; ?></h4>
-				<p class="text-left font-weight-bold">Idade:</p>
-				<p class="text-left font-weight-bold">CPF: <?php echo $candidatoAtual ["cpf"]; ?></p>
+				<h4 class="text-left font-weight-normal"><?php echo $usuarioAtual ["nome"]." ".$usuarioAtual ["sobrenome"]; ?></h4>
+				<p class="text-left font-weight-bold">Idade: <?php echo $idade; ?></p>
+				<p class="text-left font-weight-bold">CPF: <?php echo $usuarioAtual ["cpf"]; ?></p>
 				<p class="text-left font-weight-bold">Estado Civil:</p>
 			</div>
 			<div class="container-fluid rounded" style="padding: 8px; background-color: #5EC998;">
@@ -38,18 +47,18 @@ $deficiencias = listaDeficienciasCandidato($conexao, $candidatoAtual ["idCandida
 			</div>
 			<div class="container-fluid" style="margin-top: 20px;">
 				<p class="text-left font-weight-bold">País:</p>
-				<p class="text-left font-weight-bold">CEP: <?php echo $candidatoAtual ["cep"]; ?></p>
-				<p class="text-left font-weight-bold">Estado: <?php echo $candidatoAtual ["estado"]; ?></p>
-				<p class="text-left font-weight-bold">Cidade: <?php echo $candidatoAtual ["cidade"]; ?></p>
-				<p class="text-left font-weight-bold">Bairro: <?php echo $candidatoAtual ["bairro"]; ?></p>
-				<p class="text-left font-weight-bold">Endereço: <?php echo $candidatoAtual ["logradouro"]; ?></p>
+				<p class="text-left font-weight-bold">CEP: <?php echo $usuarioAtual ["cep"]; ?></p>
+				<p class="text-left font-weight-bold">Estado: <?php echo $usuarioAtual ["estado"]; ?></p>
+				<p class="text-left font-weight-bold">Cidade: <?php echo $usuarioAtual ["cidade"]; ?></p>
+				<p class="text-left font-weight-bold">Bairro: <?php echo $usuarioAtual ["bairro"]; ?></p>
+				<p class="text-left font-weight-bold">Endereço: <?php echo $usuarioAtual ["logradouro"]; ?></p>
 			</div>
 			<div class="container-fluid rounded" style="padding: 8px; background-color: #5EC998;">
 				<h3 class="text-left text-light font-weight-bold">Contato</h3>
 			</div>
 			<div class="container-fluid" style="margin-top: 20px;">
-				<p class="text-left font-weight-bold">E-mail: <?php echo $candidatoAtual ["email"]; ?></p>
-				<p class="text-left font-weight-bold">Telefone: <?php echo $candidatoAtual ["contato"]; ?></p>
+				<p class="text-left font-weight-bold">E-mail: <?php echo $usuarioAtual ["email"]; ?></p>
+				<p class="text-left font-weight-bold">Telefone: <?php echo $usuarioAtual ["contato"]; ?></p>
 			</div>
 			<div class="container-fluid rounded" style="padding: 8px; background-color: #5EC998;">
 				<h3 class="text-left text-light font-weight-bold">Deficiência(s)</h3>
@@ -58,11 +67,11 @@ $deficiencias = listaDeficienciasCandidato($conexao, $candidatoAtual ["idCandida
 <?php
 			foreach ($deficiencias as $def) {
 ?>				
-				<p class="text-left font-weight-bold"><?php echo $def ["tipo_deficiencia"] ?></p>
+				<p class="text-left font-weight-bold"><?php echo $def ["tipo_deficiencia"]; ?></p>
 <?php
 			}
 ?>			
-				<p class="text-left font-weight-bold">CID: <?php echo $candidatoAtual ["cid10"]; ?></p>
+				<p class="text-left font-weight-bold">CID: <?php echo $usuarioAtual ["cid10"]; ?></p>
 			</div>
 			<div class="container-fluid rounded" style="padding: 8px; background-color: #5EC998;">
 				<h3 class="text-left text-light font-weight-bold">Objetivos</h3>

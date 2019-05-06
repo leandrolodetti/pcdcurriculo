@@ -6,7 +6,7 @@
 	<div class="container">
 		<div id="btnCabecalho">
 		  <div id="btnCabecalhoRight">
-		    <a class="btn btn-lg" id="btnEntrar" role="button" href="form-login-empresa.php">Acesso para empresas</a>
+		    <a class="btn btn-lg" id="btnEntrar" role="button" href="form-login-empresa.php">Login empresas</a>
 		  </div>
 		</div>
 		<h3 class="text-center font-weight-normal text-white">Cadastre sua empresa e explore as vantagens do Pcdcurrículo.com.br</h3>

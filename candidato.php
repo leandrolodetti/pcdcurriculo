@@ -1,14 +1,14 @@
 <?php
 require_once("cabecalho.php");
 require_once("logica-candidato.php");
-verificaCandidato();
+//verificaCandidato();
 ?>
 
-<div id="idCandidatoContainer" class="container-fluid" style="background-color: #5EC998;">
+<div class="container-fluid" style="background-color: #5EC998;">
 	<div class="container">
 		<nav aria-label="breadcrumb">
 	  		<ol class="breadcrumb" id="idCandidatoBreadcrumb" style="background-color: transparent; padding-left: 0;">
-	  			<li class="breadcrumb-item active font-weight-bold" style="color: white;" aria-current="page">Área do Candidato</li>
+	  			<li class="breadcrumb-item active font-weight-bold" style="color: white;" aria-current="page">Área do candidato</li>
   			</ol>
 		</nav>
 	</div>
@@ -19,7 +19,7 @@ verificaCandidato();
 <div class="container" style="padding-top: 30px;">
 	<div class="row">
 		<div class="col-sm-4">
-			<h3 class="text-left font-weight-normal"><?php echo $candidatoAtual ["nome"]; ?></h3>
+			<h3 class="text-left font-weight-normal"><?php echo $usuarioAtual ["nome"]; ?></h3>
 			<br>
 			<h4 class="text-left font-weight-normal">Cargo Desejado</h4>
 			<p class="text-left font-weight-normal">Desenvolvedor de Sistemas Sênior / Arquitetura</p>

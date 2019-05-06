@@ -1,3 +1,0 @@
-function cu() {
-    alert("funcionou!!!");
-}

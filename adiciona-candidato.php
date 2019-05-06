@@ -43,12 +43,13 @@ $dataNascimentoCandidato = $_POST["dataNascimentoCandidato"];
 $contatoCandidato = $_POST["contatoCandidato"];
 $genero = $_POST["gridGenero"];
 $cpfCandidato = $_POST["cpfCandidato"];
+$emailCandidato = strtolower($_POST["emailCandidato"]);
 
 if (buscaCpf($conexao, $cpfCandidato) != null) {
 ?>
 	<div class="container" style="padding-top: 20px;">
       	<div class="alert alert-danger" role="alert" style="padding: 25px;">
-  			Usuário já possui cadastro!
+  			O CPF informado já está cadastrado!
 		</div>
 		<a class="btn btn-success" href="form-login-candidato.php">Faça o Login</a>
     </div>
@@ -56,7 +57,18 @@ if (buscaCpf($conexao, $cpfCandidato) != null) {
 die();
 }
 
-$emailCandidato = $_POST["emailCandidato"];
+if (buscaEmail($conexao, $emailCandidato) != null) {
+?>
+	<div class="container" style="padding-top: 20px;">
+      	<div class="alert alert-danger" role="alert" style="padding: 25px;">
+  			O email informado já está cadastrado!
+		</div>
+		<a class="btn btn-success" href="form-login-candidato.php">Faça o Login</a>
+    </div>
+<?php
+die();
+}
+
 $cepCandidato = $_POST["cepCandidato"];
 $cidadeCandidato = $_POST["cidadeCandidato"];
 $ufCandidato = $_POST["ufCandidato"];

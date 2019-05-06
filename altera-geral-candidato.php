@@ -11,17 +11,17 @@ verificaCandidato();
 
   <div class="form-group">
     <label for="idAlteraNomeCandidato">Candidato</label>
-    <input type="text" class="form-control" id="idAlteraNomeCandidato" value="<?php echo $candidatoAtual ["nome"]; ?>" name="nome">
+    <input type="text" class="form-control" id="idAlteraNomeCandidato" value="<?php echo $usuarioAtual ["nome"]; ?>" name="nome">
   </div>
 
   <div class="form-group">
       <label for="idAlteraSobrenomeCandidato">Sobrenome</label>
-      <input type="text" class="form-control" value="<?php echo $candidatoAtual ["sobrenome"]; ?>" name="sobrenome" id="idAlteraSobrenomeCandidato">
+      <input type="text" class="form-control" value="<?php echo $usuarioAtual ["sobrenome"]; ?>" name="sobrenome" id="idAlteraSobrenomeCandidato">
   </div>
 
   <div class="form-group">
     <label for="idAlteraEmailCandidato">E-mail</label>
-    <input type="txt" class="form-control" value="<?php echo $candidatoAtual ["email"]; ?>" id="idAlteraEmailCandidato">
+    <input type="txt" class="form-control" value="<?php echo $usuarioAtual ["email"]; ?>" id="idAlteraEmailCandidato">
   </div>
 
   <div class="form-group">

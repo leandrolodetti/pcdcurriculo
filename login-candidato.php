@@ -4,7 +4,8 @@ require_once("banco.php");
 require_once("conecta.php");
 require_once("logica-candidato.php");
 
-$usuario = buscaCandidato($conexao, $_POST["email"], $_POST["senha"]);
+$email = strtolower($_POST["email"]);
+$usuario = buscaCandidato($conexao, $email, $_POST["senha"]);
 
 if ($usuario) {
 	logaCandidato($usuario["email"]);

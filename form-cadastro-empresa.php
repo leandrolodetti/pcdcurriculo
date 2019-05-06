@@ -10,7 +10,7 @@ require_once("conecta.php");
 </div>
 
 <div class="container" style="padding-top: 20px;">
-	<form>
+	<form action="adiciona-empresa.php" method="post" onsubmit="return validaFormEmpresa();">
 		<div class="form-row">
 		    <div class="form-group col-md-5">
 		      	<label for="idRazaoSocial">Empresa</label>
@@ -69,23 +69,44 @@ require_once("conecta.php");
 			<div class="form-group col-md-4">
 				<label for="rua">Endereço</label>
 			    <input type="text" class="form-control" id="rua" name="ruaEmpresa" maxlength="50">
-			    <small id="idSmallEndereco" class="form-text text-muted"></small>
+			    <small id="idSmallEnderecoEmpresa" class="form-text text-muted"></small>
 			</div>
 			<div class="form-group col-md-2">
-			    <label for="inputNumero">Número</label>
-			    <input type="text" class="form-control" id="inputNumero" name="numeroRuaEmpresa">
-			    <small id="idSmallNumero" class="form-text text-muted"></small>
+			    <label for="inputNumeroEmpresa">Número</label>
+			    <input type="text" class="form-control" id="inputNumeroEmpresa" name="numeroRuaEmpresa">
+			    <small id="idSmallNumeroEmpresa" class="form-text text-muted"></small>
 			</div>
 			<div class="form-group col-md-3">
 			    <label for="bairro">Bairro</label>
 			    <input type="text" class="form-control" id="bairro" name="bairroEmpresa" maxlength="50">
-			    <small id="idSmallBairro" class="form-text text-muted"></small>
+			    <small id="idSmallBairroEmpresa" class="form-text text-muted"></small>
 			</div>
 			<div class="form-group col-md-3">
 			    <label for="inputComplementoEmpresa">Complemento</label>
 			    <input type="text" class="form-control" id="inputComplementoEmpresa" placeholder="Ex: Salas 1 e 2" name="ComplementoEmpresa" maxlength="20">
 			</div>
-		</div>	
+		</div>
+		<div class="form-row">
+			<div class="form-group col-md-4">
+			    <label for="idRamoAtividade">Ramo de Atividade</label>
+			    <input type="text" class="form-control" name="RamoAtividade" id="idRamoAtividade" maxlength="50">
+			    <small id="idSmallRamoAtividade" class="form-text text-muted"></small>
+			</div>
+			<div class="form-group col-md-4">
+			    <label for="idSenhaEmpresa1">Senha</label>
+			    <input type="password" class="form-control" name="senhaEmpresa" id="idSenhaEmpresa1" maxlength="15">
+			   	<small class="form-text text-muted">Use de 6 a 15 caracteres.</small>
+			    <small id="idSmallSenhaEmpresa" class="form-text text-muted"></small>
+			</div>
+			<div class="form-group col-md-4">
+			    <label for="idConfirmarSenhaEmpresa">Confirmar Senha</label>
+			    <input type="password" name="senha2" class="form-control" id="idConfirmarSenhaEmpresa" maxlength="15">
+			   	<small id="idSmallConfirmaSenhaEmpresa" class="form-text text-muted"></small>
+			</div>     	
+		</div>
+
+		<button type="submit" id="btnEnviar" class="btn btn-primary">Continuar</button>
+		<a class="btn btn-success" href="index-empresa.php">Voltar</a>
 	</form>
 </div>
 

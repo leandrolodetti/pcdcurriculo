@@ -2,10 +2,33 @@
 require_once("cabecalho.php");
 ?>
 <div class="container-fluid" style="background-color: #6f42c1;">
-	<div class="container" style="padding-top: 80px;">
+	<div class="container" style="padding-top: 80px; padding-bottom: 20px;">
+	<?php
+		if (isset($_SESSION["candidato_logado"])) {
+			?>
+			    <div class="alert alert-danger" role="alert">
+			  		Usuário logado como candidato! Faça o logout para trocar de conta
+				</div>
+				<a class="btn btn-success" href="logout-candidato.php">Logout</a>
+			<?php
+			die();
+		}
+		else
+		if (isset($_SESSION["empresa_logada"])) {
+			?>
+			    <div class="alert alert-danger" role="alert">
+			  		Usuário logado como empresa! Faça o logout para trocar de conta
+				</div>
+				<a class="btn btn-success" href="logout-empresa.php">Logout</a>
+			<?php
+			die();
+		}
+		mostraAlerta("invalidUser");
+		mostraAlerta("danger");
+	?>
 		<div class="row">
 			<div class="col-sm-5" style="padding-bottom: 30px;">
-				<form method="post" action="#">
+				<form method="post" action="login-empresa.php">
 				  <div class="form-group">
 				    <label for="idFormLoginCnpj" class="text-white">CNPJ</label>
 				    <input type="text" class="form-control" id="idFormLoginCnpj" name="cnpj">

@@ -5,7 +5,26 @@ require_once("cabecalho.php");
 <div class="container-fluid border-bottom border-primary"></div>
 
 <div class="container" style="padding-top: 80px;">
-	<?php 
+	<?php
+		if (isset($_SESSION["candidato_logado"])) {
+			?>
+			    <div class="alert alert-danger" role="alert">
+			  		Usuário logado como candidato! Faça o logout para trocar de conta
+				</div>
+				<a class="btn btn-success" href="logout-candidato.php">Logout</a>
+			<?php
+			die();
+		}
+		else
+		if (isset($_SESSION["empresa_logada"])) {
+			?>
+			    <div class="alert alert-danger" role="alert">
+			  		Usuário logado como empresa! Faça o logout para trocar de conta
+				</div>
+				<a class="btn btn-success" href="logout-empresa.php">Logout</a>
+			<?php
+			die();
+		}
 		mostraAlerta("invalidUser");
 		mostraAlerta("danger");
 	?>
@@ -35,9 +54,5 @@ require_once("cabecalho.php");
 		</div>
 	</div>
 </div>
-
-
-
-
 
 <?php require_once("rodape.php"); ?>

@@ -3,7 +3,7 @@ require_once("cabecalho.php");
 require_once("banco.php");
 require_once("conecta.php");
 
-if ($candidatoAtual == null) {
+if ($usuarioAtual == null) {
 ?>
 	<div class="container-fluid" id="containerCadastro">
 		<h2 id="txtCadastro" class="text-center">Cadastro Candidato</h2>

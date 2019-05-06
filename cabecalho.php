@@ -3,14 +3,24 @@ require_once("mostra-alerta.php");
 require_once("conecta.php");
 require_once("banco.php");
 error_reporting(E_ALL ^ E_NOTICE);
-$navlink = "nav-link";
+$navlinkCandidato = "nav-link";
+$navlinkEmpresa = "nav-link";
+$usuarioAtual = null;
 
 if (isset($_SESSION["candidato_logado"])) {
-	$candidatoAtual = buscaCandidatoAtual($conexao, $_SESSION["candidato_logado"]);
-	$navlink = "nav-link active";
+	$usuarioAtual = buscaCandidatoAtual($conexao, $_SESSION["candidato_logado"]);
+	$navlinkCandidato = "nav-link active";
+	$campo = "nome";
+	$href = "candidato.php";
+	$logout = "logout-candidato.php";
 }
-else {
-	$candidatoAtual = null;
+
+if (isset($_SESSION["empresa_logada"])) {
+	$usuarioAtual = buscaEmpresaAtual($conexao, $_SESSION["empresa_logada"]);
+	$navlinkEmpresa = "nav-link active";
+	$campo = "cnpj";
+	$href = "empresa.php";
+	$logout = "logout-empresa.php";
 }
 
 ?>
@@ -24,8 +34,6 @@ else {
 
 		<link rel="stylesheet" type="text/css" href="css/bootstrap.css">
 		<link rel="stylesheet" type="text/css" href="css/estilos.css">
-
-	  	<!--link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"-->
 	  	<link href="fontawesome/css/all.css" rel="stylesheet"> <!--load all styles -->
 	</head>
 
@@ -36,20 +44,20 @@ else {
   				<div class="col-4">
 		      		<ul class="nav nav-pills">
 				        <li class="nav-item">
-				          <a class="<?php echo $navlink; ?>" href="index.php">Candidatos</a>
+				          <a class="<?php echo $navlinkCandidato; ?>" href="index.php">Candidatos</a>
 				        </li>
 				        <li class="nav-item">
-				          <a class="nav-link" href="index-empresa.php">Empresas</a>
+				          <a class="<?php echo $navlinkEmpresa; ?>" href="index-empresa.php">Empresas</a>
 				        </li>
 		      		</ul>
 		      	</div>
 		      	<div class="col">
 <?php 				
-				if ($candidatoAtual != null) {
+				if ($usuarioAtual != null) {
 ?>	
 		      		<ul class="nav justify-content-end">
   						<li class="nav-item">
-    						<a class="nav-link active" href="candidato.php"><?php echo $candidatoAtual ["nome"]; ?></a>
+    						<a class="nav-link active" href="<?php echo $href; ?>"><?php echo $usuarioAtual ["$campo"]; ?></a>
   						</li>
 
   						
@@ -62,7 +70,7 @@ else {
 							   	<a class="dropdown-item" href="#">Outra ação</a>
 							   	<a class="dropdown-item" href="#">Alguma coisa aqui</a>
 								<div class="dropdown-divider"></div>
-								<a class="dropdown-item" href="logout-candidato.php">Logout</a>
+								<a class="dropdown-item" href="<?php echo $logout; ?>">Logout</a>
 							</div>
 						</div>
   					</ul>

@@ -8,7 +8,7 @@ verificaCandidato();
 	<div class="container">
 		<nav aria-label="breadcrumb">
 	  		<ol class="breadcrumb" id="idCandidatoBreadcrumb" style="background-color: transparent; padding-left: 0;">
-          <li class="breadcrumb-item"><a class="font-weight-bold" href="candidato.php">Área do Candidato</a></li>
+                <li class="breadcrumb-item"><a class="font-weight-bold" href="candidato.php">Área do Candidato</a></li>
 	  			<li class="breadcrumb-item active font-weight-bold" style="color: white;" aria-current="page">Alterar Cadastro</li>
   			</ol>
 		</nav>
