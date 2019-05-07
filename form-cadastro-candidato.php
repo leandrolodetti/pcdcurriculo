@@ -97,16 +97,40 @@ if ($usuarioAtual == null) {
 			  	<!--/fieldset-->
 
 				<div class="form-row">
-					<div class="form-group col-md-4">
+			    	<legend class="col-form-label col-sm-2 pt-0">Estado Civil</legend>
+			      	<div class="form-group col-md-2">
+			       		<div class="form-check">
+				         	<input class="form-check-input" type="radio" name="gridCivil" id="idSolteiro" value="Solteiro(a)">
+				          	<label class="form-check-label" for="idSolteiro">Solteiro(a)</label>
+		       			</div>
+		        		<div class="form-check">
+				          	<input class="form-check-input" type="radio" name="gridCivil" id="idCasado" value="Casado(a)">
+				          	<label class="form-check-label" for="idCasado">Casado(a)</label>
+		        		</div>
+		        		<div class="form-check">
+				          	<input class="form-check-input" type="radio" name="gridCivil" id="idSeparado" value="Separado(a)">
+				          	<label class="form-check-label" for="idSeparado">Separado(a)</label>
+		        		</div>
+		        		<div class="form-check">
+				          	<input class="form-check-input" type="radio" name="gridCivil" id="idDivorciado" value="Divorciado(a)">
+				          	<label class="form-check-label" for="idDivorciado">Divorciado(a)</label>
+		        		</div>
+		        		<div class="form-check">
+				          	<input class="form-check-input" type="radio" name="gridCivil" id="idViuvo" value="Viúvo(a)">
+				          	<label class="form-check-label" for="idViuvo">Viúvo(a)</label>
+		        		</div>
+		        		<small id="idSmallEstadoCivil" class="form-text text-danger"></small>
+		      		</div>			
+					<div class="form-group col-md-2">
 				      	<label for="cep">CEP</label>
 				      	<input type="text" value autocomplete="off" class="form-control" onblur="pesquisacep();" id="cep" name="cepCandidato">
 				      	<small id="idSmallCep" class="form-text text-danger"></small>
 			    	</div>
-				    <div class="form-group col-md-4">
+				    <div class="form-group col-md-3">
 				      	<label for="cidade">Cidade</label>
 				      	<input type="text" class="form-control" readonly="readonly" id="cidade" name="cidadeCandidato">
 				    </div>
-				    <div class="form-group col-md-4">
+				    <div class="form-group col-md-3">
 				    	<label for="uf">Estado</label>
 				    	<input type="text" class="form-control" readonly="readonly" id="uf" name="ufCandidato">
 				    </div>

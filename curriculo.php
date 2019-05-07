@@ -3,8 +3,10 @@ require_once("cabecalho.php");
 require_once("conecta.php");
 require_once("banco.php");
 require_once("logica-candidato.php");
-verificaCandidato();
+//verificaCandidato();
 $deficiencias = listaDeficienciasCandidato($conexao, $usuarioAtual ["idCandidato"]);
+$categorias = listaCategoria($conexao);
+$niveis = listaNivel($conexao);
 
 $data = $usuarioAtual ["data_nascimento"];
 
@@ -29,7 +31,7 @@ $idade = $interval->format( '%Y' );
 
 <div class="container border-bottom border-primary" style="padding-bottom: 20px;"></div>
 
-<div class="container" style="padding-top: 30px; padding-bottom: 100px;">
+<div class="container" style="padding-top: 30px;">
 	<div class="row">
 		<div class="col-sm-8">
 
@@ -84,10 +86,16 @@ $idade = $interval->format( '%Y' );
 				</div>
 				
 				<div class="form-group">
-					<label for="idCurriculoArea">Área</label>
+					<label for="idCurriculoArea">Categoria</label>
 					<select id="idCurriculoArea" class="form-control">
 						<option selected>Escolher...</option>
-					    <option>...</option>
+					    <?php
+						foreach ($categorias as $cat) {
+						?>
+							<option value="<?php echo $cat["idCategoria"]; ?>"><?php echo $cat["descricao"]; ?></option>
+						<?php	
+						}
+						?>
 					</select>
 				</div>
 				
@@ -95,7 +103,13 @@ $idade = $interval->format( '%Y' );
 					<label for="idCurriculoNivel">Nível</label>
 					<select id="idCurriculoNivel" class="form-control">
 						<option selected>Escolher...</option>
-					    <option>...</option>
+						<?php
+						foreach ($niveis as $nivel) {
+						?>
+							<option value="<?php echo $nivel["idNivel"]; ?>"><?php echo $nivel["descricao"]; ?></option>
+						<?php	
+						}
+						?>
 					</select>
 				</div>
 
@@ -113,7 +127,7 @@ $idade = $interval->format( '%Y' );
 			<form style="padding-bottom: 30px;">
 				<div class="form-group">
 					<label for="idCurriculoResumoProf">Resumo Profissional</label>
-					<textarea name="resumo" class="form-control" id="idCurriculoResumoProf"></textarea>
+					<textarea name="resumo" class="form-control" id="idCurriculoResumoProf" rows="5"></textarea>
 					<small class="form-text text-muted">Faça um resumo de suas qualificações, habilidades e realizações profissionais.</small>
 				</div>
 				<button type="submit" id="btnEnviar" class="btn btn-primary">Editar</button>
@@ -132,17 +146,17 @@ $idade = $interval->format( '%Y' );
 				</div>
 				<div class="form-group">
 					<label for="idCurriculoGraduacao">Graduação</label>
-					<textarea name="txtGraduacao" class="form-control" id="idCurriculoGraduacao"></textarea>
+					<textarea name="txtGraduacao" class="form-control" id="idCurriculoGraduacao" rows="5"></textarea>
 					<small class="form-text text-muted">Insira o nome da Universidade e a graduação.</small>
 				</div>
 				<div class="form-group">
 					<label for="idCurriculoCursosComp">Cursos Complementares</label>
-					<textarea name="txtCursoComplementares" class="form-control" id="idCurriculoCursosComp"></textarea>
+					<textarea name="txtCursoComplementares" class="form-control" id="idCurriculoCursosComp" rows="5"></textarea>
 					<small class="form-text text-muted">Insira o nome da escola e o curso realizado.</small>
 				</div>
 				<div class="form-group">
 					<label for="idCurriculoIdioma">Idiomas</label>
-					<textarea name="txtIdioma" class="form-control" id="idCurriculoIdioma"></textarea>
+					<textarea name="txtIdioma" class="form-control" id="idCurriculoIdioma" rows="5"></textarea>
 					<small class="form-text text-muted">Insira os idiomas e o nível de domínio.</small>
 				</div>
 				<button type="submit" id="btnEnviar" class="btn btn-primary">Editar</button>
@@ -155,7 +169,7 @@ $idade = $interval->format( '%Y' );
 				</div>
 				<div class="form-group">
 					<label for="idCurriculoHistoricoProf">Histórico Profissional</label>
-					<textarea name="txtHistoricoProf" class="form-control" id="idCurriculoHistoricoProf"></textarea>
+					<textarea name="txtHistoricoProf" class="form-control" id="idCurriculoHistoricoProf" rows="5"></textarea>
 					<small class="form-text text-muted">Insira o nome da empresa, cargo ocupado e o período que trabalhou (Ex: 2015 até 2019).</small>
 				</div>
 				<button type="submit" id="btnEnviar" class="btn btn-primary">Editar</button>

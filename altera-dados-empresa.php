@@ -8,7 +8,7 @@ require_once("logica-empresa.php");
 	<div class="container">
 		<nav aria-label="breadcrumb">
 	  		<ol class="breadcrumb" style="background-color: transparent; padding-left: 0;">
-          		<li class="breadcrumb-item"><a class="font-weight-bold text-warning" href="empresa.php">Área da empresa</a></li>
+                <li class="breadcrumb-item"><a class="font-weight-bold text-warning" href="empresa.php">Área da empresa</a></li>
 	  			<li class="breadcrumb-item active font-weight-bold" style="color: white;" aria-current="page">Alterar Cadastro</li>
   			</ol>
 		</nav>

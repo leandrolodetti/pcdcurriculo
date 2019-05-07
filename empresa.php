@@ -25,7 +25,7 @@ require_once("logica-empresa.php");
 			<div class="row" style="padding: 15px;">
 
 				<div class="col-sm-6">
-					<a class="nav-link" href="#">
+					<a class="nav-link" href="gerenciar-vagas.php">
 				    	<div class="card text-center">
 					    	<i class="fas fa-folder-open rounded float-left text-success" style="font-size: 70px; padding: 10px;"></i>
 					      	<div class="card-body">

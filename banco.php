@@ -1,6 +1,6 @@
 <?php
 
-function listaDeficienciasCandidato ($conexao, $id) {
+function listaDeficienciasCandidato($conexao, $id) {
 	$deficiencias = array();
 	$query = "SELECT Candidato.nome, Deficiencia.Candidato_idCandidato, Tiposdeficiencia.tipo_deficiencia
 			  FROM ((Candidato
@@ -13,6 +13,28 @@ function listaDeficienciasCandidato ($conexao, $id) {
 		array_push($deficiencias, $deficiencia);
 	}
 	return $deficiencias;
+}
+
+function listaCategoria($conexao) {
+	$categorias = array();
+	$query = "SELECT * FROM Categoria";
+	$resultado = mysqli_query($conexao, $query);
+
+	while ($categoria = mysqli_fetch_assoc($resultado)) {
+		array_push($categorias, $categoria);
+	}
+	return $categorias;
+}
+
+function listaNivel($conexao) {
+	$niveis = array();
+	$query = "SELECT * FROM Nivel";
+	$resultado = mysqli_query($conexao, $query);
+
+	while ($nivel = mysqli_fetch_assoc($resultado)) {
+		array_push($niveis, $nivel);
+	}
+	return $niveis;
 }
 
 function insereCandidato($conexao, $nomeCandidato, $sobrenomeCandidato, $dataNascimentoCandidato, $contatoCandidato,
