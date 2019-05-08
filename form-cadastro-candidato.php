@@ -184,7 +184,7 @@ if ($usuarioAtual == null) {
 			        	<small id="idSmallDeficiencia" class="form-text text-danger"></small>
 			      	</div>
 		      		<div class="form-group col-md-2">
-			      		<label for="idCid">CID10</label>
+			      		<label for="idCid">CID</label>
 			      		<input type="text" class="form-control" name="cidCandidato" id="idCid" maxlength="45">
 			      		<small id="idSmallCid" class="form-text text-muted"></small>
 			    	</div>

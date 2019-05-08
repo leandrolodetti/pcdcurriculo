@@ -2,16 +2,21 @@
 require_once("cabecalho.php");
 require_once("banco.php");
 require_once("conecta.php");
+require_once("logica-empresa.php");
+verificaEmpresa();
 
-$nomeResponsavel = "";
+$titulo = $_POST["titulo"];
+$categoria = $_POST["categoria"];
+$nivel = $_POST["nivel"];
+$descricaoVaga = $_POST["descricaoVaga"];
+$requisitoVaga = $_POST["requisitoVaga"];
+$beneficios = $_POST["beneficios"];
+$cargaHoraria = $_POST["cargaHoraria"];
+$salario = $_POST["salario"];
+$data = date('Y/m/d');
 
-if ($_POST["nomeResponsavel"] != "") { 
-	$nomeResponsavel = $_POST["nomeResponsavel"];
-	$cpfResponsavel = $_POST["cpfResponsavel"];
-	$contatoResponsavel = $_POST["contatoResponsavel"];
-	$emailResponsavel = $_POST["emailResponsavel"];
-	$nascResponsavel = $_POST["nascResponsavel"];
-}
+
+$idEmpresa = $usuarioAtual["idEmpresa"];
 
 $DefFisica = 0;
 $DefFala = 0;
@@ -35,52 +40,6 @@ if (isset($_POST["DefVisual"])) {
 	$DefVisual = $_POST["DefVisual"];
 }
 
-$idCandidato = 0;
-
-$nomeCandidato = $_POST["nomeCandidato"];
-$sobrenomeCandidato = $_POST["sobrenomeCandidato"];
-$dataNascimentoCandidato = $_POST["dataNascimentoCandidato"];
-$contatoCandidato = $_POST["contatoCandidato"];
-$genero = $_POST["gridGenero"];
-$estadoCivil = $_POST["gridCivil"];
-$cpfCandidato = $_POST["cpfCandidato"];
-$emailCandidato = strtolower($_POST["emailCandidato"]);
-
-if (buscaCpf($conexao, $cpfCandidato) != null) {
-?>
-	<div class="container" style="padding-top: 20px;">
-      	<div class="alert alert-danger" role="alert" style="padding: 25px;">
-  			O CPF informado já está cadastrado!
-		</div>
-		<a class="btn btn-success" href="form-login-candidato.php">Faça o Login</a>
-    </div>
-<?php
-die();
-}
-
-if (buscaEmail($conexao, $emailCandidato) != null) {
-?>
-	<div class="container" style="padding-top: 20px;">
-      	<div class="alert alert-danger" role="alert" style="padding: 25px;">
-  			O email informado já está cadastrado!
-		</div>
-		<a class="btn btn-success" href="form-login-candidato.php">Faça o Login</a>
-    </div>
-<?php
-die();
-}
-
-$cepCandidato = $_POST["cepCandidato"];
-$cidadeCandidato = $_POST["cidadeCandidato"];
-$ufCandidato = $_POST["ufCandidato"];
-$ruaCandidato = $_POST["ruaCandidato"];
-$numeroRuaCandidato = $_POST["numeroRuaCandidato"];
-$bairroCandidato = $_POST["bairroCandidato"];
-$ComplementoCandidato = $_POST["ComplementoCandidato"];
-$cidCandidato = $_POST["cidCandidato"];
-$senhaCandidato = $_POST["senhaCandidato"];
-$senhaMd5 = md5($senhaCandidato);
-
 if (!starTransaction($conexao)) {
 ?>
 	<div class="container">
@@ -88,32 +47,26 @@ if (!starTransaction($conexao)) {
 	  		Ocorreu um erro, tente novamente mais tarde!
 	  		<p><?php echo mysqli_error($conexao); ?></p>
 		</div>
-		<a class="btn btn-success" href="index.php">Voltar</a>
+		<a class="btn btn-success" href="gerenciar-vagas.php">Voltar</a>
     </div>
 <?php
 die();
 }
 
-if(!insereCandidato($conexao, $nomeCandidato, $sobrenomeCandidato, $dataNascimentoCandidato, $contatoCandidato,
-				   	   $genero, $cpfCandidato, $emailCandidato, $cepCandidato, $ufCandidato, $cidadeCandidato,
-				       $ruaCandidato, $numeroRuaCandidato, $bairroCandidato, $ComplementoCandidato, $senhaMd5,
-				       $cidCandidato, $estadoCivil)) {
-?>	
+if (!insereVaga($conexao, $titulo, $descricaoVaga, $requisitoVaga, $beneficios, $salario, $cargaHoraria, $data, $idEmpresa, $categoria, $nivel)) {
+?>
 	<div class="container">
 	    <div class="alert alert-danger" role="alert" style="padding: 25px;">
 	  		Ocorreu um erro, tente novamente mais tarde!
 	  		<p><?php echo mysqli_error($conexao); ?></p>
 		</div>
-		<a class="btn btn-success" href="index.php">Voltar</a>
+		<a class="btn btn-success" href="gerenciar-vagas.php">Voltar</a>
     </div>
 <?php
-rollback($conexao);
 die();
 }
 
-$buscaIdCandidato = buscaIdCandidato($conexao, $cpfCandidato);
-$idCandidato = $buscaIdCandidato["idCandidato"];
-
+/*
 if ($DefFisica != null) {
 	if (!insereDeficiencia($conexao, $DefFisica, $idCandidato)) {
 ?>		
@@ -193,38 +146,7 @@ if ($DefVisual != null) {
 		die();
 	}
 }
-
-if ($nomeResponsavel != "") {
-	if (!insereResponsavel($conexao, $nomeResponsavel, $cpfResponsavel, $contatoResponsavel,
-						   $emailResponsavel, $nascResponsavel, $idCandidato)) {
-?>
-		<div class="container">
-		    <div class="alert alert-danger" role="alert" style="padding: 25px;">
-		  		Ocorreu um erro, tente novamente mais tarde!
-		  		<p><?php echo mysqli_error($conexao); ?></p>
-			</div>
-			<a class="btn btn-success" href="index.php">Voltar</a>
-	    </div>
-<?php
-		rollback($conexao);
-		die();
-	}
-}
-
-if (!insereCurriculo($conexao, $idCandidato)) {
-?>
-	<div class="container">
-		<div class="alert alert-danger" role="alert" style="padding: 25px;">
-		  	Ocorreu um erro, tente novamente mais tarde!
-		  		<p><?php echo mysqli_error($conexao); ?></p>
-		</div>
-		<a class="btn btn-success" href="index.php">Voltar</a>
-	</div>
-<?php
-	rollback($conexao);
-	die();
-}
-
+*/
 
 if (!commit($conexao)) {
 ?>	
@@ -233,7 +155,7 @@ if (!commit($conexao)) {
 			Ocorreu um erro, tente novamente mais tarde!
 			<p><?php echo mysqli_error($conexao); ?></p>
 		</div>
-		<a class="btn btn-success" href="index.php">Voltar</a>
+		<a class="btn btn-success" href="gerenciar-vagas.php">Voltar</a>
 	</div>
 <?php
 rollback($conexao);
@@ -243,9 +165,9 @@ die();
 
 <div class="container" style="padding-top: 20px; padding-bottom: 10px;">
 	<div class="alert alert-success" role="alert" style="padding: 25px;">
-		Usuário cadastrado com sucesso!
+		Vaga cadastrada com sucesso!
 	</div>
-	<a class="btn btn-success" href="form-login-candidato.php">Login</a>
+	<a class="btn btn-success" href="gerenciar-vagas.php">Voltar</a>
 </div>
 
 <?php require_once("rodape.php"); ?>

@@ -40,13 +40,13 @@ function listaNivel($conexao) {
 function insereCandidato($conexao, $nomeCandidato, $sobrenomeCandidato, $dataNascimentoCandidato, $contatoCandidato,
 				   		 $genero, $cpfCandidato, $emailCandidato, $cepCandidato, $ufCandidato, $cidadeCandidato,
 				   	     $ruaCandidato, $numeroRuaCandidato, $bairroCandidato, $ComplementoCandidato, $senhaMd5,
-				   		 $cidCandidato) {
+				   		 $cidCandidato, $estadoCivil) {
     $query = "insert into Candidato(nome, sobrenome, data_nascimento, contato, genero, cpf, email, cep, estado, cidade,
-    								logradouro, num_logradouro, bairro, complemento, senha, cid10)
+    								logradouro, num_logradouro, bairro, complemento, senha, cid10, estado_civil)
     		  values('{$nomeCandidato}', '{$sobrenomeCandidato}', '{$dataNascimentoCandidato}', '{$contatoCandidato}',
     		  		  '{$genero}', '{$cpfCandidato}', '{$emailCandidato}', '{$cepCandidato}', '{$ufCandidato}',
     		  		  '{$cidadeCandidato}', '{$ruaCandidato}', '{$numeroRuaCandidato}', '{$bairroCandidato}', '{$ComplementoCandidato}',
-    		  		  '{$senhaMd5}', '{$cidCandidato}')";
+    		  		  '{$senhaMd5}', '{$cidCandidato}', '{$estadoCivil}')";
 
     $resultadoDaInsercao = mysqli_query($conexao, $query);
     return $resultadoDaInsercao;
@@ -66,6 +66,19 @@ function insereEmpresa($conexao, $cnpj, $fantasia, $razao_social, $contato,
     $resultadoDaInsercao = mysqli_query($conexao, $query);
     return $resultadoDaInsercao;
 }
+
+function insereVaga($conexao, $titulo, $descricaoVaga, $requisitoVaga, $beneficios,
+					$salario, $cargaHoraria, $data, $idEmpresa,
+					$categoria, $nivel) {
+	$query = "INSERT INTO Vaga(titulo, descricao, requisitos, beneficios, salario, carga_horaria,
+						  data_atualizacao, Empresa_idEmpresa, Categoria_idCategoria, Nivel_idNivel)
+				VALUES('{$titulo}', '{$descricaoVaga}', '{$requisitoVaga}', '{$beneficios}',
+					   '{$salario}', '{$cargaHoraria}', '{$data}',
+					    {$idEmpresa}, {$categoria}, {$nivel})";
+	$resultadoDaInsercao = mysqli_query($conexao, $query);
+    return $resultadoDaInsercao;
+}
+
 
 function buscaCnpj($conexao, $cnpj) {
 	$cnpj = mysqli_escape_string($conexao, $cnpj);

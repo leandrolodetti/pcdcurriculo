@@ -132,6 +132,29 @@ function pesquisacep() {
 	x.blur();
 }
 
+function validarEstadoCivil(idErro, msg) {
+	var solteiro = document.getElementById("idSolteiro");
+	var casado = document.getElementById("idCasado");
+	var separado = document.getElementById("idSeparado");
+	var divorciado = document.getElementById("idDivorciado");
+	var viuvo = document.getElementById("idViuvo");
+	var y = document.getElementById(idErro);
+
+	if ((solteiro.checked == true) || 
+		(casado.checked == true) ||
+		(separado.checked == true) ||
+		(divorciado.checked == true) ||
+		(viuvo.checked == true)
+	   ) {
+		y.innerHTML = "";
+		return true;
+	}
+	else{
+		y.innerHTML = msg;
+		return false;
+	}
+}
+
 function validarGenero(idM,idF,idErro,msg) {
 	var idM = document.getElementById(idM);
 	var idF = document.getElementById(idF);
@@ -531,6 +554,20 @@ function confirmarSenha(id, id2, idErro, msg) {
 	return false;
 }
 
+function validaSelect(id, idErro, msg) {
+	var y = document.getElementById(idErro);
+	var x = document.getElementById(id);
+	if (x.value=="") {
+		x.style.backgroundColor = "#F08080";
+		x.focus();
+		y.innerHTML = msg;
+		return false;
+	}
+	x.style.backgroundColor = white;
+	y.innerHTML = "";
+	return true;
+}
+
 function validaForm() {
 
 	if (!validaNumCaracteres("idNome","idSmallNome",3,"Nome inválido") || //validar nome candidato
@@ -541,6 +578,7 @@ function validaForm() {
 		!validarCPF("idCpf","idSmallCpf","CPF Inválido") ||
 		!validarEmail("idEmail","idSmallEmail","E-mail Inválido") ||
 		!confirmarEmail("idEmail","idConfirmarEmail","idSmallConfirmaEmail","E-mails não conferem!") ||
+		!validarEstadoCivil("idSmallEstadoCivil", "Selecione uma opção!") || //validar estado civil
 		!validarCep() ||
 		!validaNumCaracteres("rua", "idSmallEndereco", 3, "Endereço Inválido") || //validar logradouro candidato
 		!validaNumCaracteres("inputNumero", "idSmallNumero", 1, "Número Inválido") || //validar numero logradouro candidato
@@ -590,6 +628,19 @@ function validaAlteraGeralEmpresa() {
 		!validarCNPJ("idAlteraCnpj", "idSmallCnpj", "CNPJ inválido") ||
 		!validarEmail("idAlteraEmailEmpresa", "idSmallEmailEmpresa", "E-mail Inválido") ||
 		!confirmarEmail("idAlteraEmailEmpresa","idConfirmarEmailEmpresa","idSmallConfirmaEmailEmpresa","E-mails não conferem!")
+		) {
+		return false;
+	}
+	return true;
+}
+
+function validaCadastroVaga() {
+	if (!validaNumCaracteres("idTituloVaga","idSmallTituloVaga",3,"Campo inválido") ||
+ 		!validaNumCaracteres("idVagaDescricao","idSmallDescricaoVaga",5,"Campo inválido") ||
+ 		!validaNumCaracteres("idVagaRequisito","idSmallRequisitoVaga",5,"Campo inválido") ||
+ 		!validaNumCaracteres("idVagaBeneficio","idSmallBeneficioVaga",5,"Campo inválido") ||
+ 		!validaNumCaracteres("idVagaCargaHoraria","idSmallCargaHoraria",5,"Campo inválido") ||
+ 		!validaNumCaracteres("idVagaSalario","idSmallSalario",3,"Campo inválido")
 		) {
 		return false;
 	}

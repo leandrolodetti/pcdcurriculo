@@ -27,17 +27,18 @@ $niveis = listaNivel($conexao);
 			<div class="container-fluid rounded" style="padding: 8px; background-color: #6f42c1;">
 				<h3 class="text-left text-light font-weight-bold">Vaga</h3>
 			</div>
-			<form style="padding-bottom: 30px;">
+			<form style="padding-bottom: 30px;" action="adiciona-vaga.php" onsubmit="return validaCadastroVaga();" method="post">
 				<div class="form-group">
 					<label for="idTituloVaga">Título</label>
 					<input type="text" name="titulo" class="form-control" id="idTituloVaga">
 					<small class="form-text text-muted">Informe o título da vaga. Exemplo, Gerente de projetos.</small>
+					<small id="idSmallTituloVaga" class="form-text text-muted"></small>
 				</div>
 				
 				<div class="form-group">
-					<label for="idCurriculoArea">Categoria</label>
-					<select id="idCurriculoArea" class="form-control">
-						<option selected>Escolher...</option>
+					<label for="idCurriculoCategoria">Categoria</label>
+					<select name="categoria" id="idCurriculoCategoria" class="form-control">
+						<option value="" selected>Escolher...</option>
 					    <?php
 						foreach ($categorias as $cat) {
 						?>
@@ -46,12 +47,13 @@ $niveis = listaNivel($conexao);
 						}
 						?>
 					</select>
+					<small id="idSmallCategoriaVaga" class="form-text text-muted"></small>
 				</div>
 				
 				<div class="form-group">
 					<label for="idVagaNivel">Nível</label>
-					<select id="idVagaNivel" class="form-control">
-						<option selected>Escolher...</option>
+					<select name="nivel" id="idVagaNivel" class="form-control">
+						<option value="" selected>Escolher...</option>
 						<?php
 						foreach ($niveis as $nivel) {
 						?>
@@ -60,31 +62,63 @@ $niveis = listaNivel($conexao);
 						}
 						?>
 					</select>
+					<small id="idSmallNivelVaga" class="form-text text-muted"></small>
 				</div>
 				<div class="form-group">
 					<label for="idVagaDescricao">Descrição</label>
 					<textarea name="descricaoVaga" class="form-control" id="idVagaDescricao" rows="5"></textarea>
 					<small class="form-text text-muted">Faça um resumo sobre a vaga, atividades que o profissional irá exercer.</small>
+					<small id="idSmallDescricaoVaga" class="form-text text-muted"></small>
 				</div>
 				<div class="form-group">
 					<label for="idVagaRequisito">Requisitos</label>
 					<textarea name="requisitoVaga" class="form-control" id="idVagaRequisito" rows="5"></textarea>
 					<small class="form-text text-muted">Descreva os requisitos que o candidato necessita possuir.</small>
+					<small id="idSmallRequisitoVaga" class="form-text text-muted"></small>
 				</div>
 				<div class="form-group">
 					<label for="idVagaBeneficio">Benefícios</label>
-					<textarea name="resumoVaga" class="form-control" id="idVagaResumo" rows="5"></textarea>
+					<textarea name="beneficios" class="form-control" id="idVagaBeneficio" rows="5"></textarea>
 					<small class="form-text text-muted">Descreva os benefícios que a empresa oferece.</small>
+					<small id="idSmallBeneficioVaga" class="form-text text-muted"></small>
 				</div>
 				<div class="form-group">
 					<label for="idVagaCargaHoraria">Carga Horária</label>
 					<input type="text" name="cargaHoraria" class="form-control" id="idVagaCargaHoraria" maxlength="80">
+					<small id="idSmallCargaHoraria" class="form-text text-muted"></small>
 				</div>
 				<div class="form-group">
 					<label for="idVagaSalario">Salário</label>
-					<input type="text" name="cargaHoraria" class="form-control" id="idVagaSalario">
+					<input type="text" name="salario" class="form-control" id="idVagaSalario">
+					<small id="idSmallSalario" class="form-text text-muted"></small>
 				</div>
-				<button type="submit" id="btnEnviar" class="btn btn-primary">Editar</button>
+				<div class="form-group">
+					<legend class="col-form-label col-sm-2 pt-0">Deficiência(s) Restritas</legend>
+				    <div class="form-group col-md-2">
+			        	<div class="form-check">
+					        <input class="form-check-input" type="checkbox" name="DefAuditiva" id="idDefAuditiva" value="1">
+					        <label class="form-check-label" for="idDefAuditiva">Auditiva</label>
+			        	</div>
+			        	<div class="form-check">
+					        <input class="form-check-input" type="checkbox" name="DefFala" id="idDefFala" value="2">
+					        <label class="form-check-label" for="idDefFala">Fala</label>
+			        	</div>
+			        	<div class="form-check">
+					        <input class="form-check-input" type="checkbox" name="DefFisica" id="idDefFisica" value="3">
+					        <label class="form-check-label" for="idDefFisica">Física</label>
+			       		</div>
+			        	<div class="form-check">
+					        <input class="form-check-input" type="checkbox" name="DefMental" id="idDefMental" value="4">
+					       	<label class="form-check-label" for="idDefMental">Intelectual/Mental</label>
+			        	</div>
+			        	<div class="form-check">
+					        <input class="form-check-input" type="checkbox" name="DefVisual" id="idDefVisual" value="5">
+					        <label class="form-check-label" for="idDefVisual">Visual</label>
+			        	</div>
+			        	<small id="idSmallDeficiencia" class="form-text text-danger"></small>
+			      	</div>		
+				</div>
+				<!--button type="submit" id="btnEnviar" class="btn btn-primary">Editar</button-->
 				<button type="submit" id="btnEnviar" class="btn btn-primary">Salvar</button>
 			</form>
 		</div>

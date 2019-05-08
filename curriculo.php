@@ -42,13 +42,13 @@ $idade = $interval->format( '%Y' );
 				<h4 class="text-left font-weight-normal"><?php echo $usuarioAtual ["nome"]." ".$usuarioAtual ["sobrenome"]; ?></h4>
 				<p class="text-left font-weight-bold">Idade: <?php echo $idade; ?></p>
 				<p class="text-left font-weight-bold">CPF: <?php echo $usuarioAtual ["cpf"]; ?></p>
-				<p class="text-left font-weight-bold">Estado Civil:</p>
+				<p class="text-left font-weight-bold">Estado Civil: <?php echo $usuarioAtual ["estado_civil"]; ?></p>
 			</div>
 			<div class="container-fluid rounded" style="padding: 8px; background-color: #5EC998;">
 				<h3 class="text-left text-light font-weight-bold">Endereço</h3>
 			</div>
 			<div class="container-fluid" style="margin-top: 20px;">
-				<p class="text-left font-weight-bold">País:</p>
+				<p class="text-left font-weight-bold">País: Brasil</p>
 				<p class="text-left font-weight-bold">CEP: <?php echo $usuarioAtual ["cep"]; ?></p>
 				<p class="text-left font-weight-bold">Estado: <?php echo $usuarioAtual ["estado"]; ?></p>
 				<p class="text-left font-weight-bold">Cidade: <?php echo $usuarioAtual ["cidade"]; ?></p>
