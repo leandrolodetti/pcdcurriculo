@@ -14,8 +14,8 @@
         <h2 class="text-center">Procurando Uma Oportunidade de Emprego ?</h2>
       </div>
 
-      <form class="txtBuscaVaga" action="resultado-vagas.php">
-        <input type="text" placeholder="Digite um Cargo" name="">
+      <form class="txtBuscaVaga" method="get" action="resultado-vagas.php">
+        <input type="text" placeholder="Digite um Cargo" name="parametro">
         <button type="submit"><i class="fa fa-search"></i></button>
       </form>
     </div>

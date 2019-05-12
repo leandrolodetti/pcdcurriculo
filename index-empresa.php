@@ -1,5 +1,5 @@
 <?php
-	require_once("cabecalho.php");
+require_once("cabecalho.php");
 ?>
 
 <div class="container-fluid" style="background-color: #6f42c1; padding-bottom: 20px;">

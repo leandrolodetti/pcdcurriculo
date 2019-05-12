@@ -1,9 +1,16 @@
 <?php
 require_once("cabecalho.php");
+require_once("mostra-alerta.php");
 
-
+$vagas = listaVagas($conexao, $usuarioAtual["idEmpresa"]);
 
 ?>
+<div class="container">
+<?php
+	mostraAlerta("danger");
+	mostraAlerta("success");
+?>
+</div>
 
 <div class="container-fluid" style="background-color: #6f42c1;">
 	<div class="container">
@@ -16,13 +23,12 @@ require_once("cabecalho.php");
 	</div>
 </div>
 
-<div class="container">
+<div class="border-bottom border-primary" style="padding-bottom: 20px;"></div>
+
+<div class="container" style="padding-top: 10px;">
 	<ul class="nav nav-pills">
 	  <li class="nav-item">
 	    <a class="nav-link active bg-success" href="form-cadastro-vaga.php">Incluir Vaga</a>
-	  </li>
-	  <li class="nav-item">
-	    <a class="nav-link" href="#">Link</a>
 	  </li>
 	</ul>
 </div>
@@ -31,42 +37,40 @@ require_once("cabecalho.php");
 	<form class="form-inline my-2 my-lg-1">
       <input class="form-control mr-sm-2" type="search" placeholder="Pesquisar" aria-label="Pesquisar">
     </form>
-	<div class="table-responsive">
+	<div class="table-responsive-sm">
 		<table class="table">
 		  <thead>
 		    <tr>
 		      <th scope="col">ID</th>
-		      <th scope="col">Primeiro</th>
-		      <th scope="col">Último</th>
-		      <th scope="col"></th>
+		      <th scope="col">Título</th>
+		      <th scope="col">Atualizada em</th>
 		      <th scope="col"></th>
 		    </tr>
 		  </thead>
 		  <tbody>
-		    <tr>
-		      <th scope="row">1</th>
-		      <td>Markaaaaaaaaaaa</td>
-		      <td>Otto</td>
-		      <td><a class="btn btn-primary btn-sm" href="produto-altera-formulario.php?id=<?=$produto['id']?>">alterar</a></td>
-		      <td><a class="btn btn-danger btn-sm" href="produto-altera-formulario.php?id=<?=$produto['id']?>">remover</a></td>
-		    </tr>
-		    <tr>
-		      <th scope="row">2</th>
-		      <td>Jacob</td>
-		      <td>Thornton</td>
-		      <td><a class="btn btn-primary btn-sm" href="produto-altera-formulario.php?id=<?=$produto['id']?>">alterar</a></td>
-		      <td><a class="btn btn-danger btn-sm" href="produto-altera-formulario.php?id=<?=$produto['id']?>">remover</a></td>
-		    </tr>
-		    <tr>
-		      <th scope="row">3</th>
-		      <td>Larry</td>
-		      <td>the Bird</td>
-		      <td><a class="btn btn-primary btn-sm" href="produto-altera-formulario.php?id=<?=$produto['id']?>">alterar</a></td>
-		      <td><a class="btn btn-danger btn-sm" href="produto-altera-formulario.php?id=<?=$produto['id']?>">remover</a></td>
-		    </tr>
+			<?php
+			foreach ($vagas as $vaga) {
+				if ($vaga["ativa"] == "S") {
+
+					$data_atualizacao = $vaga["data_atualizacao"];
+					$datas = explode("-", $data_atualizacao);
+					$dataBr = $datas[2]."/".$datas[1]."/".$datas[0];
+			?>	
+					<tr>
+						<th scope="row"><?php echo $vaga["idVaga"]; ?></th>
+						<td><a href="form-cadastro-vaga.php?id=<?php echo $vaga["idVaga"]; ?>"><?php echo $vaga["titulo"]; ?></a></td>
+						
+						<td><?php echo $dataBr; ?></td>
+						<td><a class="btn btn-danger btn-sm" href="update-empresa.php?id=<?php echo $vaga["idVaga"]; ?>&inativar-vaga">inativar</a></td>
+					</tr>
+			<?php
+				}			
+			}
+			?>		
 		  </tbody>
 		</table>
 	</div>
+	<a class="btn btn-primary" href="empresa.php">Voltar</a>
 </div>
 
 <?php require_once("rodape.php") ?>

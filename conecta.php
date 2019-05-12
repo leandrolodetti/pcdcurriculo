@@ -1,4 +1,5 @@
 <?php
+date_default_timezone_set("America/Sao_Paulo");
 header('Content-Type: text/html; charset=utf-8');
 $conexao = mysqli_connect('localhost', 'publico', 'ede02e60172b237f72e48299bce8ac8e', 'pcdcurriculo');
 mysqli_query($conexao, "SET NAMES 'utf8'");

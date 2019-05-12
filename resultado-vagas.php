@@ -1,100 +1,149 @@
-<?php require_once("cabecalho.php"); ?>
+<?php
+require_once("cabecalho.php");
 
-<div class="container">
-	<div class="border-bottom" style="padding-top: 40px;">
-	  <h4 class="text-left font-weight-normal">xx vagas encontradas para xpto</h4>
-	</div>
+//$parametro = $_GET["parametro"];
+$parametro = mysqli_escape_string($conexao, $_GET["parametro"]);
+$filtroCity = array();
+$filtroCategoria = array();
+$filtroNivel = array();
 
-	<div class="row" style="padding-top: 30px;">
+if (isset($_GET["cidade"])) {
+	foreach ($_GET["cidade"] as $cid) {
+		array_push($filtroCity, $cid);
+	}
+}
 
-		<div class="col-sm-4">
+if (isset($_GET["parametro"]) && $_GET["parametro"] != null) {
+	$vagasEncontradas = listaVagasPorTitulo($conexao, $parametro, $filtroCity);
+	if ($vagasEncontradas != null) {
+		$naoRepetidas = array_unique($vagasEncontradas);
 
-			<div class="clearfix">
-			  <button type="button" class="btn btn-success float-left" style="min-width: 220px;">Filtrar Busca</button>
+	?>
+		<div class="container">
+			<div class="border-bottom" style="padding-top: 40px;">
+			  <h4 class="text-left font-weight-normal"><?php echo count($vagasEncontradas)." vagas encontradas para ".$parametro; ?></h4>
 			</div>
 
-			<h5 class="text-left text-muted font-weight-bold" style="padding-top: 25px;">Cidade</h5>
+			<div class="row" style="padding-top: 30px;">
 
-			<?php
-				for ($i=0; $i < 20; $i++) {
-			?>
-				<div class="form-check">
-				  <input class="form-check-input" type="checkbox" value="" id="<?php echo $i; ?>">
-				  <label class="form-check-label" for="<?php echo $i; ?>">
-				    São Paulo(X)
-				  </label>
-				</div>
-			<?php
-				}
-			?>
+				<div class="col-sm-4">
+				<form action="resultado-vagas.php" method="get">
+					<div class="btn-group" role="group">
+					  	<button type="submit" class="btn btn-success">Filtrar Busca</button>
+ 					<?php
+ 					if (isset($_GET["cidade"]) && $_GET["cidade"] != null) {
+					?>	
+						<a class="btn btn-danger" href="resultado-vagas.php?parametro=<?php echo $parametro; ?>">Limpar Filtros</a>
+					<?php
+ 					}
+ 					?>
+ 					</div>
+					<input type="hidden" name="parametro" value="<?php echo $parametro; ?>">
+					<h5 class="text-left text-muted font-weight-bold" style="padding-top: 25px;">Cidade</h5>
 
-			<h5 class="text-left text-muted font-weight-bold" style="padding-top: 25px;">Áreas</h5>
+					<?php
+						foreach ($naoRepetidas as $nRep) {
+							$checked = "";
+							foreach ($filtroCity as $city) {
+								if ($nRep["cidade"] == $city) {
+									$checked = "checked";
+								}
+							}
+					?>
+						<div class="form-check">
+						  <input class="form-check-input" <?php echo $checked; ?> name="cidade[]" type="checkbox" value="<?php echo $nRep["cidade"]; ?>" id="idFiltroCidade">
+						  <label class="form-check-label" for="idFiltroCidade">
+						    <?php echo $nRep["cidade"]; ?>
+						  </label>
+						</div>
+					<?php
+						}
+					?>
 
-			<?php
-				for ($i=0; $i < 10; $i++) {
-			?>
-				<div class="form-check">
-				  <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-				  <label class="form-check-label" for="defaultCheck1">
-				    Administração de Empresas
-				  </label>
-				</div>
-			<?php
-				}
-			?>
+					<h5 class="text-left text-muted font-weight-bold" style="padding-top: 25px;">Categoria</h5>
 
-			<h5 class="text-left text-muted font-weight-bold" style="padding-top: 25px;">Nível</h5>
+					<?php
+						foreach ($naoRepetidas as $nRep) {
+					?>
+						<div class="form-check">
+						  <input class="form-check-input" name="categoria[]" type="checkbox" value="<?php echo $nRep["categoria"]; ?>" id="idFiltroCategoria">
+						  <label class="form-check-label" for="idFiltroCategoria">
+						    <?php echo $nRep["categoria"]; ?>
+						  </label>
+						</div>
+					<?php
+						}
+					?>
 
-			<?php
-				for ($i=0; $i < 5; $i++) {
-			?>
-				<div class="form-check">
-				  <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-				  <label class="form-check-label" for="defaultCheck1">
-				    Auxiliar/Operacional(X)
-				  </label>
-				</div>
-			<?php
-				}
-			?>
-			<div style="padding-bottom: 30px;"></div>
+					<h5 class="text-left text-muted font-weight-bold" style="padding-top: 25px;">Nível</h5>
 
-		</div>
-
-		<div class="col-sm-8">
-
-			<?php
-				for ($i=0; $i < 20; $i++) {
-			?>
-					<div class="card text-left">
-					  <div class="card-header">
-					    <h5 class="text-muted font-weight-bold"><i class="fas fa-building text-success" style="font-size: 35px; padding-right: 10px;"></i>Universidade de Mogi das Cruzes</h5>
-					  </div>
-					  <div class="card-body">
-					    <h5 class="card-title text-success font-weight-light">Desenvolvedor de Sistemas Sênior / Arquitetura</h5>
-					    <p class="card-text text-muted font-weight-bold">Estágio</p>
-					    <p class="card-text text-muted">Criação de landing pages (utilizando HTML, CSS, PHP e jQuery);- Criação de templates de e-mail marketing;- conhecimento em HTML5, CSS3, JavaScript, JQuery, PHP e Wordpress;- Desejável conhecimento em AngularJS</p>
-					    <a href="#" class="btn btn-primary">Visitar</a>
-					  </div>
-					  <div class="card-footer text-muted">
-					    Publicada há 2 dias.
-					  </div>
-					</div>
+					<?php
+						foreach ($naoRepetidas as $nRep) {
+					?>
+						<div class="form-check">
+						  <input class="form-check-input" name="nivel[]" type="checkbox" value="" id="idFiltroNivel">
+						  <label class="form-check-label" for="idFiltroNivel">
+						    <?php echo $nRep["nivel"]; ?>
+						  </label>
+						</div>
+					<?php
+						}
+					?>
 					<div style="padding-bottom: 30px;"></div>
-			<?php
-				}
-			?>
+				</form>
+				</div>
 
-		</div>
+				<div class="col-sm-8">
 
-	</div>
+					<?php
+						foreach ($vagasEncontradas as $vaga) {
+							$data_atualizacao = $vaga["data_atualizacao"];
+							$datas = explode("-", $data_atualizacao);
+							$dataBr = $datas[2]."/".$datas[1]."/".$datas[0];
+					?>
+							<div class="card text-left">
+							  <div class="card-header">
+							    <h5 class="text-muted font-weight-bold"><i class="fas fa-building text-success" style="font-size: 35px; padding-right: 10px;"></i><?php echo $vaga["fantasia"]; ?></h5>
+							  </div>
+							  <div class="card-body">
+							    <h5 class="card-title text-success font-weight-light"><?php echo $vaga["titulo"]; ?></h5>
+							    <p class="card-text text-muted font-weight-bold"><?php echo $vaga["nivel"]; ?></p>
+							    <p class="card-text text-muted"><?php echo $vaga["descricao"]; ?></p>
+							    <a href="#" class="btn btn-primary">Visitar</a>
+							  </div>
+							  <div class="card-footer text-muted">
+							    <?php echo "Atualizada em ".$dataBr; ?>
+							  </div>
+							</div>
+							<div style="padding-bottom: 30px;"></div>
+					<?php
+						}
+					?>
 
-</div>
+				</div>
 
+			</div>
 
-
-
-
-
+		</div>	
+	<?php
+	}
+	else {
+		$location = "index.php";
+		$_SESSION["danger"] = "Nenhuma Vaga encontrada! :(";
+		if (isset($_SESSION["candidato_logado"])) {
+			$location = "candidato.php";
+		}
+		header("Location: ".$location);
+	}
+}	
+else {
+	$location = "index.php";
+	$_SESSION["danger"] = "Nenhuma Vaga encontrada! :(";
+	if (isset($_SESSION["candidato_logado"])) {
+		$location = "candidato.php";
+	}
+	header("Location: ".$location);
+}
+?>
 
 <?php require_once("rodape.php"); ?>

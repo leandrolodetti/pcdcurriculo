@@ -207,14 +207,9 @@ if ($usuarioAtual == null) {
 <?php
 }
 else {
-?>
-<div class="container" style="padding-top: 15px; padding-bottom: 15px;">
-    <div class="alert alert-danger" role="alert" style="padding: 5px;">
-  		Usuário Já Logado!
-	</div>
-	<a class="btn btn-lg btn-success" role="button" href="index.php">Voltar</a>
-</div>
-<?php
+	$_SESSION["danger"] = "Usuário Já Logado!";
+	header("Location: index.php");
+    die();
 }
 ?>
 

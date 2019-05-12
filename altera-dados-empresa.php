@@ -26,9 +26,11 @@ require_once("logica-empresa.php");
                 <a class="btn btn-outline-success btn-lg" href="altera-dados-empresa.php?senha" role="button" style="text-align: left;"><i class="fas fa-key"></i> Senha</a>
                 <br>
                 <a class="btn btn-outline-primary btn-lg" href="altera-dados-empresa.php?contato" role="button" style="text-align: left;"><i class="fas fa-address-card"></i> Contato</a>
+                <br>
+                <a class="btn btn-outline-danger btn-lg" href="altera-dados-empresa.php?remover-conta" role="button" style="text-align: left;"><i class="fas fa-trash-alt"></i> Apagar Conta</a>
             </div>
         </div>
-
+        <?php mostraAlerta("danger"); mostraAlerta("success"); ?>
         <div class="col-sm">
             <?php
               if (isset($_GET["geral"])) {
@@ -40,12 +42,14 @@ require_once("logica-empresa.php");
               elseif (isset($_GET["contato"])) {
                 require_once("altera-contato-empresa.php");
               }
+              elseif (isset($_GET["remover-conta"])) {
+                require_once("remover-conta-empresa.php");
+              }
               elseif (isset($_GET["geral"]) == null) {
                 require_once("altera-geral-empresa.php");
               }
             ?>
         </div>
-
     </div>
 </div>
 

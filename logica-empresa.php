@@ -1,5 +1,6 @@
 <?php 
-
+require_once("banco.php");
+require_once("banco-empresa.php");
 session_start();
 
 function logaEmpresa($cnpj) {
@@ -24,9 +25,49 @@ function verificaEmpresa() {
 }
 
 function logOut() {
-	//session_destroy();
 	unset($_SESSION["empresa_logada"]);
-	$_SESSION["logout"] = "Empresa Deslogada!";
+	$_SESSION["danger"] = "Empresa Deslogada!";
 	header("Location: index-empresa.php");
+	die();
+}
+
+function iniciarTransacao($conexao, $msgErro, $location) {
+	if (!starTransaction($conexao)) {
+		$_SESSION["danger"] = "Ocorreu um erro, tente novamente mais tarde! Erro: ".$msgErro;
+		header("Location: ".$location);
+	    die();
+	}
+}
+
+function inativarVaga($conexao, $msgErro, $location, $id) {
+	if (!updateUmCampo($conexao, "Vaga", "ativa", "N", "idVaga", $id)) {
+		$_SESSION["danger"] = "Ocorreu um erro, tente novamente mais tarde! Erro: ".$msgErro;
+		rollback($conexao);
+		header("Location: ".$location);
+	    die();
+	}
+}
+
+function inativarEmpresa($conexao, $msgErro, $location, $id) {
+	if (!updateUmCampo($conexao, "Empresa", "ativa", "N", "idEmpresa", $id)) {
+		$_SESSION["danger"] = "Ocorreu um erro, tente novamente mais tarde! Erro: ".$msgErro;
+		rollback($conexao);
+		header("Location: ".$location);
+	    die();
+	}
+}
+
+function commitTransacao($conexao, $msgErro, $location) {
+	if (!commit($conexao)) {
+		$_SESSION["danger"] = "Ocorreu um erro, tente novamente mais tarde! Erro: ".$msgErro;
+		rollback($conexao);
+		header("Location: ".$location);
+	    die();
+	}
+}
+
+function sucesso($msg, $location) {
+	$_SESSION["success"] = $msg;
+	header("Location: ".$location);
 	die();
 }

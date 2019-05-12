@@ -132,6 +132,17 @@ function pesquisacep() {
 	x.blur();
 }
 
+function validarCheckExclusao(id ,idErro, msg) {
+	var sim = document.getElementById(id);
+	var y = document.getElementById(idErro);
+	if (sim.checked == true) {
+		y.innerHTML = "";
+		return true;
+	}
+	y.innerHTML = msg;
+	return false;
+}
+
 function validarEstadoCivil(idErro, msg) {
 	var solteiro = document.getElementById("idSolteiro");
 	var casado = document.getElementById("idCasado");
@@ -642,6 +653,13 @@ function validaCadastroVaga() {
  		!validaNumCaracteres("idVagaCargaHoraria","idSmallCargaHoraria",5,"Campo inválido") ||
  		!validaNumCaracteres("idVagaSalario","idSmallSalario",3,"Campo inválido")
 		) {
+		return false;
+	}
+	return true;
+}
+
+function validaRemoverEmpresa() {
+	if (!validarCheckExclusao("idConfirmaExclusao" ,"idSmallConfirmaExclusao", "Confirme a exclusão")) {
 		return false;
 	}
 	return true;

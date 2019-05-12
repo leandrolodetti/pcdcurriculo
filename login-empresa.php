@@ -5,9 +5,10 @@ require_once("conecta.php");
 require_once("logica-empresa.php");
 
 $cnpj = $_POST["cnpj"];
-$usuario = buscaEmpresa($conexao, $cnpj, $_POST["senha"]);
+$senhaMd5 = md5($_POST["senha"]);
+$usuario = buscaEmpresa($conexao, $cnpj, $senhaMd5);
 
-if ($usuario) {
+if ($usuario && ($usuario["ativa"] == "S")) {
 	logaEmpresa($usuario["cnpj"]);
 	header("Location: empresa.php");
 }

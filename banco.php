@@ -15,28 +15,6 @@ function listaDeficienciasCandidato($conexao, $id) {
 	return $deficiencias;
 }
 
-function listaCategoria($conexao) {
-	$categorias = array();
-	$query = "SELECT * FROM Categoria";
-	$resultado = mysqli_query($conexao, $query);
-
-	while ($categoria = mysqli_fetch_assoc($resultado)) {
-		array_push($categorias, $categoria);
-	}
-	return $categorias;
-}
-
-function listaNivel($conexao) {
-	$niveis = array();
-	$query = "SELECT * FROM Nivel";
-	$resultado = mysqli_query($conexao, $query);
-
-	while ($nivel = mysqli_fetch_assoc($resultado)) {
-		array_push($niveis, $nivel);
-	}
-	return $niveis;
-}
-
 function insereCandidato($conexao, $nomeCandidato, $sobrenomeCandidato, $dataNascimentoCandidato, $contatoCandidato,
 				   		 $genero, $cpfCandidato, $emailCandidato, $cepCandidato, $ufCandidato, $cidadeCandidato,
 				   	     $ruaCandidato, $numeroRuaCandidato, $bairroCandidato, $ComplementoCandidato, $senhaMd5,
@@ -52,61 +30,15 @@ function insereCandidato($conexao, $nomeCandidato, $sobrenomeCandidato, $dataNas
     return $resultadoDaInsercao;
 }
 
-function insereEmpresa($conexao, $cnpj, $fantasia, $razao_social, $contato,
-				   		 $email, $cep, $estado, $cidade, $logradouro,
-				   	     $num_logradouro, $bairro, $complemento, $ramo_atividade, $senhaMd5,
-				   		 $responsavel) {
-    $query = "insert into Empresa(cnpj, fantasia, razao_social, contato, email, cep, estado, cidade,
-    								logradouro, num_logradouro, bairro, complemento, ramo_atividade, senha, responsavel)
-    		  values('{$cnpj}', '{$fantasia}', '{$razao_social}', '{$contato}',
-    		  		  '{$email}', '{$cep}', '{$estado}', '{$cidade}', '{$logradouro}',
-    		  		  '{$num_logradouro}', '{$bairro}', '{$complemento}', '{$ramo_atividade}', '{$senhaMd5}',
-    		  		  '{$responsavel}')";
-
-    $resultadoDaInsercao = mysqli_query($conexao, $query);
-    return $resultadoDaInsercao;
-}
-
-function insereVaga($conexao, $titulo, $descricaoVaga, $requisitoVaga, $beneficios,
-					$salario, $cargaHoraria, $data, $idEmpresa,
-					$categoria, $nivel) {
-	$query = "INSERT INTO Vaga(titulo, descricao, requisitos, beneficios, salario, carga_horaria,
-						  data_atualizacao, Empresa_idEmpresa, Categoria_idCategoria, Nivel_idNivel)
-				VALUES('{$titulo}', '{$descricaoVaga}', '{$requisitoVaga}', '{$beneficios}',
-					   '{$salario}', '{$cargaHoraria}', '{$data}',
-					    {$idEmpresa}, {$categoria}, {$nivel})";
-	$resultadoDaInsercao = mysqli_query($conexao, $query);
-    return $resultadoDaInsercao;
-}
-
-
-function buscaCnpj($conexao, $cnpj) {
-	$cnpj = mysqli_escape_string($conexao, $cnpj);
-	//$senhaMd5 = md5($senha);
-	$query = "select * from Empresa where cnpj = '{$cnpj}'";
-	$resultado = mysqli_query($conexao, $query);
-	return mysqli_fetch_assoc($resultado);
-}
-
 function buscaCpf($conexao, $cpfCandidato) {
 	$cpf = mysqli_escape_string($conexao, $cpfCandidato);
-	//$senhaMd5 = md5($senha);
 	$query = "select * from Candidato where cpf = '{$cpf}'";
-	$resultado = mysqli_query($conexao, $query);
-	return mysqli_fetch_assoc($resultado);
-}
-
-function buscaEmailEmpresa($conexao, $email) {
-	$email = mysqli_escape_string($conexao, $email);
-	//$senhaMd5 = md5($senha);
-	$query = "select * from Empresa where email = '{$email}'";
 	$resultado = mysqli_query($conexao, $query);
 	return mysqli_fetch_assoc($resultado);
 }
 
 function buscaEmail($conexao, $emailCandidato) {
 	$cpf = mysqli_escape_string($conexao, $emailCandidato);
-	//$senhaMd5 = md5($senha);
 	$query = "select * from Candidato where email = '{$emailCandidato}'";
 	$resultado = mysqli_query($conexao, $query);
 	return mysqli_fetch_assoc($resultado);
@@ -132,7 +64,6 @@ function commit($conexao) {
 
 function buscaIdCandidato($conexao, $cpfCandidato) {
 	$cpf = mysqli_escape_string($conexao, $cpfCandidato);
-	//$senhaMd5 = md5($senha);
 	$query = "select idCandidato from Candidato where cpf = '{$cpf}'";
 	$resultado = mysqli_query($conexao, $query);
 	return mysqli_fetch_assoc($resultado);
@@ -140,12 +71,6 @@ function buscaIdCandidato($conexao, $cpfCandidato) {
 
 function buscaCandidatoAtual($conexao, $emailCandidato) {
 	$query = "select * from Candidato where email = '{$emailCandidato}'";
-	$resultado = mysqli_query($conexao, $query);
-	return mysqli_fetch_assoc($resultado);
-}
-
-function buscaEmpresaAtual($conexao, $cnpj) {
-	$query = "select * from Empresa where cnpj = '{$cnpj}'";
 	$resultado = mysqli_query($conexao, $query);
 	return mysqli_fetch_assoc($resultado);
 }
@@ -175,14 +100,6 @@ function buscaCandidato($conexao, $email, $senha) {
 	$email = mysqli_escape_string($conexao, $email);
 	$senhaMd5 = md5($senha);
 	$query = "select * from Candidato where email = '{$email}' and senha = '{$senhaMd5}'";
-	$resultado = mysqli_query($conexao, $query);
-	return mysqli_fetch_assoc($resultado);
-}
-
-function buscaEmpresa($conexao, $cnpj, $senha) {
-	//$email = mysqli_escape_string($conexao, $email);
-	$senhaMd5 = md5($senha);
-	$query = "select * from Empresa where cnpj = '{$cnpj}' and senha = '{$senhaMd5}'";
 	$resultado = mysqli_query($conexao, $query);
 	return mysqli_fetch_assoc($resultado);
 }
