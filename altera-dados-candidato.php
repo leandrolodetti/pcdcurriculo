@@ -28,6 +28,8 @@ verificaCandidato();
                 <a class="btn btn-outline-primary btn-lg" href="altera-dados-candidato.php?contato" role="button" style="text-align: left;"><i class="fas fa-address-card"></i> Contato</a>
                 <br>
                 <a class="btn btn-outline-success btn-lg" href="altera-dados-candidato.php?alerta" role="button" style="text-align: left;"><i class="fas fas fa-envelope-open-text"></i> Alerta de Vagas</a>
+                <br>
+                <a class="btn btn-outline-danger btn-lg" href="altera-dados-candidato.php?remover-conta" role="button" style="text-align: left;"><i class="fas fa-trash-alt"></i> Apagar Conta</a>
             </div>
         </div>
 
@@ -44,6 +46,9 @@ verificaCandidato();
               }
               elseif (isset($_GET["alerta"])) {
                 require_once("altera-alerta-candidato.php");
+              }
+              elseif (isset($_GET["remover-conta"])) {
+                require_once("remover-conta-candidato.php");
               }
               elseif (isset($_GET["geral"]) == null) {
                 require_once("altera-geral-candidato.php");

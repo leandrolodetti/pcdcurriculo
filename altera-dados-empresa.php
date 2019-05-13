@@ -1,7 +1,7 @@
 <?php
 require_once("cabecalho.php");
 require_once("logica-empresa.php");
-//verificaEmpresa();
+verificaEmpresa();
 ?>
 
 <div class="container-fluid" style="background-color: #6f42c1;">

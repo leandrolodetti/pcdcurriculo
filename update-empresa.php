@@ -1,9 +1,6 @@
 <?php
 require_once("cabecalho.php");
 require_once("logica-empresa.php");
-require_once("banco.php");
-require_once("banco-empresa.php");
-require_once("conecta.php");
 verificaEmpresa();
 
 if (isset($_GET["remover-conta"])) {

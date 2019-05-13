@@ -658,7 +658,7 @@ function validaCadastroVaga() {
 	return true;
 }
 
-function validaRemoverEmpresa() {
+function validaRemover() {
 	if (!validarCheckExclusao("idConfirmaExclusao" ,"idSmallConfirmaExclusao", "Confirme a exclusão")) {
 		return false;
 	}

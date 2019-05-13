@@ -3,8 +3,9 @@ require_once("mostra-alerta.php");
 require_once("conecta.php");
 require_once("banco.php");
 require_once("banco-empresa.php");
-
+require_once("logica.php");
 error_reporting(E_ALL ^ E_NOTICE);
+
 $navlinkCandidato = "nav-link";
 $navlinkEmpresa = "nav-link";
 $usuarioAtual = null;

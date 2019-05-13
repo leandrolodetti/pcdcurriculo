@@ -127,18 +127,6 @@ function updateVaga($conexao, $titulo, $descricaoVaga, $requisitoVaga, $benefici
     return $resultadoDaInsercao;
 }
 
-function updateUmCampo($conexao, $tabela, $set, $valor, $where, $condicao) {
-	$query = "UPDATE {$tabela} SET {$set}='{$valor}' WHERE {$where} = {$condicao}";
-	$resultadoDaInsercao = mysqli_query($conexao, $query);
-    return $resultadoDaInsercao;
-}
-/*
-function inativarVaga($conexao, $idVaga, $ativa) {
-	$query = "UPDATE Vaga SET ativa='{$ativa}' WHERE idVaga = {$idVaga}";
-	$resultadoDaInsercao = mysqli_query($conexao, $query);
-    return $resultadoDaInsercao;
-}
-*/
 function insereVaga($conexao, $titulo, $descricaoVaga, $requisitoVaga, $beneficios,
 					$salario, $cargaHoraria, $data, $idEmpresa,
 					$categoria, $nivel, $ativa) {

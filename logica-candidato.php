@@ -1,6 +1,9 @@
 <?php 
-
+require_once("banco.php");
+require_once("banco-empresa.php");
+require_once("cabecalho.php");
 session_start();
+verificaCandidato();
 
 function logaCandidato($email) {
 	$_SESSION["candidato_logado"] = $email;
@@ -24,9 +27,17 @@ function verificaCandidato() {
 }
 
 function logOut() {
-	//session_destroy();
 	unset($_SESSION["candidato_logado"]);
 	$_SESSION["logout"] = "Usuário Deslogado!";
 	header("Location: index.php");
 	die();
+}
+
+function inativarCandidato($conexao, $msgErro, $location, $id) {
+	if (!updateUmCampo($conexao, "Candidato", "ativo", "N", "idCandidato", $id)) {
+		$_SESSION["danger"] = "Ocorreu um erro, tente novamente mais tarde! Erro: ".$msgErro;
+		rollback($conexao);
+		header("Location: ".$location);
+	    die();
+	}
 }

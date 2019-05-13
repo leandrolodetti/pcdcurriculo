@@ -1,16 +1,62 @@
 <?php
 require_once("cabecalho.php");
-require_once("banco.php");
-require_once("conecta.php");
+require_once("logica-candidato.php");
 
-$nomeResponsavel = "";
+$idResponsavel = 1; //id 1 utilizado quando não é necessário incluir um responsável
+$ativo = "S";
 
-if ($_POST["nomeResponsavel"] != "") { 
+$nomeCandidato = $_POST["nomeCandidato"];
+$sobrenomeCandidato = $_POST["sobrenomeCandidato"];
+$dataNascimentoCandidato = $_POST["dataNascimentoCandidato"];
+$contatoCandidato = $_POST["contatoCandidato"];
+$genero = $_POST["gridGenero"];
+$estadoCivil = $_POST["gridCivil"];
+$cpfCandidato = $_POST["cpfCandidato"];
+$emailCandidato = strtolower($_POST["emailCandidato"]);
+
+$selectCandidatoCpf = buscaUmRegistro($conexao, $cpfCandidato, "Candidato", "cpf");
+
+if ($selectCandidatoCpf["ativo"] == "S") {
+	$_SESSION["danger"] = "O CPF informado já está cadastrado!";
+	rollback($conexao);
+	header("Location: form-login-candidato.php");
+    die();
+}
+
+$selectCandidatoEmail = buscaUmRegistro($conexao, $emailCandidato, "Candidato", "email");
+
+if ($selectCandidatoEmail["ativo"] == "S") {
+	$_SESSION["danger"] = "O email informado já está cadastrado!";
+	rollback($conexao);
+	header("Location: form-login-candidato.php");
+    die();
+}
+
+iniciarTransacao($conexao, "$iniciarTransacao", "index.php");
+
+if ($_POST["nomeResponsavel"] != "") {
 	$nomeResponsavel = $_POST["nomeResponsavel"];
 	$cpfResponsavel = $_POST["cpfResponsavel"];
 	$contatoResponsavel = $_POST["contatoResponsavel"];
 	$emailResponsavel = $_POST["emailResponsavel"];
 	$nascResponsavel = $_POST["nascResponsavel"];
+
+	$selectResponsavel = buscarUmResponsavel($conexao, $cpfResponsavel);
+
+	if ($selectResponsavel != null) {
+		$idResponsavel = $selectResponsavel["idResponsavel"];
+	}
+	else {
+		if (!insereResponsavel($conexao, $nomeResponsavel, $cpfResponsavel, $contatoResponsavel,
+			$emailResponsavel, $nascResponsavel)) {
+			$_SESSION["danger"] = "Ocorreu um erro, tente novamente mais tarde! Erro: insereResponsavel";
+			rollback($conexao);
+			header("Location: index.php");
+    		die();
+		}
+		$selectResponsavel = buscarUmResponsavel($conexao, $cpfResponsavel);
+		$idResponsavel = $selectResponsavel["idResponsavel"];
+	}
 }
 
 $DefFisica = 0;
@@ -35,41 +81,6 @@ if (isset($_POST["DefVisual"])) {
 	$DefVisual = $_POST["DefVisual"];
 }
 
-$idCandidato = 0;
-
-$nomeCandidato = $_POST["nomeCandidato"];
-$sobrenomeCandidato = $_POST["sobrenomeCandidato"];
-$dataNascimentoCandidato = $_POST["dataNascimentoCandidato"];
-$contatoCandidato = $_POST["contatoCandidato"];
-$genero = $_POST["gridGenero"];
-$estadoCivil = $_POST["gridCivil"];
-$cpfCandidato = $_POST["cpfCandidato"];
-$emailCandidato = strtolower($_POST["emailCandidato"]);
-
-if (buscaCpf($conexao, $cpfCandidato) != null) {
-?>
-	<div class="container" style="padding-top: 20px;">
-      	<div class="alert alert-danger" role="alert" style="padding: 25px;">
-  			O CPF informado já está cadastrado!
-		</div>
-		<a class="btn btn-success" href="form-login-candidato.php">Faça o Login</a>
-    </div>
-<?php
-die();
-}
-
-if (buscaEmail($conexao, $emailCandidato) != null) {
-?>
-	<div class="container" style="padding-top: 20px;">
-      	<div class="alert alert-danger" role="alert" style="padding: 25px;">
-  			O email informado já está cadastrado!
-		</div>
-		<a class="btn btn-success" href="form-login-candidato.php">Faça o Login</a>
-    </div>
-<?php
-die();
-}
-
 $cepCandidato = $_POST["cepCandidato"];
 $cidadeCandidato = $_POST["cidadeCandidato"];
 $ufCandidato = $_POST["ufCandidato"];
@@ -81,171 +92,95 @@ $cidCandidato = $_POST["cidCandidato"];
 $senhaCandidato = $_POST["senhaCandidato"];
 $senhaMd5 = md5($senhaCandidato);
 
-if (!starTransaction($conexao)) {
-?>
-	<div class="container">
-	    <div class="alert alert-danger" role="alert" style="padding: 25px;">
-	  		Ocorreu um erro, tente novamente mais tarde!
-	  		<p><?php echo mysqli_error($conexao); ?></p>
-		</div>
-		<a class="btn btn-success" href="index.php">Voltar</a>
-    </div>
-<?php
-die();
-}
-
-if(!insereCandidato($conexao, $nomeCandidato, $sobrenomeCandidato, $dataNascimentoCandidato, $contatoCandidato,
-				   	   $genero, $cpfCandidato, $emailCandidato, $cepCandidato, $ufCandidato, $cidadeCandidato,
+if ($selectCandidatoEmail["ativo"] == "N") {
+	$idCandidato = $selectCandidatoEmail["idCandidato"];
+	if (!updateCandidato($conexao, $cpfCandidato, $nomeCandidato, $sobrenomeCandidato, $dataNascimentoCandidato, $contatoCandidato,
+				   	   $genero, $emailCandidato, $estadoCivil, $cepCandidato, $ufCandidato, $cidadeCandidato,
 				       $ruaCandidato, $numeroRuaCandidato, $bairroCandidato, $ComplementoCandidato, $senhaMd5,
-				       $cidCandidato, $estadoCivil)) {
-?>	
-	<div class="container">
-	    <div class="alert alert-danger" role="alert" style="padding: 25px;">
-	  		Ocorreu um erro, tente novamente mais tarde!
-	  		<p><?php echo mysqli_error($conexao); ?></p>
-		</div>
-		<a class="btn btn-success" href="index.php">Voltar</a>
-    </div>
-<?php
-rollback($conexao);
-die();
+				       $cidCandidato, $ativo, $idResponsavel, $idCandidato)) {
+		$_SESSION["danger"] = "Ocorreu um erro, tente novamente mais tarde! Erro: updateCandidato".mysqli_error($conexao);
+		rollback($conexao);
+		header("Location: index.php");
+    	die();
+	}
+	if (!deleteDeficiencias($conexao, $idCandidato)) {
+		$_SESSION["danger"] = "Ocorreu um erro, tente novamente mais tarde! Erro: deleteDeficiencias".mysqli_error($conexao);
+		rollback($conexao);
+		header("Location: index.php");
+    	die();
+	}
 }
 
-$buscaIdCandidato = buscaIdCandidato($conexao, $cpfCandidato);
-$idCandidato = $buscaIdCandidato["idCandidato"];
+if ($selectCandidatoEmail == null) {
+	if(!insereCandidato($conexao, $cpfCandidato, $nomeCandidato, $sobrenomeCandidato, $dataNascimentoCandidato, $contatoCandidato,
+					   	   $genero, $emailCandidato, $estadoCivil, $cepCandidato, $ufCandidato, $cidadeCandidato,
+					       $ruaCandidato, $numeroRuaCandidato, $bairroCandidato, $ComplementoCandidato, $senhaMd5,
+					       $cidCandidato, $ativo, $idResponsavel)) {
+		$_SESSION["danger"] = "Ocorreu um erro, tente novamente mais tarde! Erro: insereCandidato".mysqli_error($conexao);
+		rollback($conexao);
+		header("Location: index.php");
+	    die();
+	}
+	$selectCandidatoEmail = buscaUmRegistro($conexao, $emailCandidato, "Candidato", "email");
+	$idCandidato = $selectCandidatoEmail["idCandidato"];
+}
 
 if ($DefFisica != null) {
 	if (!insereDeficiencia($conexao, $DefFisica, $idCandidato)) {
-?>		
-		<div class="container">
-		    <div class="alert alert-danger" role="alert" style="padding: 25px;">
-		  		Ocorreu um erro, tente novamente mais tarde!
-		  		<p><?php echo mysqli_error($conexao); ?></p>
-			</div>
-			<a class="btn btn-success" href="index.php">Voltar</a>
-	    </div>
-<?php
+		$_SESSION["danger"] = "Ocorreu um erro, tente novamente mais tarde! Erro: DefFisica";
 		rollback($conexao);
-		die();
-	}
+		header("Location: index.php");
+    	die();
+	}	
 }
 
 if ($DefAuditiva != null) {
 	if (!insereDeficiencia($conexao, $DefAuditiva, $idCandidato)) {
-?>		
-		<div class="container">
-		    <div class="alert alert-danger" role="alert" style="padding: 25px;">
-		  		Ocorreu um erro, tente novamente mais tarde!
-		  		<p><?php echo mysqli_error($conexao); ?></p>
-			</div>
-			<a class="btn btn-success" href="index.php">Voltar</a>
-	    </div>
-<?php
+		$_SESSION["danger"] = "Ocorreu um erro, tente novamente mais tarde! Erro: DefAuditiva";
 		rollback($conexao);
-		die();
+		header("Location: index.php");
+    	die();
 	}
 }
 
 if ($DefFala != null) {
 	if (!insereDeficiencia($conexao, $DefFala, $idCandidato)) {
-?>		
-		<div class="container">
-		    <div class="alert alert-danger" role="alert" style="padding: 25px;">
-		  		Ocorreu um erro, tente novamente mais tarde!
-		  		<p><?php echo mysqli_error($conexao); ?></p>
-			</div>
-			<a class="btn btn-success" href="index.php">Voltar</a>
-	    </div>
-<?php
+		$_SESSION["danger"] = "Ocorreu um erro, tente novamente mais tarde! Erro: DefFala";
 		rollback($conexao);
-		die();
+		header("Location: index.php");
+    	die();
 	}
 }
 
 if ($DefMental != null) {
 	if (!insereDeficiencia($conexao, $DefMental, $idCandidato)) {
-?>		
-		<div class="container">
-		    <div class="alert alert-danger" role="alert" style="padding: 25px;">
-		  		Ocorreu um erro, tente novamente mais tarde!
-		  		<p><?php echo mysqli_error($conexao); ?></p>
-			</div>
-			<a class="btn btn-success" href="index.php">Voltar</a>
-	    </div>
-<?php
+		$_SESSION["danger"] = "Ocorreu um erro, tente novamente mais tarde! Erro: DefMental";
 		rollback($conexao);
-		die();
+		header("Location: index.php");
+    	die();
 	}
 }
 
 if ($DefVisual != null) {
 	if (!insereDeficiencia($conexao, $DefVisual, $idCandidato)) {
-?>		
-		<div class="container">
-		    <div class="alert alert-danger" role="alert" style="padding: 25px;">
-		  		Ocorreu um erro, tente novamente mais tarde!
-		  		<p><?php echo mysqli_error($conexao); ?></p>
-			</div>
-			<a class="btn btn-success" href="index.php">Voltar</a>
-	    </div>
-<?php
+		$_SESSION["danger"] = "Ocorreu um erro, tente novamente mais tarde! Erro: DefVisual";
 		rollback($conexao);
-		die();
-	}
-}
-
-if ($nomeResponsavel != "") {
-	if (!insereResponsavel($conexao, $nomeResponsavel, $cpfResponsavel, $contatoResponsavel,
-						   $emailResponsavel, $nascResponsavel, $idCandidato)) {
-?>
-		<div class="container">
-		    <div class="alert alert-danger" role="alert" style="padding: 25px;">
-		  		Ocorreu um erro, tente novamente mais tarde!
-		  		<p><?php echo mysqli_error($conexao); ?></p>
-			</div>
-			<a class="btn btn-success" href="index.php">Voltar</a>
-	    </div>
-<?php
-		rollback($conexao);
-		die();
+		header("Location: index.php");
+    	die();
 	}
 }
 
 if (!insereCurriculo($conexao, $idCandidato)) {
-?>
-	<div class="container">
-		<div class="alert alert-danger" role="alert" style="padding: 25px;">
-		  	Ocorreu um erro, tente novamente mais tarde!
-		  		<p><?php echo mysqli_error($conexao); ?></p>
-		</div>
-		<a class="btn btn-success" href="index.php">Voltar</a>
-	</div>
-<?php
+	$_SESSION["danger"] = "Ocorreu um erro, tente novamente mais tarde! Erro: insereCurriculo";
 	rollback($conexao);
-	die();
+	header("Location: index.php");
+    die();
 }
 
-
-if (!commit($conexao)) {
-?>	
-	<div class="container" style="padding-top: 20px;">
-		<div class="alert alert-danger" role="alert" style="padding: 25px;">
-			Ocorreu um erro, tente novamente mais tarde!
-			<p><?php echo mysqli_error($conexao); ?></p>
-		</div>
-		<a class="btn btn-success" href="index.php">Voltar</a>
-	</div>
-<?php
-rollback($conexao);
+commitTransacao($conexao, "commitTransacao", "index.php");
+sucesso("Candidato cadastrado com sucesso!", "form-login-candidato.php");
 die();
-}
-?>
 
-<div class="container" style="padding-top: 20px; padding-bottom: 10px;">
-	<div class="alert alert-success" role="alert" style="padding: 25px;">
-		Usuário cadastrado com sucesso!
-	</div>
-	<a class="btn btn-success" href="form-login-candidato.php">Login</a>
-</div>
+?>
 
 <?php require_once("rodape.php"); ?>

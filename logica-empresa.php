@@ -1,6 +1,7 @@
 <?php 
 require_once("banco.php");
 require_once("banco-empresa.php");
+require_once("cabecalho.php");
 session_start();
 
 function logaEmpresa($cnpj) {
@@ -31,14 +32,6 @@ function logOut() {
 	die();
 }
 
-function iniciarTransacao($conexao, $msgErro, $location) {
-	if (!starTransaction($conexao)) {
-		$_SESSION["danger"] = "Ocorreu um erro, tente novamente mais tarde! Erro: ".$msgErro;
-		header("Location: ".$location);
-	    die();
-	}
-}
-
 function inativarVaga($conexao, $msgErro, $location, $id) {
 	if (!updateUmCampo($conexao, "Vaga", "ativa", "N", "idVaga", $id)) {
 		$_SESSION["danger"] = "Ocorreu um erro, tente novamente mais tarde! Erro: ".$msgErro;
@@ -56,7 +49,7 @@ function inativarEmpresa($conexao, $msgErro, $location, $id) {
 	    die();
 	}
 }
-
+/*
 function commitTransacao($conexao, $msgErro, $location) {
 	if (!commit($conexao)) {
 		$_SESSION["danger"] = "Ocorreu um erro, tente novamente mais tarde! Erro: ".$msgErro;
@@ -71,3 +64,4 @@ function sucesso($msg, $location) {
 	header("Location: ".$location);
 	die();
 }
+*/

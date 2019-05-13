@@ -1,6 +1,5 @@
 <?php
 require_once("cabecalho.php");
-require_once("conecta.php");
 require_once("logica-empresa.php");
 
 $razaoSocial = $_POST["razaoSocial"];
@@ -11,7 +10,7 @@ $emailEmpresa = strtolower($_POST["emailEmpresa"]);
 $ativa = "S";
 $buscaEmpresaAtual = buscaEmpresaAtual($conexao, $cnpj);
 
-if ($buscaEmpresaAtual["ativa"] == "S" || $buscaEmpresaAtual == null) {
+if ($buscaEmpresaAtual["ativa"] == "S") {
 	$_SESSION["danger"] = "O CNPJ informado já está cadastrado!";
 	header("Location: form-login-empresa.php");
 	die();
