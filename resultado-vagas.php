@@ -17,8 +17,30 @@ if (isset($_GET["parametro"]) && $_GET["parametro"] != null) {
 	$vagasEncontradas = listaVagasPorTitulo($conexao, $parametro, $filtroCity);
 	if ($vagasEncontradas != null) {
 		$naoRepetidas = array_unique($vagasEncontradas);
-
 	?>
+		<div class="container-fluid" style="background-color: #5EC998;">
+			<div class="container">
+				<nav aria-label="breadcrumb">
+			  		<ol class="breadcrumb" id="idCandidatoBreadcrumb" style="background-color: transparent; padding-left: 0;">
+			  			<?php
+			  			if (isset($_SESSION["candidato_logado"])) {
+			  			?>
+			  				<li class="breadcrumb-item font-weight-bold"><a href="candidato.php">Área do Candidato</a></li>
+			  				<li class="breadcrumb-item active font-weight-bold" style="color: white;" aria-current="page">Resultado Vagas</li>
+			  			<?php	
+			  			}
+			  			else {
+			  			?>
+			  				<li class="breadcrumb-item font-weight-bold"><a href="index.php">Página Inicial</a></li>
+			  				<li class="breadcrumb-item active font-weight-bold" style="color: white;" aria-current="page">Resultado Vagas</li>
+			  			<?php	
+			  			}
+			  			?>
+		  			</ol>
+				</nav>
+			</div>
+		</div>
+
 		<div class="container">
 			<div class="border-bottom" style="padding-top: 40px;">
 			  <h4 class="text-left font-weight-normal"><?php echo count($vagasEncontradas)." vagas encontradas para ".$parametro; ?></h4>

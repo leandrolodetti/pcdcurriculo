@@ -63,7 +63,7 @@ function buscaUmRegistro($conexao, $parametro, $tabela, $where) {
 	$resultado = mysqli_query($conexao, $query);
 	return mysqli_fetch_assoc($resultado);
 }
-
+/*
 function buscaCpf($conexao, $cpfCandidato) {
 	$cpf = mysqli_escape_string($conexao, $cpfCandidato);
 	$query = "select * from Candidato where cpf = '{$cpf}'";
@@ -77,7 +77,7 @@ function buscaEmail($conexao, $emailCandidato) {
 	$resultado = mysqli_query($conexao, $query);
 	return mysqli_fetch_assoc($resultado);
 }
-
+*/
 function starTransaction($conexao) {
 	$query = "START TRANSACTION";
 	$resultado = mysqli_query($conexao, $query);
@@ -136,6 +136,35 @@ function buscaCandidato($conexao, $email, $senha) {
 	$query = "select * from Candidato where email = '{$email}' and senha = '{$senhaMd5}'";
 	$resultado = mysqli_query($conexao, $query);
 	return mysqli_fetch_assoc($resultado);
+}
+
+function updateObjetivo($conexao, $objetivo, $categoria, $nivel, $salario, $data, $idCurriculo) {
+	$query = "UPDATE Curriculo SET objetivo='{$objetivo}', area='{$categoria}', nivel_area='{$nivel}', salario='{$salario}', data_atualizacao='{$data}'
+	WHERE idCurriculo={$idCurriculo}";
+	$resultado = mysqli_query($conexao, $query);
+	return $resultado;
+}
+
+function updateResumo($conexao, $resumo, $data, $idCurriculo) {
+	$query = "UPDATE Curriculo SET resumo_profissional='{$resumo}', data_atualizacao='{$data}'
+	WHERE idCurriculo={$idCurriculo}";
+	$resultado = mysqli_query($conexao, $query);
+	return $resultado;
+}
+
+function updateFormacao($conexao, $txtNivelEscolar, $txtGraduacao, $txtCursoComplementares, $txtIdioma, $data, $idCurriculo) {
+	$query = "UPDATE Curriculo SET nivel_escolar='{$txtNivelEscolar}', graduacao='{$txtGraduacao}', curso_complemento='{$txtCursoComplementares}',
+	idiomas='{$txtIdioma}', data_atualizacao='{$data}'
+	WHERE idCurriculo={$idCurriculo}";
+	$resultado = mysqli_query($conexao, $query);
+	return $resultado;
+}
+
+function updateHistoricoProf($conexao, $txtHistoricoProf, $data, $idCurriculo) {
+	$query = "UPDATE Curriculo SET historico_profissional='{$txtHistoricoProf}', data_atualizacao='{$data}'
+	WHERE idCurriculo={$idCurriculo}";
+	$resultado = mysqli_query($conexao, $query);
+	return $resultado;
 }
 
 ?>

@@ -1,7 +1,7 @@
 <?php
 require_once("cabecalho.php");
 require_once("logica-empresa.php");
-//verificaEmpresa();
+verificaEmpresa();
 ?>
 
 <div id="idCandidatoContainer" class="container-fluid" style="background-color: #6f42c1;">
@@ -14,7 +14,7 @@ require_once("logica-empresa.php");
 	</div>
 </div>
 
-<div class="container border-bottom border-primary" style="padding-bottom: 20px;"></div>
+<div class="container-fluid border-bottom border-primary" style="padding-bottom: 20px;"></div>
 
 <div class="container" style="padding-top: 30px;">
 	<div class="row">

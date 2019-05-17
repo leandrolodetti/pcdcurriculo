@@ -3,7 +3,6 @@ require_once("banco.php");
 require_once("banco-empresa.php");
 require_once("cabecalho.php");
 session_start();
-verificaCandidato();
 
 function logaCandidato($email) {
 	$_SESSION["candidato_logado"] = $email;

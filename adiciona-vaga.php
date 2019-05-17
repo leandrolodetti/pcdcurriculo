@@ -36,6 +36,24 @@ if ($buscaVagaRepetida["ativa"] == "S") {
     die();
 }
 
+if (isset($_POST["DefFisica"])) {
+	$DefFisica = $_POST["DefFisica"];
+}
+if (isset($_POST["DefFala"])) {
+	$DefFala = $_POST["DefFala"];
+}
+if (isset($_POST["DefAuditiva"])) {
+	$DefAuditiva = $_POST["DefAuditiva"];
+}
+if (isset($_POST["DefMental"])) {
+	$DefMental = $_POST["DefMental"];
+}
+if (isset($_POST["DefVisual"])) {
+	$DefVisual = $_POST["DefVisual"];
+}
+
+iniciarTransacao($conexao, "iniciarTransacao", "form-cadastro-vaga.php");
+
 if ($buscaVagaRepetida["ativa"] == "N") {
 
 	$idVaga = $buscaVagaRepetida["idVaga"];
@@ -49,27 +67,11 @@ if ($buscaVagaRepetida["ativa"] == "N") {
 		    die();
 		}
 	}
-
+/*
 	if ($titulo == null || $salario == null) {
 		$_SESSION["danger"] = "Ocorreu um erro, tente novamente mais tarde! Erro: FormNull";
 		header("Location: form-cadastro-vaga.php");
 	    die();
-	}
-
-	if (isset($_POST["DefFisica"])) {
-		$DefFisica = $_POST["DefFisica"];
-	}
-	if (isset($_POST["DefFala"])) {
-		$DefFala = $_POST["DefFala"];
-	}
-	if (isset($_POST["DefAuditiva"])) {
-		$DefAuditiva = $_POST["DefAuditiva"];
-	}
-	if (isset($_POST["DefMental"])) {
-		$DefMental = $_POST["DefMental"];
-	}
-	if (isset($_POST["DefVisual"])) {
-		$DefVisual = $_POST["DefVisual"];
 	}
 
 	if (!starTransaction($conexao)) {
@@ -77,7 +79,7 @@ if ($buscaVagaRepetida["ativa"] == "N") {
 		header("Location: form-cadastro-vaga.php");
 	    die();
 	}
-
+*/
 	if (!updateVaga($conexao, $titulo, $descricaoVaga, $requisitoVaga, $beneficios, $salario, $cargaHoraria, $data, $idEmpresa, $categoria, $nivel, $idVaga, $ativa)) {
 		$_SESSION["danger"] = "Ocorreu um erro, tente novamente mais tarde! Erro: Update".mysqli_error($conexao);
 		rollback($conexao);
@@ -148,7 +150,7 @@ if ($buscaVagaRepetida["ativa"] == "N") {
 	header("Location: gerenciar-vagas.php");
 	die();
 }
-
+/*
 if (isset($_POST["DefFisica"])) {
 	$DefFisica = $_POST["DefFisica"];
 }
@@ -170,7 +172,7 @@ if (!starTransaction($conexao)) {
 	header("Location: form-cadastro-vaga.php");
     die();
 }
-
+*/
 if (!insereVaga($conexao, $titulo, $descricaoVaga, $requisitoVaga, $beneficios, $salario, $cargaHoraria, $data, $idEmpresa, $categoria, $nivel, $ativa)) {
 	$_SESSION["danger"] = "Ocorreu um erro, tente novamente mais tarde!  Erro: Insert".mysqli_error($conexao);
 	rollback($conexao);

@@ -1,7 +1,8 @@
 <?php
 require_once("cabecalho.php");
 require_once("logica-candidato.php");
-//verificaCandidato();
+verificaCandidato();
+$CurriculoAtual = buscaUmRegistro($conexao, $usuarioAtual["idCandidato"], "Curriculo", "Candidato_idCandidato");
 ?>
 
 <div class="container-fluid" style="background-color: #5EC998;">
@@ -14,15 +15,23 @@ require_once("logica-candidato.php");
 	</div>
 </div>
 
-<div class="container border-bottom border-primary" style="padding-bottom: 20px;"></div>
+<div class="container-fluid border-bottom border-primary" style="padding-bottom: 20px;"></div>
 
 <div class="container" style="padding-top: 30px;">
 	<div class="row">
 		<div class="col-sm-4">
 			<h3 class="text-left font-weight-normal"><?php echo $usuarioAtual ["nome"]; ?></h3>
 			<br>
-			<h4 class="text-left font-weight-normal">Cargo Desejado</h4>
-			<p class="text-left font-weight-normal">Desenvolvedor de Sistemas Sênior / Arquitetura</p>
+			<h4 class="text-left font-weight-normal">Cargo desejado</h4>
+			<h5 class="text-left font-weight-normal"><?php 
+				if ($CurriculoAtual["objetivo"] == "") {
+				?>	
+					<a class="btn btn-lg btn-danger btn-lg" role="button" href="curriculo.php">Preencha seu currículo</a>
+				<?php
+				}
+				else {
+					echo $CurriculoAtual["objetivo"];	
+				} ?></h5>
 
 			<div style="padding-top: 30px; padding-bottom: 40px;">
 				<h5 class="text-left font-weight-normal">Mantenha seu currículo atualizado!</h5>
@@ -33,8 +42,8 @@ require_once("logica-candidato.php");
 
 
 		<div class="col-sm-8">
-			<form class="txtBuscaVaga" action="/action_page.php">
-		    	<input type="text" placeholder="Digite um Cargo" name="">
+			<form class="txtBuscaVaga" method="get" action="resultado-vagas.php">
+		    	<input type="text" placeholder="Digite um Cargo" name="parametro">
 		        <button type="submit"><i class="fa fa-search"></i></button>
     		</form>
 

@@ -11,6 +11,8 @@ $("#inputNumero").mask("00000");
 $("#idFormLoginCnpj").mask("00.000.000/0000-00");
 $("#idCNPJ").mask("00.000.000/0000-00");
 $("#idAlteraCnpj").mask("00.000.000/0000-00");
+$("#idCurriculoPretSalarial").mask("#.##0,00", {reverse: true});
+$("#idVagaSalario").mask("#.##0,00", {reverse: true});
 
 var erroCep = "";
 var erroSenha = "";
@@ -664,3 +666,12 @@ function validaRemover() {
 	}
 	return true;
 }
+/*
+function edicaoObjetivos() {
+	//var r = "readonly='no"
+	document.getElementById("idCurriculoObjetivo").removeAttribute("readonly");
+
+	//("type", "hidden");
+	//alert("foi!");
+}
+*/

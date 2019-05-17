@@ -25,8 +25,8 @@ require_once("cabecalho.php");
 			<?php
 			die();
 		}
-		mostraAlerta("invalidUser");
-		mostraAlerta("danger");
+		//mostraAlerta("invalidUser");
+		//mostraAlerta("danger");
 	?>
 	<div class="row">
 		<div class="col-sm-5" style="padding-bottom: 30px;">

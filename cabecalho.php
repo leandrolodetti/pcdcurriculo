@@ -16,6 +16,8 @@ if (isset($_SESSION["candidato_logado"])) {
 	$campo = "nome";
 	$href = "candidato.php";
 	$logout = "logout-candidato.php";
+	$acao1 = "curriculo.php"; $msg1 = "Currículo";
+	$acao2 = "altera-dados-candidato.php";
 }
 
 if (isset($_SESSION["empresa_logada"])) {
@@ -69,8 +71,8 @@ if (isset($_SESSION["empresa_logada"])) {
 						    	<i class="fas fa-align-justify"></i>
 						  	</button>
 							<div class="dropdown-menu">
-							   	<a class="dropdown-item" href="#">Alguma ação</a>
-							   	<a class="dropdown-item" href="#">Outra ação</a>
+							   	<a class="dropdown-item" href="<?php echo $acao1; ?>"><?php echo $msg1; ?></a>
+							   	<a class="dropdown-item" href="<?php echo $acao2; ?>">Alterar Cadastro</a>
 							   	<a class="dropdown-item" href="#">Alguma coisa aqui</a>
 								<div class="dropdown-divider"></div>
 								<a class="dropdown-item" href="<?php echo $logout; ?>">Logout</a>

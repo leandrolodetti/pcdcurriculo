@@ -13,7 +13,7 @@ if ($usuario && ($usuario["ativa"] == "S")) {
 	header("Location: empresa.php");
 }
 else {
-	$_SESSION["invalidUser"] = "CNPJ ou Senha Inválidos!";
+	$_SESSION["danger"] = "CNPJ ou Senha Inválidos!";
 	header("Location: form-login-empresa.php");
 }
 die();

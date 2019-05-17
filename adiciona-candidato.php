@@ -123,6 +123,13 @@ if ($selectCandidatoEmail == null) {
 	}
 	$selectCandidatoEmail = buscaUmRegistro($conexao, $emailCandidato, "Candidato", "email");
 	$idCandidato = $selectCandidatoEmail["idCandidato"];
+
+	if (!insereCurriculo($conexao, $idCandidato)) {
+		$_SESSION["danger"] = "Ocorreu um erro, tente novamente mais tarde! Erro: insereCurriculo";
+		rollback($conexao);
+		header("Location: index.php");
+	    die();
+	}
 }
 
 if ($DefFisica != null) {
@@ -168,13 +175,6 @@ if ($DefVisual != null) {
 		header("Location: index.php");
     	die();
 	}
-}
-
-if (!insereCurriculo($conexao, $idCandidato)) {
-	$_SESSION["danger"] = "Ocorreu um erro, tente novamente mais tarde! Erro: insereCurriculo";
-	rollback($conexao);
-	header("Location: index.php");
-    die();
 }
 
 commitTransacao($conexao, "commitTransacao", "index.php");

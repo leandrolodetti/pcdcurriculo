@@ -13,7 +13,7 @@ verificaCandidato();
 
 <form onsubmit="return validaRemover();" method="post" action="update-candidato.php?remover-conta" style="padding-top: 5px; min-width: 300px; max-width: 300px;">
 	<div class="form-group form-check">
-    	<input type="checkbox" class="form-check-input" id="idConfirmaExclusao">
+    	<input type="checkbox" class="form-check-input" id="idConfirmaExclusao" name="confirmaExclusao" value="yes">
     	<label class="form-check-label" for="idConfirmaExclusao">Sim</label>
     	<small id="idSmallConfirmaExclusao" class="form-text text-danger"></small>
   	</div>
