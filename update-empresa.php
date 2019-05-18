@@ -135,7 +135,7 @@ if (isset($_GET["id"]) && isset($_GET["update-vaga"])) {
 	    die();
 	}
 
-	if ($DefFisica != null) {
+	if ($DefFisica != 0) {
 		if (!insereRestricoes($conexao, $DefFisica, $idVaga)) {
 			$_SESSION["danger"] = "Ocorreu um erro, tente novamente mais tarde!";
 			rollback($conexao);
@@ -144,7 +144,7 @@ if (isset($_GET["id"]) && isset($_GET["update-vaga"])) {
 		}
 	}
 
-	if ($DefAuditiva != null) {
+	if ($DefAuditiva != 0) {
 		if (!insereRestricoes($conexao, $DefAuditiva, $idVaga)) {
 			$_SESSION["danger"] = "Ocorreu um erro, tente novamente mais tarde!";
 			rollback($conexao);
@@ -153,7 +153,7 @@ if (isset($_GET["id"]) && isset($_GET["update-vaga"])) {
 		}
 	}
 
-	if ($DefFala != null) {
+	if ($DefFala != 0) {
 		if (!insereRestricoes($conexao, $DefFala, $idVaga)) {
 			$_SESSION["danger"] = "Ocorreu um erro, tente novamente mais tarde!";
 			rollback($conexao);
@@ -162,7 +162,7 @@ if (isset($_GET["id"]) && isset($_GET["update-vaga"])) {
 		}
 	}
 
-	if ($DefMental != null) {
+	if ($DefMental != 0) {
 		if (!insereRestricoes($conexao, $DefMental, $idVaga)) {
 			$_SESSION["danger"] = "Ocorreu um erro, tente novamente mais tarde!";
 			rollback($conexao);
@@ -171,7 +171,7 @@ if (isset($_GET["id"]) && isset($_GET["update-vaga"])) {
 		}
 	}
 
-	if ($DefVisual != null) {
+	if ($DefVisual != 0) {
 		if (!insereRestricoes($conexao, $DefVisual, $idVaga)) {
 			$_SESSION["danger"] = "Ocorreu um erro, tente novamente mais tarde!";
 			rollback($conexao);

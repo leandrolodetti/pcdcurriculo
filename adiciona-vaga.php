@@ -6,7 +6,8 @@ require_once("logica-empresa.php");
 verificaEmpresa();
 
 $ativa = "S";
-$titulo = mb_strtolower($_POST["titulo"]);
+//$titulo = mb_strtolower($_POST["titulo"]);
+$titulo = $_POST["titulo"];
 $categoria = $_POST["categoria"];
 $nivel = $_POST["nivel"];
 $descricaoVaga = $_POST["descricaoVaga"];
@@ -94,7 +95,7 @@ if ($buscaVagaRepetida["ativa"] == "N") {
 	    die();
 	}
 
-	if ($DefFisica != null) {
+	if ($DefFisica != 0) {
 		if (!insereRestricoes($conexao, $DefFisica, $idVaga)) {
 			$_SESSION["danger"] = "Ocorreu um erro, tente novamente mais tarde!";
 			rollback($conexao);
@@ -103,7 +104,7 @@ if ($buscaVagaRepetida["ativa"] == "N") {
 		}
 	}
 
-	if ($DefAuditiva != null) {
+	if ($DefAuditiva != 0) {
 		if (!insereRestricoes($conexao, $DefAuditiva, $idVaga)) {
 			$_SESSION["danger"] = "Ocorreu um erro, tente novamente mais tarde!";
 			rollback($conexao);
@@ -112,7 +113,7 @@ if ($buscaVagaRepetida["ativa"] == "N") {
 		}
 	}
 
-	if ($DefFala != null) {
+	if ($DefFala != 0) {
 		if (!insereRestricoes($conexao, $DefFala, $idVaga)) {
 			$_SESSION["danger"] = "Ocorreu um erro, tente novamente mais tarde!";
 			rollback($conexao);
@@ -121,7 +122,7 @@ if ($buscaVagaRepetida["ativa"] == "N") {
 		}
 	}
 
-	if ($DefMental != null) {
+	if ($DefMental != 0) {
 		if (!insereRestricoes($conexao, $DefMental, $idVaga)) {
 			$_SESSION["danger"] = "Ocorreu um erro, tente novamente mais tarde!";
 			rollback($conexao);
@@ -130,7 +131,7 @@ if ($buscaVagaRepetida["ativa"] == "N") {
 		}
 	}
 
-	if ($DefVisual != null) {
+	if ($DefVisual != 0) {
 		if (!insereRestricoes($conexao, $DefVisual, $idVaga)) {
 			$_SESSION["danger"] = "Ocorreu um erro, tente novamente mais tarde!";
 			rollback($conexao);
@@ -186,7 +187,7 @@ if (!insereVaga($conexao, $titulo, $descricaoVaga, $requisitoVaga, $beneficios, 
 $buscaIdVaga = buscaIdVaga($conexao, $titulo, $idEmpresa);
 $idVaga = $buscaIdVaga["idVaga"];
 
-if ($DefFisica != null) {
+if ($DefFisica != 0) {
 	if (!insereRestricoes($conexao, $DefFisica, $idVaga)) {
 		$_SESSION["danger"] = "Ocorreu um erro, tente novamente mais tarde! Erro: DefFisica";
 		rollback($conexao);
@@ -195,7 +196,7 @@ if ($DefFisica != null) {
 	}
 }
 
-if ($DefAuditiva != null) {
+if ($DefAuditiva != 0) {
 	if (!insereRestricoes($conexao, $DefAuditiva, $idVaga)) {
 		$_SESSION["danger"] = "Ocorreu um erro, tente novamente mais tarde! Erro: DefAuditiva";
 		rollback($conexao);
@@ -204,7 +205,7 @@ if ($DefAuditiva != null) {
 	}
 }
 
-if ($DefFala != null) {
+if ($DefFala != 0) {
 	if (!insereRestricoes($conexao, $DefFala, $idVaga)) {
 		$_SESSION["danger"] = "Ocorreu um erro, tente novamente mais tarde! Erro: DefFala";
 		rollback($conexao);
@@ -213,7 +214,7 @@ if ($DefFala != null) {
 	}
 }
 
-if ($DefMental != null) {
+if ($DefMental != 0) {
 	if (!insereRestricoes($conexao, $DefMental, $idVaga)) {
 		$_SESSION["danger"] = "Ocorreu um erro, tente novamente mais tarde! Erro: DefMental";
 		rollback($conexao);
@@ -222,7 +223,7 @@ if ($DefMental != null) {
 	}
 }
 
-if ($DefVisual != null) {
+if ($DefVisual != 0) {
 	if (!insereRestricoes($conexao, $DefVisual, $idVaga)) {
 		$_SESSION["danger"] = "Ocorreu um erro, tente novamente mais tarde! Erro: DefVisual";
 		rollback($conexao);
