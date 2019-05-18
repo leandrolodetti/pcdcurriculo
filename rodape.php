@@ -1,4 +1,4 @@
-<footer class="footer navbar-fixed-bottom" style="background-color: #5EC998; padding: 50px;">
+<footer class="footer navbar-fixed-bottom" style="background-color: #5EC998; padding: 50px; margin-top: 15px;">
 	<div class="container">
 		<ul class="nav justify-content-center">
 		  <li class="nav-item">

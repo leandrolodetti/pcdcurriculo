@@ -6,7 +6,7 @@ require_once("logica-empresa.php");
 verificaEmpresa();
 
 $ativa = "S";
-$titulo = strtolower($_POST["titulo"]);
+$titulo = mb_strtolower($_POST["titulo"]);
 $categoria = $_POST["categoria"];
 $nivel = $_POST["nivel"];
 $descricaoVaga = $_POST["descricaoVaga"];
@@ -138,7 +138,9 @@ if ($buscaVagaRepetida["ativa"] == "N") {
 		    die();
 		}
 	}
-
+	commitTransacao($conexao, "commitTransacao", "form-cadastro-vaga.php");
+	sucesso("Vaga ativada com sucesso!", "form-cadastro-vaga.php");
+/*
 	if (!commit($conexao)) {
 		$_SESSION["danger"] = "Ocorreu um erro, tente novamente mais tarde! Erro: commit";
 		rollback($conexao);
@@ -149,6 +151,7 @@ if ($buscaVagaRepetida["ativa"] == "N") {
 	$_SESSION["success"] = "Vaga ativada com sucesso!";
 	header("Location: gerenciar-vagas.php");
 	die();
+*/	
 }
 /*
 if (isset($_POST["DefFisica"])) {
@@ -174,7 +177,7 @@ if (!starTransaction($conexao)) {
 }
 */
 if (!insereVaga($conexao, $titulo, $descricaoVaga, $requisitoVaga, $beneficios, $salario, $cargaHoraria, $data, $idEmpresa, $categoria, $nivel, $ativa)) {
-	$_SESSION["danger"] = "Ocorreu um erro, tente novamente mais tarde!  Erro: Insert".mysqli_error($conexao);
+	$_SESSION["danger"] = "Ocorreu um erro, tente novamente mais tarde! Erro: Insert".mysqli_error($conexao);
 	rollback($conexao);
 	header("Location: form-cadastro-vaga.php");
     die();
@@ -185,7 +188,7 @@ $idVaga = $buscaIdVaga["idVaga"];
 
 if ($DefFisica != null) {
 	if (!insereRestricoes($conexao, $DefFisica, $idVaga)) {
-		$_SESSION["danger"] = "Ocorreu um erro, tente novamente mais tarde!";
+		$_SESSION["danger"] = "Ocorreu um erro, tente novamente mais tarde! Erro: DefFisica";
 		rollback($conexao);
 		header("Location: form-cadastro-vaga.php");
 	    die();
@@ -194,7 +197,7 @@ if ($DefFisica != null) {
 
 if ($DefAuditiva != null) {
 	if (!insereRestricoes($conexao, $DefAuditiva, $idVaga)) {
-		$_SESSION["danger"] = "Ocorreu um erro, tente novamente mais tarde!";
+		$_SESSION["danger"] = "Ocorreu um erro, tente novamente mais tarde! Erro: DefAuditiva";
 		rollback($conexao);
 		header("Location: form-cadastro-vaga.php");
 	    die();
@@ -203,7 +206,7 @@ if ($DefAuditiva != null) {
 
 if ($DefFala != null) {
 	if (!insereRestricoes($conexao, $DefFala, $idVaga)) {
-		$_SESSION["danger"] = "Ocorreu um erro, tente novamente mais tarde!";
+		$_SESSION["danger"] = "Ocorreu um erro, tente novamente mais tarde! Erro: DefFala";
 		rollback($conexao);
 		header("Location: form-cadastro-vaga.php");
 	    die();
@@ -212,7 +215,7 @@ if ($DefFala != null) {
 
 if ($DefMental != null) {
 	if (!insereRestricoes($conexao, $DefMental, $idVaga)) {
-		$_SESSION["danger"] = "Ocorreu um erro, tente novamente mais tarde!";
+		$_SESSION["danger"] = "Ocorreu um erro, tente novamente mais tarde! Erro: DefMental";
 		rollback($conexao);
 		header("Location: form-cadastro-vaga.php");
 	    die();
@@ -221,13 +224,16 @@ if ($DefMental != null) {
 
 if ($DefVisual != null) {
 	if (!insereRestricoes($conexao, $DefVisual, $idVaga)) {
-		$_SESSION["danger"] = "Ocorreu um erro, tente novamente mais tarde!";
+		$_SESSION["danger"] = "Ocorreu um erro, tente novamente mais tarde! Erro: DefVisual";
 		rollback($conexao);
 		header("Location: form-cadastro-vaga.php");
 	    die();
 	}
 }
 
+commitTransacao($conexao, "commitTransacao", "form-cadastro-vaga.php");
+sucesso("Vaga cadastrada com sucesso!", "form-cadastro-vaga.php");
+/*
 if (!commit($conexao)) {
 	$_SESSION["danger"] = "Ocorreu um erro, tente novamente mais tarde!";
 	rollback($conexao);
@@ -238,7 +244,7 @@ if (!commit($conexao)) {
 $_SESSION["success"] = "Vaga cadastrada com sucesso!";
 header("Location: gerenciar-vagas.php");
 die();
-
+*/
 ?>
 
 <?php require_once("rodape.php"); ?>

@@ -186,7 +186,6 @@ if (isset($_GET["id"])) {
 			        	<small id="idSmallDeficiencia" class="form-text text-danger"></small>
 			      	</div>		
 				</div>
-				<!--button type="submit" id="btnEnviar" class="btn btn-primary">Editar</button-->
 				<button type="submit" id="btnSalvar" class="btn btn-primary">Salvar</button>
 				<a class="btn btn-danger" href="gerenciar-vagas.php">Cancelar</a>
 			</form>

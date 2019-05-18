@@ -66,7 +66,7 @@ if (isset($_GET["id"]) && isset($_GET["update-vaga"])) {
 	$idVaga = $_GET["id"];
 	$idEmpresa = $usuarioAtual["idEmpresa"];
 
-	$titulo = strtolower($_POST["titulo"]);
+	$titulo =  mb_strtolower($_POST["titulo"]);
 	$listaUmaVaga = listaUmaVaga($conexao, $idVaga);
 
 	if ($titulo != $listaUmaVaga["titulo"]) {
