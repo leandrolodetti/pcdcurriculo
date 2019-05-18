@@ -1,25 +1,44 @@
-<?php require_once("cabecalho.php"); ?>
+<?php
+require_once("cabecalho.php");
+$parametro = $_GET["parametro"];
+$botaoCandidatar = "<a class='btn btn-danger' href='form-login-candidato.php'>Faça login para se candidatar</a>";
 
-<div id="idCandidatoContainer" class="container-fluid" style="background-color: #5EC998;">
+?>
+
+<div class="container-fluid" style="background-color: #5EC998;">
 	<div class="container">
 		<nav aria-label="breadcrumb">
 	  		<ol class="breadcrumb" id="idCandidatoBreadcrumb" style="background-color: transparent; padding-left: 0;">
-	  			<li class="breadcrumb-item active font-weight-bold" style="color: white;" aria-current="page">Área do Candidato</li>
-			    <li class="breadcrumb-item font-weight-bold"><a href="#">Home</a></li>
-				<li class="breadcrumb-item font-weight-bold"><a href="#">Biblioteca</a></li>
+	  			<?php
+	  			if (isset($_SESSION["candidato_logado"])) {
+	  				$botaoCandidatar = "<button type='button' class='btn btn-success btn-lg'>Candidatar-se</button>";
+	  			?>
+	  				<li class="breadcrumb-item font-weight-bold"><a href="candidato.php">Área do Candidato</a></li>
+	  				<li class="breadcrumb-item font-weight-bold"><a href="resultado-vagas.php?parametro=<?php echo $parametro; ?>">Resultado Vagas</a></li>
+	  				<li class="breadcrumb-item active font-weight-bold" style="color: white;" aria-current="page">Exibir Vaga</li>
+	  			<?php	
+	  			}
+	  			else {
+	  			?>
+	  				<li class="breadcrumb-item font-weight-bold"><a href="index.php">Página Inicial</a></li>
+	  				<li class="breadcrumb-item font-weight-bold"><a href="resultado-vagas.php?parametro=<?php echo $parametro; ?>">Resultado Vagas</a></li>
+	  				<li class="breadcrumb-item active font-weight-bold" style="color: white;" aria-current="page">Exibir Vaga</li>
+	  			<?php	
+	  			}
+	  			?>
   			</ol>
 		</nav>
 	</div>
 </div>
 
-<div class="container border-bottom border-primary" style="padding-bottom: 20px;"></div>
+<div class="container-fluid border-bottom border-primary" style="padding-bottom: 20px;"></div>
 
-<div class="container" style="padding-top: 30px; padding-bottom: 100px;">
+<div class="container" style="padding-top: 30px; padding-bottom: 20px;">
 	<div class="row">
 		<div class="col-sm-8">
-			<button type="button" class="btn btn-success btn-lg">Candidatar-se</button>
+			<?php echo $botaoCandidatar; ?>
 			<div style="padding-top: 20px;">
-				<div class="card text-center" style="width: 300px;">
+				<div class="card text-center" >
 					<i class="fas fa-warehouse rounded float-left text-primary" style="font-size: 70px; padding: 10px;"></i>
 				    <div class="card-body">
 				      	<h5 class="tit-box text-body">Programação em PHP</h5>
@@ -35,7 +54,6 @@
 					<i class="nav-link fas fa-dollar-sign rounded float-left text-primary" style="font-size: 25px;"><span class="text-dark"> 1500,00</span></i>
 				</li>
 				<li class="nav-item">
-					<!--i class="nav-link fas fa-map-marker-alt rounded float-left text-success" style="font-size: 25px;"><span class="text-dark"> Osasco</span></i-->
 					<button type="button" class="btn border-0" data-toggle="modal" data-target="#modalExemplo" style="background-color: transparent; padding: 0px;">
 					  <i class="nav-link fas fa-map-marker-alt rounded float-left text-success" style="font-size: 25px;"><span class="text-dark"> Osasco</span></i>
 					</button>
@@ -49,27 +67,27 @@
 
 			<div class="form-group" style="padding-top: 30px;">
 				<h5 class="text-dark">Descrição</h5>
-				<p name="descricao" id="idVagaDescricao">Ele usa classes utilitárias para tipografia e espaçamento de conteúdo, dentro do maior container. Ele usa classes utilitárias para tipografia e espaçamento de conteúdo, dentro do maior container.</p>
+				<p class="text-left" name="descricao" id="idVagaDescricao">Ele usa classes utilitárias para tipografia e espaçamento de conteúdo, dentro do maior container. Ele usa classes utilitárias para tipografia e espaçamento de conteúdo, dentro do maior container.</p>
 			</div>
 
 			<div class="form-group" style="padding-top: 10px;">
 				<h5 class="text-dark">Requisitos</h5>
-				<p name="requisitos" id="idVagaRequisitos">Ele usa classes utilitárias para tipografia e espaçamento de conteúdo, dentro do maior container. Ele usa classes utilitárias para tipografia e espaçamento de conteúdo, dentro do maior container.</p>
+				<p class="text-left" name="requisitos" id="idVagaRequisitos">Ele usa classes utilitárias para tipografia e espaçamento de conteúdo, dentro do maior container. Ele usa classes utilitárias para tipografia e espaçamento de conteúdo, dentro do maior container.</p>
 			</div>
 
 			<div class="form-group" style="padding-top: 10px;">
 				<h5 class="text-dark">Benefícios</h5>
-				<p name="beneficios" id="idVagaBeneficios">Ele usa classes utilitárias para tipografia e espaçamento de conteúdo, dentro do maior container. Ele usa classes utilitárias para tipografia e espaçamento de conteúdo, dentro do maior container.</p>
+				<p class="text-left" name="beneficios" id="idVagaBeneficios">Ele usa classes utilitárias para tipografia e espaçamento de conteúdo, dentro do maior container. Ele usa classes utilitárias para tipografia e espaçamento de conteúdo, dentro do maior container.</p>
 			</div>
 
 			<div class="form-group" style="padding-top: 10px;">
 				<h5 class="text-dark">Carga Horária</h5>
-				<p name="beneficios" id="idVagaCargaHoraria">Ele usa classes utilitárias para tipografia e espaçamento de conteúdo, dentro do maior container.</p>
+				<p class="text-left" name="beneficios" id="idVagaCargaHoraria">Ele usa classes utilitárias para tipografia e espaçamento de conteúdo, dentro do maior container.</p>
 			</div>
 
-			<button type="button" class="btn btn-success btn-lg">Candidatar-se</button>
+			<?php echo $botaoCandidatar; ?>
 		</div>
-		<div class="col-sm-4">
+		<div class="col-sm">
 			
 		</div>
 	</div>

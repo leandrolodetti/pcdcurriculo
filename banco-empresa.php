@@ -22,17 +22,24 @@ function listaUmaVaga($conexao, $id) {
 	return mysqli_fetch_assoc($resultado);
 }
 
-function listaVagasPorTitulo($conexao, $parametro, $cidade) {
+function listaVagasPorTitulo($conexao, $parametro, $cidade, $categoria, $nivel) {
 	foreach ($cidade as $cid) {
 		$filtroCity = $filtroCity."AND Empresa.cidade LIKE '%{$cid}%'";
 	}
+	foreach ($categoria as $cat) {
+		$filtroCat = $filtroCat."AND Categoria.descricao LIKE '%{$cat}%'";
+	}
+	foreach ($nivel as $niv) {
+		$filtroNiv = $filtroNiv."AND Nivel.descricao LIKE '%{$niv}%'";
+	}
+
 	$vagas = array();
 	$query = "SELECT Vaga.titulo, Vaga.descricao, Vaga.idVaga, Vaga.ativa, Vaga.data_atualizacao, Nivel.descricao AS nivel, 
 				Categoria.descricao AS categoria, Empresa.fantasia, Empresa.cidade 
 		FROM ((Vaga INNER JOIN Nivel ON Nivel.idNivel = Vaga.Nivel_idNivel)
 		INNER JOIN Categoria ON Categoria.idCategoria = Vaga.Categoria_idCategoria)
 		INNER JOIN Empresa ON Vaga.Empresa_idEmpresa = Empresa.idEmpresa
-		WHERE Vaga.titulo LIKE '%{$parametro}%' AND Vaga.ativa='S'".$filtroCity;
+		WHERE Vaga.titulo LIKE '%{$parametro}%' AND Vaga.ativa='S'".$filtroCity.$filtroCat.$filtroNiv;
 	$resultado = mysqli_query($conexao, $query);
 
 	while ($vaga = mysqli_fetch_assoc($resultado)) {

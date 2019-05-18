@@ -570,7 +570,7 @@ function confirmarSenha(id, id2, idErro, msg) {
 function validaSelect(id, idErro, msg) {
 	var y = document.getElementById(idErro);
 	var x = document.getElementById(id);
-	if (x.value=="") {
+	if (x.value == "") {
 		x.style.backgroundColor = "#F08080";
 		x.focus();
 		y.innerHTML = msg;
@@ -666,12 +666,46 @@ function validaRemover() {
 	}
 	return true;
 }
-/*
-function edicaoObjetivos() {
-	//var r = "readonly='no"
-	document.getElementById("idCurriculoObjetivo").removeAttribute("readonly");
 
-	//("type", "hidden");
-	//alert("foi!");
+function validaCurriculoObjetivo() {
+	if (!validaNumCaracteres("idCurriculoObjetivo","idSmallObjetivos",3,"Campo inválido") ||
+		!validaNumCaracteres("idCurriculoPretSalarial","idSmallPretensaoSalarial",3,"Campo inválido")
+		) {
+		return false;
+	}
+	return true;
 }
-*/
+
+function validaCurriculoPretensao() {
+	if (!validaNumCaracteres("idCurriculoResumoProf","idSmallResumoProf",3,"Campo inválido")) {
+		return false;
+	}
+	return true;
+}
+
+function validaCurriculoFormacao() {
+	if (!validaNumCaracteres("idCurriculoNivelEscolar","idSmallNivelEscolar",3,"Campo inválido") ||
+		!validaNumCaracteres("idCurriculoGraduacao","idSmallGraduacao",3,"Campo inválido") ||
+		!validaNumCaracteres("idCurriculoIdioma","idSmallIdioma",3,"Campo inválido")
+		) {
+		return false;
+	}
+	return true;
+}
+
+function validaAlteraGeralCandidato() {
+	if (!validaNumCaracteres("idAlteraNomeCandidato","idSmallAlteraNome",3,"Campo inválido") || //validar Nome
+		!validaNumCaracteres("idAlteraSobrenomeCandidato","idSmallAlteraSobrenome",3,"Campo inválido") || //validar Sobrenome
+		!validarCPF("idAlteraCPF","idSmallAlteraCPF","CPF Inválido") || //validar cpf
+		!validaNumCaracteres("idAlteraNascimento","idSmallAlteraNascimento",10,"Data Inválida") || //validar data nascimento
+		!validarDeficiencia("idSmallDeficiencia","Selecione uma opção") ||
+		!validaNumCaracteres("idAlteraCid","idSmallAlteraCid",3,"Código inválido") || //validar cid
+		!validarGenero("idMasculino","idFeminino","idSmallGenero","Selecione uma opção!") ||
+		/*!validaSelect("idAlteraEstadoCivil", "idSmallEstadoCivil", "Selecione uma opção!") ||*/
+		!validarEmail("idAlteraEmailCandidato", "idSmallAlteraEmail", "E-mail Inválido") ||
+		!confirmarEmail("idAlteraEmailCandidato","idConfirmarEmailAlteradoCandidato","idSmallConfirmaEmail","E-mails não conferem!")
+		) {
+		return false;
+	}
+	return true;
+}

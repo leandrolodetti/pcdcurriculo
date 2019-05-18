@@ -82,17 +82,19 @@ $dataBr = $dataExplode[2]."/".$dataExplode[1]."/".$dataExplode[0];
 			<div class="container-fluid rounded" style="padding: 8px; background-color: #5EC998;">
 				<h3 class="text-left text-light font-weight-bold">Objetivos</h3>
 			</div>
-			<form action="update-candidato.php?objetivos" method="post" style="padding-bottom: 30px;">
+			<form action="update-candidato.php?objetivos" onsubmit="return validaCurriculoObjetivo();" method="post" style="padding-bottom: 30px;">
+				<input type="hidden" name="confirmaUpdate" value="yes">
 				<div class="form-group">
 					<label for="idCurriculoObjetivo">Objetivo Profissional</label>
 					<input type="text" name="objetivo" class="form-control" id="idCurriculoObjetivo" value="<?php echo $CurriculoAtual["objetivo"]; ?>">
 					<small class="form-text text-muted">Informe o cargo ou colocação pretendida. Exemplo, Analista de Sistemas.</small>
+					<small id="idSmallObjetivos" class="form-text text-muted"></small>
 				</div>
 				
 				<div class="form-group">
 					<label for="idCurriculoArea">Categoria</label>
 					<select id="idCurriculoArea" name="categoria" class="form-control">
-						<option value="">Escolher...</option>
+						<option value="" selected="selected">Escolher...</option>
 					    <?php
 					    $categorias = listaCategoria($conexao);
 						foreach ($categorias as $cat) {
@@ -111,7 +113,7 @@ $dataBr = $dataExplode[2]."/".$dataExplode[1]."/".$dataExplode[0];
 				<div class="form-group">
 					<label for="idCurriculoNivel">Nível</label>
 					<select name="nivel" id="idCurriculoNivel" class="form-control">
-						<option value="">Escolher...</option>
+						<option value="" selected="selected">Escolher...</option>
 						<?php
 						$niveis = listaNivel($conexao);
 						foreach ($niveis as $nivel) {
@@ -130,6 +132,7 @@ $dataBr = $dataExplode[2]."/".$dataExplode[1]."/".$dataExplode[0];
 				<div class="form-group">
 					<label for="idCurriculoPretSalarial">Pretensão Salarial</label>
 					<input type="text" name="pretensaoSalarial" class="form-control" id="idCurriculoPretSalarial" value="<?php echo $CurriculoAtual["salario"]; ?>" maxlength="9">
+					<small id="idSmallPretensaoSalarial" class="form-text text-muted"></small>
 				</div>
 				<button type="submit" class="btn btn-primary">Salvar</button>
 			</form>
@@ -137,27 +140,32 @@ $dataBr = $dataExplode[2]."/".$dataExplode[1]."/".$dataExplode[0];
 			<div class="container-fluid rounded" style="padding: 8px; background-color: #5EC998;">
 				<h3 class="text-left text-light font-weight-bold">Resumo Profissional</h3>
 			</div>
-			<form action="update-candidato.php?pretensao" method="post" style="padding-bottom: 30px;">
+			<form action="update-candidato.php?pretensao" onsubmit="return validaCurriculoPretensao();" method="post" style="padding-bottom: 30px;">
+				<input type="hidden" name="confirmaUpdate" value="yes">
 				<div class="form-group">
 					<label for="idCurriculoResumoProf">Resumo Profissional</label>
 					<textarea name="resumo" class="form-control" id="idCurriculoResumoProf" rows="5"><?php echo $CurriculoAtual["resumo_profissional"]; ?></textarea>
 					<small class="form-text text-muted">Faça um resumo de suas qualificações, habilidades e realizações profissionais.</small>
+					<small id="idSmallResumoProf" class="form-text text-muted"></small>
 				</div>
 				<button type="submit" class="btn btn-primary">Salvar</button>
 			</form>
 			<div class="container-fluid rounded" style="padding: 8px; background-color: #5EC998;">
 				<h3 class="text-left text-light font-weight-bold">Formação Acadêmica</h3>
 			</div>
-			<form action="update-candidato.php?formacao" method="post" style="padding-bottom: 30px;">
+			<form action="update-candidato.php?formacao" onsubmit="return validaCurriculoFormacao();" method="post" style="padding-bottom: 30px;">
+				<input type="hidden" name="confirmaUpdate" value="yes">
 				<div class="form-group">
 					<label for="idCurriculoNivelEscolar">Nível Escolaridade</label>
 					<input class="form-control" type="text" id="idCurriculoNivelEscolar" value="<?php echo $CurriculoAtual["nivel_escolar"]; ?>" name="txtNivelEscolar" maxlength="40">
 					<small class="form-text text-muted">Insira seu grau de escolaridade. Ex: Superior completo.</small>
+					<small id="idSmallNivelEscolar" class="form-text text-muted"></small>
 				</div>
 				<div class="form-group">
 					<label for="idCurriculoGraduacao">Graduação</label>
 					<textarea name="txtGraduacao" class="form-control" id="idCurriculoGraduacao" rows="5"><?php echo $CurriculoAtual["graduacao"]; ?></textarea>
 					<small class="form-text text-muted">Insira o nome da Universidade e a graduação.</small>
+					<small id="idSmallGraduacao" class="form-text text-muted"></small>
 				</div>
 				<div class="form-group">
 					<label for="idCurriculoCursosComp">Cursos Complementares</label>
@@ -168,11 +176,13 @@ $dataBr = $dataExplode[2]."/".$dataExplode[1]."/".$dataExplode[0];
 					<label for="idCurriculoIdioma">Idiomas</label>
 					<textarea name="txtIdioma" class="form-control" id="idCurriculoIdioma" rows="5"><?php echo $CurriculoAtual["idiomas"]; ?></textarea>
 					<small class="form-text text-muted">Insira os idiomas e o nível de domínio.</small>
+					<small id="idSmallIdioma" class="form-text text-muted"></small>
 				</div>
 				<button type="submit" id="btnEnviar" class="btn btn-primary">Salvar</button>
 			</form>
 
 			<form action="update-candidato.php?historico" method="post" style="padding-bottom: 30px;">
+				<input type="hidden" name="confirmaUpdate" value="yes">
 				<div class="container-fluid rounded" style="padding: 8px; background-color: #5EC998;">
 					<h3 class="text-left text-light font-weight-bold">Histórico Profissional</h3>
 				</div>

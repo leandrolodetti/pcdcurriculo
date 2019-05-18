@@ -12,9 +12,19 @@ if (isset($_GET["cidade"])) {
 		array_push($filtroCity, $cid);
 	}
 }
+if (isset($_GET["categoria"])) {
+	foreach ($_GET["categoria"] as $cat) {
+		array_push($filtroCategoria, $cat);
+	}
+}
+if (isset($_GET["nivel"])) {
+	foreach ($_GET["nivel"] as $niv) {
+		array_push($filtroNivel, $niv);
+	}
+}
 
 if (isset($_GET["parametro"]) && $_GET["parametro"] != null) {
-	$vagasEncontradas = listaVagasPorTitulo($conexao, $parametro, $filtroCity);
+	$vagasEncontradas = listaVagasPorTitulo($conexao, $parametro, $filtroCity, $filtroCategoria, $filtroNivel);
 	if ($vagasEncontradas != null) {
 		$naoRepetidas = array_unique($vagasEncontradas);
 	?>
@@ -49,17 +59,20 @@ if (isset($_GET["parametro"]) && $_GET["parametro"] != null) {
 			<div class="row" style="padding-top: 30px;">
 
 				<div class="col-sm-4">
-				<form action="resultado-vagas.php" method="get">
-					<div class="btn-group" role="group">
-					  	<button type="submit" class="btn btn-success">Filtrar Busca</button>
+				<form id="idFormBuscar" action="resultado-vagas.php" method="get">
+					<h4 class="text-left font-weight-normal">Filtrar Busca</h4>
+					<!--div class="btn-group" role="group">
+					  	<button type="submit" class="btn btn-success">Filtrar Busca</button-->
  					<?php
- 					if (isset($_GET["cidade"]) && $_GET["cidade"] != null) {
+ 					if ($filtroNivel != null || $filtroCategoria != null || $filtroCity != null) {
 					?>	
+						<div class="btn-group" role="group">
 						<a class="btn btn-danger" href="resultado-vagas.php?parametro=<?php echo $parametro; ?>">Limpar Filtros</a>
+						</div>
 					<?php
  					}
  					?>
- 					</div>
+ 					<!--/div-->
 					<input type="hidden" name="parametro" value="<?php echo $parametro; ?>">
 					<h5 class="text-left text-muted font-weight-bold" style="padding-top: 25px;">Cidade</h5>
 
@@ -73,7 +86,7 @@ if (isset($_GET["parametro"]) && $_GET["parametro"] != null) {
 							}
 					?>
 						<div class="form-check">
-						  <input class="form-check-input" <?php echo $checked; ?> name="cidade[]" type="checkbox" value="<?php echo $nRep["cidade"]; ?>" id="idFiltroCidade">
+						  <input class="form-check-input" onclick="document.getElementById('idFormBuscar').submit();" <?php echo $checked; ?> name="cidade[]" type="checkbox" value="<?php echo $nRep["cidade"]; ?>" id="idFiltroCidade">
 						  <label class="form-check-label" for="idFiltroCidade">
 						    <?php echo $nRep["cidade"]; ?>
 						  </label>
@@ -86,9 +99,15 @@ if (isset($_GET["parametro"]) && $_GET["parametro"] != null) {
 
 					<?php
 						foreach ($naoRepetidas as $nRep) {
+							$checked = "";
+							foreach ($filtroCategoria as $cate) {
+								if ($nRep["categoria"] == $cate) {
+									$checked = "checked";
+								}
+							}
 					?>
 						<div class="form-check">
-						  <input class="form-check-input" name="categoria[]" type="checkbox" value="<?php echo $nRep["categoria"]; ?>" id="idFiltroCategoria">
+						  <input class="form-check-input" onclick="document.getElementById('idFormBuscar').submit();" <?php echo $checked; ?> name="categoria[]" type="checkbox" value="<?php echo $nRep["categoria"]; ?>" id="idFiltroCategoria">
 						  <label class="form-check-label" for="idFiltroCategoria">
 						    <?php echo $nRep["categoria"]; ?>
 						  </label>
@@ -101,9 +120,15 @@ if (isset($_GET["parametro"]) && $_GET["parametro"] != null) {
 
 					<?php
 						foreach ($naoRepetidas as $nRep) {
+							$checked = "";
+							foreach ($filtroNivel as $niv) {
+								if ($nRep["nivel"] == $niv) {
+									$checked = "checked";
+								}
+							}
 					?>
 						<div class="form-check">
-						  <input class="form-check-input" name="nivel[]" type="checkbox" value="" id="idFiltroNivel">
+						  <input class="form-check-input" onclick="document.getElementById('idFormBuscar').submit();" <?php echo $checked; ?> name="nivel[]" type="checkbox" value="<?php echo $nRep["nivel"]; ?>" id="idFiltroNivel">
 						  <label class="form-check-label" for="idFiltroNivel">
 						    <?php echo $nRep["nivel"]; ?>
 						  </label>
@@ -131,7 +156,7 @@ if (isset($_GET["parametro"]) && $_GET["parametro"] != null) {
 							    <h5 class="card-title text-success font-weight-light"><?php echo $vaga["titulo"]; ?></h5>
 							    <p class="card-text text-muted font-weight-bold"><?php echo $vaga["nivel"]; ?></p>
 							    <p class="card-text text-muted"><?php echo $vaga["descricao"]; ?></p>
-							    <a href="#" class="btn btn-primary">Visitar</a>
+							    <a href="vaga.php?id=<?php echo $vaga["idVaga"]; ?>&parametro=<?php echo $parametro; ?>" class="btn btn-primary">Visitar</a>
 							  </div>
 							  <div class="card-footer text-muted">
 							    <?php echo "Atualizada em ".$dataBr; ?>

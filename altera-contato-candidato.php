@@ -38,7 +38,7 @@ verificaCandidato();
 
     	<div class="form-group">
     		<label for="rua">Endereço</label>
-    		<input type="text" value="<?php echo $usuarioAtual ["logradouro"]; ?>" class="form-control" id="rua">
+    		<input type="text" value="<?php echo $usuarioAtual ["logradouro"]; ?>" class="form-control" id="rua" style="min-width: 300px; max-width: 300px;">
     	</div>
     	<div class="form-group">
     	  <label for="idAlteraContatoCandidatoNumero">Número</label>
@@ -58,5 +58,3 @@ verificaCandidato();
   </div>
   <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Salvar</button>
 </form>
-
-<?php require_once("rodape.php"); ?>
