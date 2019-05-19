@@ -6,8 +6,8 @@ require_once("logica-empresa.php");
 verificaEmpresa();
 
 $ativa = "S";
-//$titulo = mb_strtolower($_POST["titulo"]);
-$titulo = $_POST["titulo"];
+$titulo = mb_strtolower($_POST["titulo"], 'UTF-8');
+//$titulo = $_POST["titulo"];
 $categoria = $_POST["categoria"];
 $nivel = $_POST["nivel"];
 $descricaoVaga = $_POST["descricaoVaga"];

@@ -178,7 +178,7 @@ function buscaEmpresaAtual($conexao, $cnpj) {
 }
 
 function insereRestricoes($conexao, $idDeficiencia, $idVaga) {
-	$query = "insert into Restricaodeficiencia(TiposDeficiencia_idTiposDeficiencia, Vaga_idVaga) values({$idDeficiencia}, {$idVaga})";
+	$query = "insert into RestricaoDeficiencia(TiposDeficiencia_idTiposDeficiencia, Vaga_idVaga) values({$idDeficiencia}, {$idVaga})";
 	$resultado = mysqli_query($conexao, $query);
 	return $resultado;
 }
