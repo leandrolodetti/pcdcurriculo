@@ -62,14 +62,20 @@ if (isset($_GET["id"]) && isset($_GET["inativar-vaga"])) {
 
 if (isset($_GET["id"]) && isset($_GET["update-vaga"])) {
 
+	$comAcentos = array('à', 'á', 'â', 'ã', 'ä', 'å', 'ç', 'è', 'é', 'ê', 'ë', 'ì', 'í', 'î', 'ï', 'ñ', 'ò', 'ó', 'ô', 'õ', 'ö', 'ù', 'ü', 'ú', 'ÿ', 'À', 'Á', 'Â', 'Ã', 'Ä', 'Å', 'Ç', 'È', 'É', 'Ê', 'Ë', 'Ì', 'Í', 'Î', 'Ï', 'Ñ', 'Ò', 'Ó', 'Ô', 'Õ', 'Ö', 'O', 'Ù', 'Ü', 'Ú');
+	$semAcentos = array('a', 'a', 'a', 'a', 'a', 'a', 'c', 'e', 'e', 'e', 'e', 'i', 'i', 'i', 'i', 'n', 'o', 'o', 'o', 'o', 'o', 'u', 'u', 'u', 'y', 'A', 'A', 'A', 'A', 'A', 'A', 'C', 'E', 'E', 'E', 'E', 'I', 'I', 'I', 'I', 'N', 'O', 'O', 'O', 'O', 'O', '0', 'U', 'U', 'U');
+
 	$ativa="S";
 	$idVaga = $_GET["id"];
 	$idEmpresa = $usuarioAtual["idEmpresa"];
-
-	$titulo =  mb_strtolower($_POST["titulo"], 'UTF-8');
+	//$titulo = mb_convert_case($_POST["titulo"], MB_CASE_LOWER, "UTF-8");
+	//$titulo =  mb_strtolower($_POST["titulo"], mb_detect_encoding($_POST["titulo"]));
+	$titulo = $_POST["titulo"];
+	$tituloSemAcento = str_replace($comAcentos, $semAcentos, $titulo);
 	$listaUmaVaga = listaUmaVaga($conexao, $idVaga);
+	$vagaSemAcento = str_replace($comAcentos, $semAcentos, $listaUmaVaga["titulo"]);
 
-	if ($titulo != $listaUmaVaga["titulo"]) {
+	if (strcasecmp($tituloSemAcento, $vagaSemAcento) != 0) {
 		if (buscaVagaRepetida($conexao, $titulo, $idEmpresa) != null) {
 			$_SESSION["danger"] = "Vaga já cadastrada";
 			rollback($conexao);

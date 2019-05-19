@@ -184,7 +184,7 @@ function insereRestricoes($conexao, $idDeficiencia, $idVaga) {
 }
 
 function deleteRestricoes($conexao, $idVaga) {
-	$query = "DELETE FROM Restricaodeficiencia
+	$query = "DELETE FROM RestricaoDeficiencia
 				WHERE Vaga_idVaga = {$idVaga}";
 	$resultado = mysqli_query($conexao, $query);
 	return $resultado;		
