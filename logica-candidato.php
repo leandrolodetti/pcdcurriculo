@@ -27,7 +27,7 @@ function verificaCandidato() {
 
 function logOut() {
 	unset($_SESSION["candidato_logado"]);
-	$_SESSION["logout"] = "Usuário Deslogado!";
+	$_SESSION["danger"] = "Usuário Deslogado!";
 	header("Location: index.php");
 	die();
 }

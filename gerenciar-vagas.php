@@ -1,16 +1,11 @@
 <?php
 require_once("cabecalho.php");
-require_once("mostra-alerta.php");
+require_once("logica-empresa.php");
+verificaEmpresa();
 
 $vagas = listaVagas($conexao, $usuarioAtual["idEmpresa"]);
 
 ?>
-<div class="container">
-<?php
-	mostraAlerta("danger");
-	mostraAlerta("success");
-?>
-</div>
 
 <div class="container-fluid" style="background-color: #6f42c1;">
 	<div class="container">
@@ -34,9 +29,9 @@ $vagas = listaVagas($conexao, $usuarioAtual["idEmpresa"]);
 </div>
 
 <div class="container" style="padding-top: 30px;">
-	<form class="form-inline my-2 my-lg-1">
+	<!--form class="form-inline my-2 my-lg-1">
       <input class="form-control mr-sm-2" type="search" placeholder="Pesquisar" aria-label="Pesquisar">
-    </form>
+    </form-->
 	<div class="table-responsive-sm">
 		<table class="table">
 		  <thead>

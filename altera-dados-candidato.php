@@ -16,8 +16,9 @@ verificaCandidato();
 </div>
 
 <div class="container-fluid border-bottom border-primary" style="padding-bottom: 20px;"></div>
+<div class="container"><a class="text-danger text-bold" onClick="history.go(-1)"><i class="far fa-arrow-alt-circle-left" style="font-size: 45px; padding: 10px;"></i></a></div>
 
-<div class="container" style="padding-top: 30px;">
+<div class="container">
     <div class="row">
         <div class="col-sm-4">
             <div class="btn-group-vertical" style="padding-top: 30px;">
@@ -27,7 +28,9 @@ verificaCandidato();
                 <br>
                 <a class="btn btn-outline-primary btn-lg" href="altera-dados-candidato.php?contato" role="button" style="text-align: left;"><i class="fas fa-address-card"></i> Contato</a>
                 <br>
-                <a class="btn btn-outline-success btn-lg" href="altera-dados-candidato.php?alerta" role="button" style="text-align: left;"><i class="fas fas fa-envelope-open-text"></i> Alerta de Vagas</a>
+                <a class="btn btn-outline-success btn-lg" href="altera-dados-candidato.php?responsavel" role="button" style="text-align: left;"><i class="fas fa-user-cog"></i> Responsável</a>
+                <br>
+                <a class="btn btn-outline-primary btn-lg" href="altera-dados-candidato.php?alerta" role="button" style="text-align: left;"><i class="fas fas fa-envelope-open-text"></i> Alerta de Vagas</a>
                 <br>
                 <a class="btn btn-outline-danger btn-lg" href="altera-dados-candidato.php?remover-conta" role="button" style="text-align: left;"><i class="fas fa-trash-alt"></i> Apagar Conta</a>
             </div>
@@ -43,6 +46,9 @@ verificaCandidato();
               }
               elseif (isset($_GET["contato"])) {
                 require_once("altera-contato-candidato.php");
+              }
+              elseif (isset($_GET["responsavel"])) {
+                require_once("#");
               }
               elseif (isset($_GET["alerta"])) {
                 require_once("altera-alerta-candidato.php");

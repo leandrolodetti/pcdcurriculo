@@ -34,11 +34,10 @@ $dataBr = $dataExplode[2]."/".$dataExplode[1]."/".$dataExplode[0];
 </div>
 
 <div class="container-fluid border-bottom border-primary" style="padding-bottom: 20px;"></div>
-
-<div class="container" style="padding-top: 30px;">
+<div class="container"><a class="text-danger text-bold" onClick="history.go(-1)"><i class="far fa-arrow-alt-circle-left" style="font-size: 45px; padding: 10px;"></i></a></div>
+<div class="container">
 	<div class="row">
 		<div class="col-sm-8">
-
 			<div class="container-fluid rounded" style="padding: 8px; background-color: #5EC998; background-color: #5EC998;">
 				<h3 class="text-left text-light font-weight-bold">Dados Pessoais</h3>
 			</div>

@@ -1,5 +1,11 @@
 <?php
 
+function listaVagaEmpresa($conexao, $idVaga) {
+	$query = "SELECT * FROM Vaga INNER JOIN Empresa ON Vaga.Empresa_idEmpresa=Empresa.idEmpresa WHERE idVaga={$idVaga}";
+	$resultado = mysqli_query($conexao, $query);
+	return mysqli_fetch_assoc($resultado);
+}
+
 function listaCategoriaVaga($conexao, $idVaga) {
 	$query = "SELECT Categoria.idCategoria, Categoria.descricao FROM Categoria
 			INNER JOIN Vaga ON Categoria.idCategoria = Vaga.Categoria_idCategoria

@@ -150,12 +150,12 @@ elseif ($usuarioAtual["estado_civil"] == "Viúvo(a)") {
             </div>      
             <div class="form-group">
                 <label for="idAlteraEmailCandidato">E-mail</label>
-                <input type="txt" class="form-control" value="<?php echo $usuarioAtual ["email"]; ?>" id="idAlteraEmailCandidato" style="min-width: 300px; max-width: 300px;">
+                <input type="text" class="form-control" name="email" value="<?php echo $usuarioAtual ["email"]; ?>" id="idAlteraEmailCandidato" style="min-width: 300px; max-width: 300px;">
                 <small id="idSmallAlteraEmail" class="form-text text-muted"></small>
             </div>
             <div class="form-group">
                 <label for="idConfirmarEmailAlteradoCandidato">Confirmar E-mail</label>
-                <input type="txt" class="form-control" id="idConfirmarEmailAlteradoCandidato" style="min-width: 300px; max-width: 300px;">
+                <input type="text" class="form-control" id="idConfirmarEmailAlteradoCandidato" style="min-width: 300px; max-width: 300px;">
                 <small id="idSmallConfirmaEmail" class="form-text text-muted"></small>
             </div>
         </div>

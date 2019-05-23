@@ -1,8 +1,10 @@
 $("#inputDataNascimento").mask("00/00/0000");
 $("#idNascResponsavel").mask("00/00/0000");
+$("#idAlteraNascimento").mask("00/00/0000");
 $("#cep").mask("00000-000");
 $("#idCpf").mask("000.000.000-00");
 $("#idCpfResponsavel").mask("000.000.000-00");
+$("#idAlteraCPF").mask("000.000.000-00");
 $("#idContato").mask("(00)000000000");
 $("#idContatoEmpresa").mask("(00)000000000");
 $("#idContatoResponsavel").mask("(00)000000000");
@@ -608,7 +610,12 @@ function validaForm() {
 }
 
 function validaFormAlteraContato() {
-	if (!validarCep()) {
+	if (!validaNumCaracteres("idAlteraContatoCandidato","idSmallAlteraContato",12,"Número inválido") || //validar contato candidato
+		!validarCep() ||
+		!validaNumCaracteres("rua", "idSmallAlteraLogradouro", 3, "Endereço Inválido") || //validar logradouro candidato
+		!validaNumCaracteres("idAlteraContatoCandidatoNumero", "idSmallNumero", 1, "Número Inválido") || //validar numero logradouro candidato
+		!validaNumCaracteres("bairro", "idSmallBairro", 3, "Campo Inválido") //validar bairro candidato
+		) {
 		return false;
 	}
 	return true;
@@ -693,6 +700,28 @@ function validaCurriculoFormacao() {
 	return true;
 }
 
+function calcularIdadeAltera(id) {
+	var id1 = document.getElementById(id);
+	var nascimento = document.getElementById(id).value.split("/");
+	//document.getElementById("idFormResponsavel").style.visibility = "hidden";
+    var dataNascimento = new Date(parseInt(nascimento[2], 10),
+    parseInt(nascimento[1], 10) - 1,
+    parseInt(nascimento[0], 10));
+    var diferenca = Date.now() -  dataNascimento.getTime();
+    var idade = new Date(diferenca);
+
+    if (Math.abs(idade.getUTCFullYear() - 1970) < 16) {
+    	alert("Idade inferior a 16 anos!");
+    	return false;
+    }
+
+    if (Math.abs(idade.getUTCFullYear() - 1970) < 18) {
+    	alert("Para fazer esta alteração, será necessário apagar a conta e refazer o cadastro, pois a idade será inferior a 18 anos, necessitando do cadastro de um responsável");
+    	return false;
+    }
+    return true;
+}
+
 function validaAlteraGeralCandidato() {
 	if (!validaNumCaracteres("idAlteraNomeCandidato","idSmallAlteraNome",3,"Campo inválido") || //validar Nome
 		!validaNumCaracteres("idAlteraSobrenomeCandidato","idSmallAlteraSobrenome",3,"Campo inválido") || //validar Sobrenome
@@ -703,7 +732,18 @@ function validaAlteraGeralCandidato() {
 		!validarGenero("idMasculino","idFeminino","idSmallGenero","Selecione uma opção!") ||
 		/*!validaSelect("idAlteraEstadoCivil", "idSmallEstadoCivil", "Selecione uma opção!") ||*/
 		!validarEmail("idAlteraEmailCandidato", "idSmallAlteraEmail", "E-mail Inválido") ||
-		!confirmarEmail("idAlteraEmailCandidato","idConfirmarEmailAlteradoCandidato","idSmallConfirmaEmail","E-mails não conferem!")
+		!confirmarEmail("idAlteraEmailCandidato","idConfirmarEmailAlteradoCandidato","idSmallConfirmaEmail","E-mails não conferem!") ||
+		!calcularIdadeAltera("idAlteraNascimento")
+		) {
+		return false;
+	}
+	return true;
+}
+
+function validaAlteraSenhaCandidato() {
+	if (!validaNumCaracteres("idAlteraSenhaAtual","idSmallSenhaCandidato",6,"Campo inválido") ||
+		!validarSenha("idAlteraSenhaCandidato", "idSmallAlteraSenhaCandidato", 6, "Campo Inválido") ||
+		!confirmarSenha("idAlteraSenhaCandidato", "idConfirmarSenhaAlteraCandidato", "idSmallConfirmaSenhaCandidato", "Senhas não conferem!")
 		) {
 		return false;
 	}

@@ -36,6 +36,16 @@ function insereCandidato($conexao, $cpfCandidato, $nomeCandidato, $sobrenomeCand
     return $resultadoDaInsercao;
 }
 
+function updateContato($conexao, $contato, $cepCandidato, $estadoCandidato, $cidadeCandidato, $logradouro, $numero, $bairro, $complemento, $idCandidato) {
+	$query = "UPDATE Candidato SET contato='{$contato}', cep='{$cepCandidato}', estado='{$estadoCandidato}',
+			cidade='{$cidadeCandidato}', logradouro='{$logradouro}', num_logradouro='{$numero}',
+			bairro='{$bairro}', complemento='{$complemento}'
+			WHERE idCandidato={$idCandidato}";
+
+	$resultadoDaInsercao = mysqli_query($conexao, $query);
+    return $resultadoDaInsercao;	
+}
+
 function updateCandidato($conexao, $cpfCandidato, $nomeCandidato, $sobrenomeCandidato, $dataNascimentoCandidato, $contatoCandidato,
 				   		 $genero, $emailCandidato, $estadoCivil, $cepCandidato, $ufCandidato, $cidadeCandidato,
 				   	     $ruaCandidato, $numeroRuaCandidato, $bairroCandidato, $ComplementoCandidato, $senhaMd5,
@@ -60,6 +70,20 @@ function deleteDeficiencias($conexao, $idCandidato) {
 function buscaUmRegistro($conexao, $parametro, $tabela, $where) {
 	$thisParametro = mysqli_escape_string($conexao, $parametro);
 	$query = "select * from {$tabela} where {$where} = '{$thisParametro}'";
+	$resultado = mysqli_query($conexao, $query);
+	return mysqli_fetch_assoc($resultado);
+}
+
+function insereCandidatura($conexao, $idVaga, $idCandidato, $dataAtual) {
+	$query = "INSERT INTO Candidatura(Vaga_idVaga, Candidato_idCandidato, data_candidatura, data_contratacao, contratado)
+				VALUES ({$idVaga}, {$idCandidato}, '{$dataAtual}', '', 'N')";
+	$resultadoDaInsercao = mysqli_query($conexao, $query);
+    return $resultadoDaInsercao;			
+
+}
+
+function buscaCandidatura($conexao, $idVaga, $idCandidato) {
+	$query = "SELECT * FROM Candidatura WHERE Vaga_idVaga={$idVaga} AND Candidato_idCandidato={$idCandidato}";
 	$resultado = mysqli_query($conexao, $query);
 	return mysqli_fetch_assoc($resultado);
 }
@@ -111,9 +135,9 @@ function buscaCandidatoAtual($conexao, $emailCandidato) {
 
 function insereResponsavel($conexao, $nomeResponsavel, $cpfResponsavel, $contatoResponsavel,
 						   $emailResponsavel, $nascResponsavel) {
-	$query = "insert into Responsavel(nome, cpf, contato, email, data_nascimento, Candidato_idCandidato) 
-			  values('{$nomeResponsavel}','{$cpfResponsavel}','{$contatoResponsavel}','{$emailResponsavel}',
-			  		 '{$nascResponsavel}')";
+	$query = "INSERT INTO Responsavel(nome, cpf, contato, email, data_nascimento)
+				VALUES('{$nomeResponsavel}','{$cpfResponsavel}', '{$contatoResponsavel}',
+					'{$emailResponsavel}', '{$nascResponsavel}')";
 	$resultado = mysqli_query($conexao, $query);
 	return $resultado;
 }
@@ -165,6 +189,26 @@ function updateHistoricoProf($conexao, $txtHistoricoProf, $data, $idCurriculo) {
 	WHERE idCurriculo={$idCurriculo}";
 	$resultado = mysqli_query($conexao, $query);
 	return $resultado;
+}
+
+function listaHistorico($conexao, $idCandidato) {
+	$candidaturas = array();
+	$query = "SELECT * FROM Vaga INNER JOIN Candidatura ON Vaga_idVaga=Candidatura.Vaga_idVaga WHERE Candidatura.Candidato_idCandidato = {$idCandidato}";
+	$resultado = mysqli_query($conexao, $query);
+
+	while ($candidatura = mysqli_fetch_assoc($resultado)) {
+		array_push($candidaturas, $candidatura);
+	}
+	return $candidaturas;
+}
+
+function updateGeralCandidato($conexao, $cpf, $nome, $sobrenome, $nascimento, $cid, $gridGenero, $estadoCivil, $email, $idCandidato) {
+	$query = "UPDATE Candidato SET cpf='{$cpf}', nome='{$nome}', sobrenome='{$sobrenome}',
+			data_nascimento='{$nascimento}', cid10='{$cid}', genero='{$gridGenero}',
+			estado_civil='{$estadoCivil}', email='{$email}'
+			WHERE idCandidato={$idCandidato}";
+	$resultado = mysqli_query($conexao, $query);
+	return $resultado;		
 }
 
 ?>

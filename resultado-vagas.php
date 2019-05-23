@@ -1,6 +1,21 @@
 <?php
 require_once("cabecalho.php");
 
+function unique_multidim_array($array, $key) { 
+    $temp_array = array(); 
+    $i = 0; 
+    $key_array = array(); 
+    
+    foreach($array as $val) { 
+        if (!in_array($val[$key], $key_array)) { 
+            $key_array[$i] = $val[$key]; 
+            $temp_array[$i] = $val; 
+        } 
+        $i++; 
+    } 
+    return $temp_array; 
+}
+
 //$parametro = $_GET["parametro"];
 $parametro = mysqli_escape_string($conexao, $_GET["parametro"]);
 $filtroCity = array();
@@ -26,7 +41,8 @@ if (isset($_GET["nivel"])) {
 if (isset($_GET["parametro"]) && $_GET["parametro"] != null) {
 	$vagasEncontradas = listaVagasPorTitulo($conexao, $parametro, $filtroCity, $filtroCategoria, $filtroNivel);
 	if ($vagasEncontradas != null) {
-		$naoRepetidas = array_unique($vagasEncontradas);
+		$naoRepetidas = unique_multidim_array($vagasEncontradas, "cidade");
+		//var_dump($naoRepetidas);
 	?>
 		<div class="container-fluid" style="background-color: #5EC998;">
 			<div class="container">
@@ -50,9 +66,9 @@ if (isset($_GET["parametro"]) && $_GET["parametro"] != null) {
 				</nav>
 			</div>
 		</div>
-
+		<div class="container"><a class="text-danger text-bold" onClick="history.go(-1)"><i class="far fa-arrow-alt-circle-left" style="font-size: 45px; padding: 10px;"></i></a></div>
 		<div class="container">
-			<div class="border-bottom" style="padding-top: 40px;">
+			<div class="border-bottom" style="padding-top: 15px;">
 			  <h4 class="text-left font-weight-normal"><?php echo count($vagasEncontradas)." vagas encontradas para ".$parametro; ?></h4>
 			</div>
 
@@ -98,6 +114,7 @@ if (isset($_GET["parametro"]) && $_GET["parametro"] != null) {
 					<h5 class="text-left text-muted font-weight-bold" style="padding-top: 25px;">Categoria</h5>
 
 					<?php
+						$naoRepetidas = unique_multidim_array($vagasEncontradas, "categoria");
 						foreach ($naoRepetidas as $nRep) {
 							$checked = "";
 							foreach ($filtroCategoria as $cate) {
@@ -119,6 +136,7 @@ if (isset($_GET["parametro"]) && $_GET["parametro"] != null) {
 					<h5 class="text-left text-muted font-weight-bold" style="padding-top: 25px;">Nível</h5>
 
 					<?php
+						$naoRepetidas = unique_multidim_array($vagasEncontradas, "nivel");
 						foreach ($naoRepetidas as $nRep) {
 							$checked = "";
 							foreach ($filtroNivel as $niv) {

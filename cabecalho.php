@@ -18,6 +18,7 @@ if (isset($_SESSION["candidato_logado"])) {
 	$logout = "logout-candidato.php";
 	$acao1 = "curriculo.php"; $msg1 = "Currículo";
 	$acao2 = "altera-dados-candidato.php";
+	$acao3 = "historico-vagas.php"; $msg3 = "Histórico";
 }
 
 if (isset($_SESSION["empresa_logada"])) {
@@ -26,6 +27,9 @@ if (isset($_SESSION["empresa_logada"])) {
 	$campo = "cnpj";
 	$href = "empresa.php";
 	$logout = "logout-empresa.php";
+	$acao1 = ""; $msg1 = "";
+	$acao2 = "altera-dados-empresa.php";
+	$acao3 = ""; $msg3 = "";
 }
 
 ?>
@@ -73,7 +77,7 @@ if (isset($_SESSION["empresa_logada"])) {
 							<div class="dropdown-menu">
 							   	<a class="dropdown-item" href="<?php echo $acao1; ?>"><?php echo $msg1; ?></a>
 							   	<a class="dropdown-item" href="<?php echo $acao2; ?>">Alterar Cadastro</a>
-							   	<a class="dropdown-item" href="#">Alguma coisa aqui</a>
+							   	<a class="dropdown-item" href="<?php echo $acao3; ?>"><?php echo $msg3; ?></a>
 								<div class="dropdown-divider"></div>
 								<a class="dropdown-item" href="<?php echo $logout; ?>">Logout</a>
 							</div>
