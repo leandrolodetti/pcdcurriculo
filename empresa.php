@@ -19,7 +19,11 @@ verificaEmpresa();
 <div class="container" style="padding-top: 30px;">
 	<div class="row">
 		<div class="col-sm-4">
-			<h3 class="text-left font-weight-normal"><?php echo $usuarioAtual ["fantasia"]; ?></h3>
+			<h3 class="text-left font-weight-normal"><?php echo $usuarioAtual ["razao_social"]; ?></h3>
+			<br>
+			<h4 class="text-left font-weight-normal"><?php echo "CNPJ: ".$usuarioAtual["cnpj"]; ?></h4>
+			<br>
+			<h4 class="text-left font-weight-normal"><?php echo "Ramo: ".$usuarioAtual["ramo_atividade"]; ?></h4>
 		</div>
 		<div class="col-sm-8">
 			<div class="row" style="padding: 15px;">
@@ -50,7 +54,7 @@ verificaEmpresa();
 				</div>
 
 				<div class="col-sm-6">
-					<a class="nav-link" href="">
+					<a class="nav-link" href="historico-candidatura.php">
 				    	<div class="card text-center">
 				    		
 					    	<i class="fas fa-history rounded float-left text-success" style="font-size: 70px; padding: 10px;"></i>
@@ -65,3 +69,5 @@ verificaEmpresa();
 		</div>
 	</div>
 </div>
+
+<?php require_once("rodape.php"); ?>

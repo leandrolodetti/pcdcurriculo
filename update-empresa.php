@@ -11,43 +11,47 @@ if (isset($_GET["remover-conta"])) {
 	sucesso("Conta inativada com sucesso", "index-empresa.php");
 }
 
-if (isset($_GET["altera_geral"])) {
+if (isset($_GET["altera_geral"]) && $_POST["confirmaUpdate"] == "yes") {
 	$razao_social = $_POST["razao_social"];
 	$fantasia = $_POST["fantasia"];
 	$cnpj = $_POST["cnpj"];
 	$emailEmpresa = $_POST["emailEmpresa"];
+	$idEmpresa = $usuarioAtual["idEmpresa"];
+	$responsavelRh = $_POST["responsavelRh"];
+	$ramoAtividade = $_POST["ramoAtividade"];
 
-	if ($razao_social == null || $cnpj == null) {
-		$_SESSION["danger"] = "Ocorreu um erro, tente novamente mais tarde! Erro: FormNull";
-		header("Location: form-cadastro-vaga.php");
+	if (strcmp($cnpj, $usuarioAtual ["cnpj"]) != 0) {
+		$jaExiste = buscaUmRegistro($conexao, $cnpj, "Empresa", "cnpj");
+		if ($jaExiste != null) {
+			$_SESSION["danger"] = "O CNPJ informado já possui cadastro";
+			header("Location: altera-dados-empresa.php");
+	    	die();
+		}
+	}
+
+	iniciarTransacao($conexao, "$iniciarTransacao", "altera-dados-empresa.php");
+
+	if (!updateGeralEmpresa($conexao, $razao_social, $fantasia, $emailEmpresa, $cnpj, $responsavelRh, $ramoAtividade, $idEmpresa)) {
+		$_SESSION["danger"] = "Ocorreu um erro, tente novamente mais tarde! Erro: updateGeralEmpresa";
+		rollback($conexao);
+		header("Location: altera-dados-empresa.php");
 	    die();
 	}
 
-	if (strcmp($cnpj, $usuarioAtual ["cnpj"]) != 0) {
-		logOut();
-	}
+	logaEmpresa($cnpj);
+	commitTransacao($conexao, "Ocorreu um erro, tente novamente mais tarde! Erro: commitTransacao", "altera-dados-empresa.php");
+	sucesso("Cadastro atualizado com sucesso!", "altera-dados-empresa.php");
+
 }
 
 if (isset($_GET["id"]) && isset($_GET["inativar-vaga"])) {
 		//$ativa="N";
-		$idVaga = $_GET["id"];
+	$idVaga = $_GET["id"];
 	iniciarTransacao($conexao, "$iniciarTransacao", "form-cadastro-vaga.php");
-	/*
-	if (!starTransaction($conexao)) {
-		$_SESSION["danger"] = "Ocorreu um erro, tente novamente mais tarde! Erro: StartTransaction";
-		header("Location: form-cadastro-vaga.php");
-	    die();
-	}
-	*/
 	inativarVaga($conexao, "inativarVaga", "form-cadastro-vaga.php", $idVaga);
-	/*
-	if (!inativarVaga($conexao, $idVaga, $ativa)) {
-		$_SESSION["danger"] = "Ocorreu um erro, tente novamente mais tarde! Erro: Update".mysqli_error($conexao);
-		rollback($conexao);
-		header("Location: form-cadastro-vaga.php");
-	    die();
-	}
-	*/
+	commitTransacao($conexao, "Ocorreu um erro, tente novamente mais tarde! Erro: commitTransacao", "form-cadastro-vaga.php");
+	sucesso("Vaga inativada com sucesso!", "gerenciar-vagas.php");
+/*
 	if (!commit($conexao)) {
 		$_SESSION["danger"] = "Ocorreu um erro, tente novamente mais tarde! Erro: commit";
 		rollback($conexao);
@@ -58,6 +62,7 @@ if (isset($_GET["id"]) && isset($_GET["inativar-vaga"])) {
 	$_SESSION["success"] = "Vaga inativada com sucesso!";
 	header("Location: gerenciar-vagas.php");
 	die();
+*/	
 }
 
 if (isset($_GET["id"]) && isset($_GET["update-vaga"])) {
@@ -99,6 +104,13 @@ if (isset($_GET["id"]) && isset($_GET["update-vaga"])) {
 	    die();
 	}
 
+	$DefFisica = 0; $DefFisica = $_POST["DefFisica"];
+	$DefFala = 0; $DefFala = $_POST["DefFala"];
+	$DefAuditiva = 0; $DefAuditiva = $_POST["DefAuditiva"];
+	$DefMental = 0; $DefMental = $_POST["DefMental"];
+	$DefVisual = 0; $DefVisual = $_POST["DefVisual"];
+
+/*
 	$DefFisica = 0;
 	$DefFala = 0;
 	$DefAuditiva = 0;
@@ -126,6 +138,8 @@ if (isset($_GET["id"]) && isset($_GET["update-vaga"])) {
 		header("Location: form-cadastro-vaga.php");
 	    die();
 	}
+*/
+	iniciarTransacao($conexao, "$iniciarTransacao", "form-cadastro-vaga.php");
 
 	if (!updateVaga($conexao, $titulo, $descricaoVaga, $requisitoVaga, $beneficios, $salario, $cargaHoraria, $data, $idEmpresa, $categoria, $nivel, $idVaga, $ativa)) {
 		$_SESSION["danger"] = "Ocorreu um erro, tente novamente mais tarde! Erro: Update".mysqli_error($conexao);
@@ -186,6 +200,9 @@ if (isset($_GET["id"]) && isset($_GET["update-vaga"])) {
 		}
 	}
 
+	commitTransacao($conexao, "Ocorreu um erro, tente novamente mais tarde! Erro: commitTransacao", "form-cadastro-vaga.php");
+	sucesso("Vaga atualizada com sucesso!", "gerenciar-vagas.php");
+/*
 	if (!commit($conexao)) {
 		$_SESSION["danger"] = "Ocorreu um erro, tente novamente mais tarde! Erro: commit";
 		rollback($conexao);
@@ -196,8 +213,57 @@ if (isset($_GET["id"]) && isset($_GET["update-vaga"])) {
 	$_SESSION["success"] = "Vaga atualizada com sucesso!";
 	header("Location: gerenciar-vagas.php");
 	die();
+*/	
 }
 
-?>
+if (isset($_GET["senha"]) && $_POST["confirmaUpdate"] == "yes") {
 
-<?php require_once("rodape.php"); ?>
+	$verificaSenha = md5($_POST["senhaAtual"]);
+	$novaSenha = md5($_POST["senha"]);
+	$idEmpresa = $usuarioAtual["idEmpresa"];
+	$senhaAtual = $usuarioAtual["senha"];
+
+	if ($verificaSenha != $senhaAtual) {
+		$_SESSION["danger"] = "Senha atual inválida";
+		header("Location: altera-dados-empresa.php?senha");
+		die();
+	}
+
+	iniciarTransacao($conexao, "$iniciarTransacao", "altera-dados-empresa.php?senha");
+
+	if (!updateUmCampo($conexao, "Empresa", "senha", $novaSenha, "idEmpresa", $idEmpresa)) {
+		$_SESSION["danger"] = "Ocorreu um erro, tente novamente mais tarde! Erro: updateUmCampoSenha";
+		rollback($conexao);
+		header("Location: altera-dados-empresa.php?senha");
+	    die();
+	}
+
+	commitTransacao($conexao, "Ocorreu um erro, tente novamente mais tarde! Erro: commitTransacao", "altera-dados-empresa.php?senha");
+	sucesso("Cadastro atualizado com sucesso!", "altera-dados-empresa.php?senha");
+
+}
+
+if (isset($_GET["contato"]) && $_POST["confirmaUpdate"] == "yes") {
+
+	$contato = $_POST["contato"];
+	$cep = $_POST["cep"];
+	$cidade = $_POST["cidade"];
+	$estado = $_POST["estado"];
+	$logradouro = $_POST["logradouro"];
+	$numero = $_POST["numero"];
+	$bairro = $_POST["bairro"];
+	$complemento = $_POST["complemento"];
+	$idEmpresa = $usuarioAtual["idEmpresa"];
+
+	iniciarTransacao($conexao, "$iniciarTransacao", "altera-dados-empresa.php?contato");
+
+	if (!updateContatoEmpresa($conexao, $contato, $cep, $cidade, $estado, $logradouro, $numero, $bairro, $complemento, $idEmpresa)) {
+		$_SESSION["danger"] = "Ocorreu um erro, tente novamente mais tarde! Erro: updateContatoEmpresa";
+		rollback($conexao);
+		header("Location: altera-dados-empresa.php?contato");
+	    die();
+	}
+
+	commitTransacao($conexao, "Ocorreu um erro, tente novamente mais tarde! Erro: commitTransacao", "altera-dados-empresa.php?contato");
+	sucesso("Cadastro atualizado com sucesso!", "altera-dados-empresa.php?contato");
+}

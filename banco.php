@@ -46,6 +46,14 @@ function updateContato($conexao, $contato, $cepCandidato, $estadoCandidato, $cid
     return $resultadoDaInsercao;	
 }
 
+function updateResponsavel($conexao, $nomeResponsavel, $cpfResponsavel, $contatoResponsavel, $emailResponsavel, $nascResponsavel, $idResponsavel) {
+	$query = "UPDATE Responsavel SET nome='{$nomeResponsavel}', cpf='{$cpfResponsavel}', contato='{$contatoResponsavel}',
+			email='{$emailResponsavel}', data_nascimento='{$nascResponsavel}'
+			WHERE idResponsavel={$idResponsavel}";
+	$resultadoDaInsercao = mysqli_query($conexao, $query);
+    return $resultadoDaInsercao;		
+}
+
 function updateCandidato($conexao, $cpfCandidato, $nomeCandidato, $sobrenomeCandidato, $dataNascimentoCandidato, $contatoCandidato,
 				   		 $genero, $emailCandidato, $estadoCivil, $cepCandidato, $ufCandidato, $cidadeCandidato,
 				   	     $ruaCandidato, $numeroRuaCandidato, $bairroCandidato, $ComplementoCandidato, $senhaMd5,
@@ -65,6 +73,12 @@ function deleteDeficiencias($conexao, $idCandidato) {
 				WHERE Candidato_idCandidato = {$idCandidato}";
 	$resultado = mysqli_query($conexao, $query);
 	return $resultado;		
+}
+
+function deleteCandidatura($conexao, $idCandidato, $idVaga) {
+	$query = "DELETE FROM Candidatura WHERE Candidato_idCandidato={$idCandidato} AND Vaga_idVaga={$idVaga}";
+	$resultado = mysqli_query($conexao, $query);
+	return $resultado;
 }
 
 function buscaUmRegistro($conexao, $parametro, $tabela, $where) {

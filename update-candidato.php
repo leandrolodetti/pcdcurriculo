@@ -221,6 +221,7 @@ if (isset($_GET["geral-candidato"]) && $_POST["confirmaUpdate"] == "yes") {
 		}
 	}
 
+	$_SESSION["candidato_logado"] = $email;
 	commitTransacao($conexao, "commitTransacao", "altera-dados-candidato.php");
 	sucesso("Cadastro atualizado com sucesso!", "altera-dados-candidato.php");
 	die();
@@ -228,19 +229,20 @@ if (isset($_GET["geral-candidato"]) && $_POST["confirmaUpdate"] == "yes") {
 }
 
 if (isset($_GET["senha"]) && $_POST["confirmaUpdate"] == "yes") {
-	$email = $usuarioAtual["email"];
-	$senhaAtual = $_POST["senhaAtual"];
-	$senha = md5($_POST["senha"]);
 
-	if (!buscaCandidato($conexao, $email, $senhaAtual)) {
-		$_SESSION["danger"] = "Senha Atual Inválida!";
+	$senhaAtual = md5($usuarioAtual["senha"]);
+	$confirmaSenha = $_POST["senhaAtual"];
+	$novaSenha = md5($_POST["senha"]);
+
+	if ($confirmaSenha != $senhaAtual) {
+		$_SESSION["danger"] = "Senha atual inválida";
 		header("Location: altera-dados-candidato.php?senha");
     	die();
 	}
 
 	iniciarTransacao($conexao, "$iniciarTransacao", "altera-dados-candidato.php?senha");
 
-	if (!updateUmCampo($conexao, "Candidato", "senha", $senha, "idCandidato", $usuarioAtual["idCandidato"])) {
+	if (!updateUmCampo($conexao, "Candidato", "senha", $novaSenha, "idCandidato", $usuarioAtual["idCandidato"])) {
 		$_SESSION["danger"] = "Ocorreu um erro, tente novamente mais tarde! Erro: updateUmCampoSenha";
 		rollback($conexao);
 		header("Location: altera-dados-candidato.php?senha");
@@ -254,9 +256,9 @@ if (isset($_GET["senha"]) && $_POST["confirmaUpdate"] == "yes") {
 if (isset($_GET["contato"]) && $_POST["confirmaUpdate"] == "yes") {
 
 	$contato = $_POST["contato"];
-	$cepCandidato = $_POST["cepCandidato"];
-	$cidadeCandidato = $_POST["cidadeCandidato"];
-	$estadoCandidato = $_POST["estadoCandidato"];
+	$cepCandidato = $_POST["cep"];
+	$cidadeCandidato = $_POST["cidade"];
+	$estadoCandidato = $_POST["estado"];
 	$logradouro = $_POST["logradouro"];
 	$numero = $_POST["numero"];
 	$bairro = $_POST["bairro"];
@@ -273,7 +275,6 @@ if (isset($_GET["contato"]) && $_POST["confirmaUpdate"] == "yes") {
 	}
 	commitTransacao($conexao, "commitTransacao", "altera-dados-candidato.php?contato");
 	sucesso("Cadastro atualizado com sucesso!", "altera-dados-candidato.php?contato");
-	die();
 }
 
 if (isset($_GET["recebe_vagas"]) && $_POST["confirmaUpdate"] == "yes") {
@@ -291,7 +292,6 @@ if (isset($_GET["recebe_vagas"]) && $_POST["confirmaUpdate"] == "yes") {
 
 	commitTransacao($conexao, "commitTransacao", "altera-dados-candidato.php?alerta");
 	sucesso("Cadastro atualizado com sucesso!", "altera-dados-candidato.php?alerta");
-	die();
 }
 
 if (isset($_GET["candidatar"]) && $_GET["vaga"] != "") {
@@ -322,7 +322,91 @@ if (isset($_GET["candidatar"]) && $_GET["vaga"] != "") {
 		sucesso("Candidatura realizada com sucesso!", "vaga.php?id=".$idVaga."&parametro=".$parametro);
 		die();
 	}
+}
 
+if (isset($_GET["responsavel"]) && $_POST["confirmaUpdate"] == "yes") {
+
+	$nomeResponsavel = $_POST["nomeResponsavel"];
+	$cpfResponsavel = $_POST["cpfResponsavel"];
+	$contatoResponsavel = $_POST["contatoResponsavel"];
+	$emailResponsavel = $_POST["emailResponsavel"];
+	$nascResponsavel = $_POST["nascResponsavel"];
+	$idCandidato = $usuarioAtual["idCandidato"];
+
+
+	if ($cpfResponsavel == $usuarioAtual["cpf"]) {
+		$_SESSION["danger"] = "CPF igual ao do candidato";
+		header("Location: altera-dados-candidato.php?responsavel");
+		die();
+	}
+
+	if ($contatoResponsavel == $usuarioAtual["contato"]) {
+		$_SESSION["danger"] = "Contato igual ao do candidato";
+		header("Location: altera-dados-candidato.php?responsavel");
+		die();
+	}
+
+	if ($emailResponsavel == $usuarioAtual["email"]) {
+		$_SESSION["danger"] = "E-mail igual ao do candidato";
+		header("Location: altera-dados-candidato.php?responsavel");
+		die();
+	}
+
+	iniciarTransacao($conexao, "$iniciarTransacao", "altera-dados-candidato.php?responsavel");
+
+		$selectResponsavel = buscaUmRegistro($conexao, $cpfResponsavel, "Responsavel", "cpf");
+
+		if ($selectResponsavel != null) {
+			$idResponsavel = $selectResponsavel["idResponsavel"];
+
+			if (!updateResponsavel($conexao, $nomeResponsavel, $cpfResponsavel, $contatoResponsavel, $emailResponsavel,
+				$nascResponsavel, $idResponsavel)) {
+				$_SESSION["danger"] = "Ocorreu um erro, tente novamente mais tarde! Erro: updateResponsavel";
+				rollback($conexao);
+				header("Location: altera-dados-candidato.php?responsavel");
+	    		die();
+			}
+		}
+		else {
+			if (!insereResponsavel($conexao, $nomeResponsavel, $cpfResponsavel, $contatoResponsavel,
+				$emailResponsavel, $nascResponsavel)) {
+				$_SESSION["danger"] = "Ocorreu um erro, tente novamente mais tarde! Erro: insereResponsavel";
+				rollback($conexao);
+				header("Location: altera-dados-candidato.php?responsavel");
+	    		die();
+			}
+			$selectResponsavel = buscaUmRegistro($conexao, $cpfResponsavel, "Responsavel", "cpf");
+			$idResponsavel = $selectResponsavel["idResponsavel"];
+		}
+
+		if (!updateUmCampo($conexao, "Candidato", "Responsavel_idResponsavel", $idResponsavel, "idCandidato", $idCandidato)) {
+			$_SESSION["danger"] = "Ocorreu um erro, tente novamente mais tarde! Erro: updateUmCampoResponsavel";
+			rollback($conexao);
+			header("Location: altera-dados-candidato.php?responsavel");
+	    	die();
+		}
+		commitTransacao($conexao, "commitTransacao", "altera-dados-candidato.php?responsavel");
+		sucesso("Responsável atualizado com sucesso!", "altera-dados-candidato.php?responsavel");
+		die();
+}
+
+if (isset($_GET["desfazer-candidatura"]) && $_GET["vaga"] != null) {
+
+	$idCandidato = $usuarioAtual["idCandidato"];
+	$idVaga = $_GET["vaga"];
+
+	iniciarTransacao($conexao, "$iniciarTransacao", "historico-vagas.php");
+
+	if (!deleteCandidatura($conexao, $idCandidato, $idVaga)) {
+		$_SESSION["danger"] = "Ocorreu um erro, tente novamente mais tarde! Erro: deleteCandidatura";
+		rollback($conexao);
+		header("Location: historico-vagas.php");
+	    die();
+	}
+
+	commitTransacao($conexao, "commitTransacao", "historico-vagas.php");
+	sucesso("Candidatura desfeita com sucesso!", "historico-vagas.php");
+	die();
 }
 
 header("Location: candidato.php");

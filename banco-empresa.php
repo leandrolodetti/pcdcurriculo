@@ -6,12 +6,55 @@ function listaVagaEmpresa($conexao, $idVaga) {
 	return mysqli_fetch_assoc($resultado);
 }
 
+function listaUltimasVagas($conexao, $limite) {
+	$vagas = array();
+	$query = "SELECT * FROM Vaga ORDER BY data_atualizacao DESC LIMIT {$limite}";
+
+	$resultado = mysqli_query($conexao, $query);
+
+	while ($vaga = mysqli_fetch_assoc($resultado)) {
+		array_push($vagas, $vaga);
+	}
+	return $vagas;
+}
+
 function listaCategoriaVaga($conexao, $idVaga) {
 	$query = "SELECT Categoria.idCategoria, Categoria.descricao FROM Categoria
 			INNER JOIN Vaga ON Categoria.idCategoria = Vaga.Categoria_idCategoria
 			WHERE Vaga.idVaga = {$idVaga}";
 	$resultado = mysqli_query($conexao, $query);
 	return mysqli_fetch_assoc($resultado);
+}
+
+function listaCandidaturaCandidato($conexao, $idEmpresa) {
+	$candidaturas = array();
+	$query = "SELECT Candidatura.Vaga_idVaga, Candidato.nome, Candidatura.data_candidatura, Candidatura.Candidato_idCandidato,
+				Candidatura.data_contratacao, Vaga.titulo FROM Candidatura INNER JOIN Candidato ON Candidatura.Candidato_idCandidato=Candidato.idCandidato
+				INNER JOIN Vaga ON Candidatura.Vaga_idVaga=Vaga.idVaga
+				WHERE Vaga.Empresa_idEmpresa={$idEmpresa}";
+
+	$resultado = mysqli_query($conexao, $query);
+
+	while ($candidatura = mysqli_fetch_assoc($resultado)) {
+		array_push($candidaturas, $candidatura);
+	}
+	return $candidaturas;
+}
+
+function buscaCurriculo($conexao, $idCandidato) {
+	$query = "SELECT Candidato.nome AS nome_candidato, Candidato.sobrenome AS sobrenome_candidato, Curriculo.salario, Curriculo.area,
+				Categoria.descricao AS desc_categoria, Candidato.logradouro, Candidato.num_logradouro, Candidato.cep, Candidato.cidade,
+				Candidato.estado, Candidato.bairro, Candidato.email AS email_candidato, Candidato.contato AS contato_candidato,
+				Candidato.cpf AS cpf_candidato, Candidato.estado_civil, Candidato.data_nascimento AS nasc_candidato, Candidato.cid10,
+				Curriculo.objetivo, Nivel.descricao AS nivel_descricao, Curriculo.resumo_profissional, Curriculo.nivel_escolar,
+				Curriculo.graduacao, Curriculo.curso_complemento, Curriculo.idiomas, Curriculo.historico_profissional
+				FROM Candidato INNER JOIN Responsavel ON Responsavel.idResponsavel=Candidato.Responsavel_idResponsavel
+				INNER JOIN Curriculo ON Curriculo.Candidato_idCandidato=Candidato.idCandidato
+                INNER JOIN Categoria ON Categoria.idCategoria=Curriculo.area
+                INNER JOIN Nivel ON Nivel.idNivel=Curriculo.nivel_area
+				WHERE Candidato.idCandidato={$idCandidato}";
+	$resultado = mysqli_query($conexao, $query);
+	return mysqli_fetch_assoc($resultado);			
 }
 
 function listaNivelVaga($conexao, $idNivel) {
@@ -202,4 +245,20 @@ function buscaEmpresa($conexao, $cnpj, $senha) {
 	$query = "select * from Empresa where cnpj = '{$cnpj}' and senha = '{$senha}'";
 	$resultado = mysqli_query($conexao, $query);
 	return mysqli_fetch_assoc($resultado);
+}
+
+function updateGeralEmpresa($conexao, $razao_social, $fantasia, $emailEmpresa, $cnpj, $responsavelRh, $ramoAtividade, $idEmpresa) {
+	$query = "UPDATE Empresa SET razao_social='{$razao_social}', fantasia='{$fantasia}', email='{$emailEmpresa}',
+			cnpj='{$cnpj}', responsavel='{$responsavelRh}', ramo_atividade='{$ramoAtividade}'
+			WHERE idEmpresa={$idEmpresa}";
+	$resultado = mysqli_query($conexao, $query);
+	return $resultado;
+}
+
+function updateContatoEmpresa($conexao, $contato, $cep, $cidade, $estado, $logradouro, $numero, $bairro, $complemento, $idEmpresa) {
+	$query = "UPDATE Empresa SET contato='{$contato}', cep='{$cep}', cidade='{$cidade}', estado='{$estado}',
+			logradouro='{$logradouro}', num_logradouro='{$numero}', bairro='{$bairro}', complemento='{$complemento}'
+			WHERE idEmpresa={$idEmpresa}";
+	$resultado = mysqli_query($conexao, $query);
+	return $resultado;		
 }

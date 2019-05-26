@@ -16,7 +16,7 @@ verificaCandidato();
 </div>
 
 <div class="container-fluid border-bottom border-primary" style="padding-bottom: 20px;"></div>
-<div class="container"><a class="text-danger text-bold" onClick="history.go(-1)"><i class="far fa-arrow-alt-circle-left" style="font-size: 45px; padding: 10px;"></i></a></div>
+<div class="container"><a class="text-danger text-bold" href="candidato.php"><i class="far fa-arrow-alt-circle-left" style="font-size: 45px; padding: 10px;"></i></a></div>
 
 <div class="container">
     <div class="row">
@@ -48,7 +48,7 @@ verificaCandidato();
                 require_once("altera-contato-candidato.php");
               }
               elseif (isset($_GET["responsavel"])) {
-                require_once("#");
+                require_once("altera-contato-responsavel.php");
               }
               elseif (isset($_GET["alerta"])) {
                 require_once("altera-alerta-candidato.php");

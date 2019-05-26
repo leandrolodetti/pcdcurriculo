@@ -1,40 +1,40 @@
 <?php
-require_once("logica-candidato.php");
-verificaCandidato();
+require_once("logica-empresa.php");
+verificaEmpresa();
 ?>
+
 <div class="border-bottom border-success" style="padding-top: 25px;">
-  <h4 class="text-left font-weight-normal">Contato</h4>
-  <p class="text-left font-weight-normal">Altere seus dados de contato</p>
+    <h4 class="text-left font-weight-normal">Contato</h4>
+    <p class="text-left font-weight-normal">Altere seus dados de contato</p>
 </div>
 
-<form action="update-candidato.php?contato" method="post" onsubmit="return validaFormAlteraContato();">
-  <div class="row">
-    <div class="col-sm">
-		<input type="hidden" name="confirmaUpdate" value="yes">
+<form action="update-empresa.php?contato" method="post" onsubmit="return validaFormAlteraContato();">
+    <div class="row">
+        <div class="col-sm">
+        	<input type="hidden" name="confirmaUpdate" value="yes">
 
- 			<div class="form-group">
- 				<label for="idAlteraContato">Contato</label>
- 				<input type="text" value="<?php echo $usuarioAtual ["contato"]; ?>" class="form-control" id="idAlteraContato" name="contato" style="min-width: 200px; max-width: 200px;">
+         	<div class="form-group">
+         		<label for="idAlteraContato">Contato</label>
+         		<input type="text" value="<?php echo $usuarioAtual ["contato"]; ?>" class="form-control" id="idAlteraContato" name="contato" style="min-width: 200px; max-width: 200px;">
                 <small id="idSmallAlteraContato" class="form-text text-danger"></small>
- 			</div>
+         	</div>
 
- 			<div class="form-group">
- 				<label for="cep">CEP</label>
- 				<input type="text" class="form-control" name="cep" value="<?php echo $usuarioAtual ["cep"]; ?>" onblur="pesquisacep();" id="cep" style="min-width: 200px; max-width: 200px;">
- 				<small id="idSmallCep" class="form-text text-danger"></small>
- 			</div>
+         	<div class="form-group">
+         		<label for="cep">CEP</label>
+         		<input type="text" class="form-control" name="cep" value="<?php echo $usuarioAtual ["cep"]; ?>" onblur="pesquisacep();" id="cep" style="min-width: 200px; max-width: 200px;">
+         		<small id="idSmallCep" class="form-text text-danger"></small>
+         	</div>
 
- 			<div class="form-group">
- 				<label for="cidade">Cidade</label>
- 				<input type="text" class="form-control" name="cidade" value="<?php echo $usuarioAtual ["cidade"]; ?>" readonly="readonly" id="cidade" style="min-width: 300px; max-width: 300px;">
- 			</div>
+         	<div class="form-group">
+         		<label for="cidade">Cidade</label>
+         		<input type="text" class="form-control" name="cidade" value="<?php echo $usuarioAtual ["cidade"]; ?>" readonly="readonly" id="cidade" style="min-width: 300px; max-width: 300px;">
+         	</div>
 
- 			<div class="form-group">
- 				<label for="uf">Estado</label>
- 				<input type="text" class="form-control" name="estado" value="<?php echo $usuarioAtual ["estado"]; ?>" readonly="readonly" id="uf" style="min-width: 100px; max-width: 100px;">
- 			</div>
-
-    </div>
+         	<div class="form-group">
+         		<label for="uf">Estado</label>
+         		<input type="text" class="form-control" name="estado" value="<?php echo $usuarioAtual ["estado"]; ?>" readonly="readonly" id="uf" style="min-width: 100px; max-width: 100px;">
+         	</div>
+        </div>
 
     <div class="col-sm">
 

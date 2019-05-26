@@ -1,4 +1,4 @@
-<?php require_once("cabecalho.php") ?>
+<?php require_once("cabecalho.php"); ?>
 
 <!--body-->
   <div id="containerCabecalho" class="container-fluid">
@@ -52,31 +52,18 @@
     <h2 class="text-center" id="txtContratacoes">Vagas Recentes</h2>
 
     <div class="container">
-      <!--div class="row">
-        <?php
-          for($i=0;$i<6;$i++) {
-        ?>
-            <div class="col-sm-4" id="cardVagas">
-              <div class="card">
-                <div class="card-body">
-                  <h5 class="card-title">Desenvolvedor de Sistemas Sênior / Arquitetura</h5>
-                  <p class="card-text">Data: 22/03/2019</p>
-                  <p class="card-text">Empresa: Universidade de Mogi das Cruzes</p>
-                  <p class="card-text">Local: São Paulo</p>
-                </div>
-              </div>
-            </div>
-        <?php
-          }
-        ?>
-      </div-->
     <div class="row" style="padding-bottom: 30px;">
       <div class="col-sm">
-      <a class="badge badge-pill badge-secondary" style="/*font-size: 14px; */padding: 12px; margin-right: 10px; margin-top: 10px;" href="">Desenvolvedor de Sistemas Sênior / Arquitetura</a>
-      <a class="badge badge-pill badge-secondary" style="/*font-size: 14px; */padding: 12px; margin-right: 10px; margin-top: 10px;" href="">Desenvolvedor de Sistemas</a>
-      <a class="badge badge-pill badge-secondary" style="padding: 12px; margin-right: 10px; margin-top: 10px;" href="">Gerente de RH</a>
-      <a class="badge badge-pill badge-secondary" style="padding: 12px; margin-right: 10px; margin-top: 10px;" href="">Estágio em Administração</a>
-      <a class="badge badge-pill badge-secondary" style="padding: 12px; margin-right: 10px; margin-top: 10px;" href="">Analista de Negócios</a>
+        <?php
+          $cores = array("badge-secondary", "badge-primary", "badge-success", "badge-warning");
+          $ultimasVagas = listaUltimasVagas($conexao, 10);
+          foreach ($ultimasVagas as $vaga) {
+            $num = rand(0,3);
+          ?>  
+            <a class="badge badge-pill <?php echo $cores[$num]; ?>" style="padding: 12px; margin-right: 10px; margin-top: 10px;" href=""><?php echo $vaga["titulo"]; ?></a>
+          <?php
+          }
+        ?>
       </div>
       </div>
     </div>

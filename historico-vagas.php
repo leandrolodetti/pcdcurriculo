@@ -2,29 +2,25 @@
 require_once("cabecalho.php");
 require_once("logica-candidato.php");
 
+verificaCandidato();
+
 if (isset($_SESSION["candidato_logado"])) {
 	$idCandidato = $usuarioAtual["idCandidato"];
 	$vagas = listaHistorico($conexao, $idCandidato);
-	$href = "candidato.php";
-	$msg = "Área do candidato";
+	//$href = "candidato.php";
+	//$msg = "Área do candidato";
 	$msgBotao = "Desfazer candidatura";
-	$cor = "#5EC998";
+	//$cor = "#5EC998";
 	$corBread = "text-primary";
-}
-elseif (isset($_SESSION["empresa_logada"])) {
-	$cor = "#6f42c1";
-}
-else{
-	verificaCandidato();
 }
 
 ?>
 
-<div class="container-fluid" style="background-color: <?php echo $cor; ?>;">
+<div class="container-fluid" style="background-color: #5EC998;">
 	<div class="container">
 		<nav aria-label="breadcrumb">
 	  		<ol class="breadcrumb" style="background-color: transparent; padding-left: 0;">
-	  			<li class="breadcrumb-item"><a class="font-weight-bold <?php echo $corBread; ?>" href="<?php echo $href; ?>"><?php echo $msg; ?></a></li>
+	  			<li class="breadcrumb-item"><a class="font-weight-bold text-primary" href="candidato.php">Área do candidato</a></li>
 	  			<li class="breadcrumb-item active font-weight-bold" style="color: white;" aria-current="page">Histórico</li>
   			</ol>
 		</nav>
@@ -59,7 +55,7 @@ else{
 						<td><a href="vaga.php?id=<?php echo $vaga["idVaga"]."&parametro=".$vaga["titulo"] ?>"><?php echo $vaga["titulo"]; ?></a></td>
 						
 						<td><?php echo $dataBr; ?></td>
-						<td><a class="btn btn-danger btn-sm" href="#"><?php echo $msgBotao; ?></a></td>
+						<td><a class="btn btn-danger btn-sm" href="<?php echo "update-candidato.php?desfazer-candidatura&vaga=".$vaga["idVaga"]; ?>"><?php echo $msgBotao; ?></a></td>
 					</tr>
 			<?php
 				}			

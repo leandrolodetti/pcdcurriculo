@@ -75,12 +75,12 @@ elseif ($usuarioAtual["estado_civil"] == "Viúvo(a)") {
         <div class="col-sm">
             <div class="form-group">
                 <label for="idAlteraNomeCandidato">Candidato</label>
-                <input type="text" class="form-control" id="idAlteraNomeCandidato" value="<?php echo $usuarioAtual ["nome"]; ?>" name="nome" style="min-width: 300px; max-width: 300px;">
+                <input type="text" class="form-control" maxlength="30" id="idAlteraNomeCandidato" value="<?php echo $usuarioAtual ["nome"]; ?>" name="nome" style="min-width: 300px; max-width: 300px;">
                 <small id="idSmallAlteraNome" class="form-text text-muted"></small>
             </div>
             <div class="form-group">
                 <label for="idAlteraSobrenomeCandidato">Sobrenome</label>
-                <input type="text" class="form-control" value="<?php echo $usuarioAtual ["sobrenome"]; ?>" name="sobrenome" id="idAlteraSobrenomeCandidato" style="min-width: 300px; max-width: 300px;">
+                <input type="text" class="form-control" maxlength="30" value="<?php echo $usuarioAtual ["sobrenome"]; ?>" name="sobrenome" id="idAlteraSobrenomeCandidato" style="min-width: 300px; max-width: 300px;">
                 <small id="idSmallAlteraSobrenome" class="form-text text-muted"></small>
             </div>
             <div class="form-group">
@@ -121,7 +121,7 @@ elseif ($usuarioAtual["estado_civil"] == "Viúvo(a)") {
         <div class="col-sm">
             <div class="form-group">
                 <label for="idAlteraCid">CID</label>
-                <input type="text" class="form-control" id="idAlteraCid" value="<?php echo $usuarioAtual ["cid10"]; ?>" name="cid" style="min-width: 300px; max-width: 300px;">
+                <input type="text" class="form-control" maxlength="45" id="idAlteraCid" value="<?php echo $usuarioAtual ["cid10"]; ?>" name="cid" style="min-width: 300px; max-width: 300px;">
                 <small id="idSmallAlteraCid" class="form-text text-muted"></small>
             </div>
             <legend class="col-form-label col-sm-0 pt-0">Gênero</legend>
@@ -150,12 +150,12 @@ elseif ($usuarioAtual["estado_civil"] == "Viúvo(a)") {
             </div>      
             <div class="form-group">
                 <label for="idAlteraEmailCandidato">E-mail</label>
-                <input type="text" class="form-control" name="email" value="<?php echo $usuarioAtual ["email"]; ?>" id="idAlteraEmailCandidato" style="min-width: 300px; max-width: 300px;">
+                <input type="text" class="form-control" maxlength="45" name="email" value="<?php echo $usuarioAtual ["email"]; ?>" id="idAlteraEmailCandidato" style="min-width: 300px; max-width: 300px;">
                 <small id="idSmallAlteraEmail" class="form-text text-muted"></small>
             </div>
             <div class="form-group">
                 <label for="idConfirmarEmailAlteradoCandidato">Confirmar E-mail</label>
-                <input type="text" class="form-control" id="idConfirmarEmailAlteradoCandidato" style="min-width: 300px; max-width: 300px;">
+                <input type="text" class="form-control" maxlength="45" id="idConfirmarEmailAlteradoCandidato" style="min-width: 300px; max-width: 300px;">
                 <small id="idSmallConfirmaEmail" class="form-text text-muted"></small>
             </div>
         </div>

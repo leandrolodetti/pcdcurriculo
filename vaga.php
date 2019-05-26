@@ -46,7 +46,9 @@ $dataBr = $datas[2]."/".$datas[1]."/".$datas[0];
 </div-->
 
 <div class="container-fluid border-bottom border-primary" style="padding-bottom: 20px;"></div>
-<div class="container"><a class="text-danger text-bold" onClick="history.go(-1)"><i class="far fa-arrow-alt-circle-left" style="font-size: 45px; padding: 10px;"></i></a></div>
+<div class="container">
+	<a class="text-danger text-bold" onClick="history.go(-1)"><i class="far fa-arrow-alt-circle-left" style="font-size: 45px; padding: 10px;"></i></a>
+</div>
 
 <div class="container" style="padding-bottom: 20px;">
 	<div class="row">

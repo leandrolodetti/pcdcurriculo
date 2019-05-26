@@ -66,7 +66,10 @@ if (isset($_GET["parametro"]) && $_GET["parametro"] != null) {
 				</nav>
 			</div>
 		</div>
-		<div class="container"><a class="text-danger text-bold" onClick="history.go(-1)"><i class="far fa-arrow-alt-circle-left" style="font-size: 45px; padding: 10px;"></i></a></div>
+		<div class="container">
+			<a class="text-danger text-bold" onClick="history.go(-1)"><i class="far fa-arrow-alt-circle-left" style="font-size: 45px; padding: 10px;"></i></a>
+		</div>
+
 		<div class="container">
 			<div class="border-bottom" style="padding-top: 15px;">
 			  <h4 class="text-left font-weight-normal"><?php echo count($vagasEncontradas)." vagas encontradas para ".$parametro; ?></h4>

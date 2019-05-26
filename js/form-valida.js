@@ -8,7 +8,7 @@ $("#idAlteraCPF").mask("000.000.000-00");
 $("#idContato").mask("(00)000000000");
 $("#idContatoEmpresa").mask("(00)000000000");
 $("#idContatoResponsavel").mask("(00)000000000");
-$("#idAlteraContatoCandidato").mask("(00)000000000");
+$("#idAlteraContato").mask("(00)000000000");
 $("#inputNumero").mask("00000");
 $("#idFormLoginCnpj").mask("00.000.000/0000-00");
 $("#idCNPJ").mask("00.000.000/0000-00");
@@ -519,11 +519,11 @@ function calcularIdade(id) {
 			*/
 	   	if (!validarNomeResponsavel() ||
 	   	 	!validarCPF("idCpfResponsavel","idSmallCpfResponsavel","CPF Inválido") ||
-	   	 	!diferencaCampo("idCpf","idCpfResponsavel","idSmallCpfResponsavel","CPF igual do candidato") ||
+	   	 	!diferencaCampo("idCpf","idCpfResponsavel","idSmallCpfResponsavel","CPF igual ao do candidato") ||
 	   	 	!validarContatoResponsavel() ||
-	   	 	!diferencaCampo("idContato","idContatoResponsavel","idSmallContatoResponsavel","Contato igual do candidato") ||
+	   	 	!diferencaCampo("idContato","idContatoResponsavel","idSmallContatoResponsavel","Contato igual ao do candidato") ||
 	   	 	!validarEmail("idEmailResponsavel", "idSmallEmailResponsavel", "E-mail Inválido") ||
-	   	 	!diferencaCampo("idEmail","idEmailResponsavel","idSmallEmailResponsavel","E-mail igual do candidato") ||
+	   	 	!diferencaCampo("idEmail","idEmailResponsavel","idSmallEmailResponsavel","E-mail igual ao do candidato") ||
 	   	 	!validaNumCaracteres("idNascResponsavel","idSmallNascResponsavel",10,"Data Inválida") ||
 	   	 	!calcularIdadeResponsavel("idNascResponsavel")
 	   	 	) {
@@ -610,11 +610,11 @@ function validaForm() {
 }
 
 function validaFormAlteraContato() {
-	if (!validaNumCaracteres("idAlteraContatoCandidato","idSmallAlteraContato",12,"Número inválido") || //validar contato candidato
+	if (!validaNumCaracteres("idAlteraContato","idSmallAlteraContato",12,"Número inválido") || //validar contato
 		!validarCep() ||
-		!validaNumCaracteres("rua", "idSmallAlteraLogradouro", 3, "Endereço Inválido") || //validar logradouro candidato
-		!validaNumCaracteres("idAlteraContatoCandidatoNumero", "idSmallNumero", 1, "Número Inválido") || //validar numero logradouro candidato
-		!validaNumCaracteres("bairro", "idSmallBairro", 3, "Campo Inválido") //validar bairro candidato
+		!validaNumCaracteres("rua", "idSmallAlteraLogradouro", 3, "Endereço Inválido") || //validar logradouro
+		!validaNumCaracteres("idAlteraContatoNumero", "idSmallNumero", 1, "Número Inválido") || //validar numero logradouro
+		!validaNumCaracteres("bairro", "idSmallBairro", 3, "Campo Inválido") //validar bairro
 		) {
 		return false;
 	}
@@ -645,6 +645,8 @@ function validaFormEmpresa() {
 function validaAlteraGeralEmpresa() {
 	if (!validaNumCaracteres("idAlteraRazaoSocial","idSmallRazaoSocial",3,"Razão social inválida") ||
 		!validaNumCaracteres("idAlteraFantasia","idSmallFantasia",3,"Nome fantasia inválido") ||
+		!validaNumCaracteres("idAlteraResponsavelRh","idSmallAlteraResponsavelRh",3,"Nome inválido") ||
+		!validaNumCaracteres("idAlteraRamo","idSmallAlteraRamo",3,"Campo inválido") ||
 		!validarCNPJ("idAlteraCnpj", "idSmallCnpj", "CNPJ inválido") ||
 		!validarEmail("idAlteraEmailEmpresa", "idSmallEmailEmpresa", "E-mail Inválido") ||
 		!confirmarEmail("idAlteraEmailEmpresa","idConfirmarEmailEmpresa","idSmallConfirmaEmailEmpresa","E-mails não conferem!")
@@ -740,12 +742,33 @@ function validaAlteraGeralCandidato() {
 	return true;
 }
 
-function validaAlteraSenhaCandidato() {
-	if (!validaNumCaracteres("idAlteraSenhaAtual","idSmallSenhaCandidato",6,"Campo inválido") ||
-		!validarSenha("idAlteraSenhaCandidato", "idSmallAlteraSenhaCandidato", 6, "Campo Inválido") ||
-		!confirmarSenha("idAlteraSenhaCandidato", "idConfirmarSenhaAlteraCandidato", "idSmallConfirmaSenhaCandidato", "Senhas não conferem!")
+function validaAlteraSenha() {
+	if (!validaNumCaracteres("idAlteraSenhaAtual","idSmallAlteraSenha",6,"Campo inválido") ||
+		!validarSenha("idAlteraNovaSenha", "idSmallAlteraNovaSenha", 6, "Campo Inválido") ||
+		!confirmarSenha("idAlteraNovaSenha", "idConfirmarAlteraSenha", "idSmallConfirmaAlteraSenha", "Senhas não conferem!")
 		) {
 		return false;
 	}
 	return true;
+}
+
+function validaAlteraResponsavel() {
+	if (!validaNumCaracteres("idNomeResponsavel","idSmallNomeResponsavel",3,"Nome inválido") ||
+	 	!validarCPF("idCpfResponsavel","idSmallCpfResponsavel","CPF Inválido") ||
+	 	!validaNumCaracteres("idContatoResponsavel","idSmallContatoResponsavel",12,"Número inválido") ||
+	 	!validarEmail("idEmailResponsavel", "idSmallEmailResponsavel", "E-mail Inválido") ||
+	 	!validaNumCaracteres("idNascResponsavel","idSmallNascResponsavel",10,"Data Inválida") ||
+	 	!calcularIdadeResponsavel("idNascResponsavel")
+	 	) {
+		return false;
+	}
+	return true;
+}
+
+function validaContratacao() {
+
+	if (confirm("Confirma contratação do candidato ?")) {
+		return true;
+	}
+	return false;
 }

@@ -19,6 +19,9 @@ $vagas = listaVagas($conexao, $usuarioAtual["idEmpresa"]);
 </div>
 
 <div class="border-bottom border-primary" style="padding-bottom: 20px;"></div>
+<div class="container">
+	<a class="text-danger text-bold" href="empresa.php"><i class="far fa-arrow-alt-circle-left" style="font-size: 45px; padding: 10px;"></i></a>
+</div>
 
 <div class="container" style="padding-top: 10px;">
 	<ul class="nav nav-pills">
@@ -28,7 +31,7 @@ $vagas = listaVagas($conexao, $usuarioAtual["idEmpresa"]);
 	</ul>
 </div>
 
-<div class="container" style="padding-top: 30px;">
+<div class="container" style="padding-top: 30px; padding-bottom: 30px;">
 	<!--form class="form-inline my-2 my-lg-1">
       <input class="form-control mr-sm-2" type="search" placeholder="Pesquisar" aria-label="Pesquisar">
     </form-->

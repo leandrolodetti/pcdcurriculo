@@ -1,6 +1,6 @@
 <?php
-require_once("logica-candidato.php");
-verificaCandidato();
+require_once("logica-empresa.php");
+verificaEmpresa();
 ?>
 <div class="border-bottom border-primary" style="padding-top: 25px;">
   <h4 class="text-left font-weight-normal">Senha</h4>
@@ -8,7 +8,7 @@ verificaCandidato();
 </div>
 
 <div>
-	<form method="post" onsubmit="return validaAlteraSenha();" action="update-candidato.php?senha" style="min-width: 300px; max-width: 300px; padding-top: 15px;">
+	<form method="post" onsubmit="return validaAlteraSenha();" action="update-empresa.php?senha" style="min-width: 300px; max-width: 300px; padding-top: 15px;">
 		<input type="hidden" name="confirmaUpdate" value="yes">
 			<div class="form-group">
 				<label for="idAlteraSenhaAtual">Senha Atual</label>

@@ -1,7 +1,5 @@
 <?php
 require_once("cabecalho.php");
-require_once("conecta.php");
-require_once("banco.php");
 require_once("logica-candidato.php");
 verificaCandidato();
 
@@ -9,7 +7,6 @@ $deficiencias = listaDeficienciasCandidato($conexao, $usuarioAtual ["idCandidato
 $CurriculoAtual = buscaUmRegistro($conexao, $usuarioAtual["idCandidato"], "Curriculo", "Candidato_idCandidato");
 
 $data = $usuarioAtual ["data_nascimento"];
-
 $datas = explode("/", $data);
 $dataNascimento = $datas[2].$datas[1].$datas[0];
 $date = new DateTime($dataNascimento);
@@ -34,7 +31,7 @@ $dataBr = $dataExplode[2]."/".$dataExplode[1]."/".$dataExplode[0];
 </div>
 
 <div class="container-fluid border-bottom border-primary" style="padding-bottom: 20px;"></div>
-<div class="container"><a class="text-danger text-bold" onClick="history.go(-1)"><i class="far fa-arrow-alt-circle-left" style="font-size: 45px; padding: 10px;"></i></a></div>
+<div class="container"><a class="text-danger text-bold" href="candidato.php"><i class="far fa-arrow-alt-circle-left" style="font-size: 45px; padding: 10px;"></i></a></div>
 <div class="container">
 	<div class="row">
 		<div class="col-sm-8">
