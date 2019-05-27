@@ -1,7 +1,5 @@
 <?php
 require_once("cabecalho.php");
-require_once("banco.php");
-require_once("conecta.php");
 require_once("logica-empresa.php");
 verificaEmpresa();
 
@@ -20,11 +18,13 @@ $data = date('Y/m/d');
 $idEmpresa = $usuarioAtual["idEmpresa"];
 $buscaVagaRepetida = buscaVagaRepetida($conexao, $titulo, $idEmpresa);
 
-$DefFisica = 0;
-$DefFala = 0;
-$DefAuditiva = 0;
-$DefMental = 0;
-$DefVisual = 0;
+$DefFisica = 0; $DefFisica = $_POST["DefFisica"];
+$DefFala = 0; $DefFala = $_POST["DefFala"];
+$DefAuditiva = 0; $DefAuditiva = $_POST["DefAuditiva"];
+$DefMental = 0; $DefMental = $_POST["DefMental"];
+$DefVisual = 0; $DefVisual = $_POST["DefVisual"];
+
+$arrayRestricoes = array($DefFisica, $DefFala, $DefAuditiva, $DefMental, $DefVisual);
 
 if ($titulo == null || $salario == null) {
 	$_SESSION["danger"] = "Ocorreu um erro, tente novamente mais tarde! Erro: FormNull";
@@ -37,7 +37,7 @@ if ($buscaVagaRepetida["ativa"] == "S") {
 	header("Location: form-cadastro-vaga.php");
     die();
 }
-
+/*
 if (isset($_POST["DefFisica"])) {
 	$DefFisica = $_POST["DefFisica"];
 }
@@ -53,7 +53,7 @@ if (isset($_POST["DefMental"])) {
 if (isset($_POST["DefVisual"])) {
 	$DefVisual = $_POST["DefVisual"];
 }
-
+*/
 iniciarTransacao($conexao, "iniciarTransacao", "form-cadastro-vaga.php");
 
 if ($buscaVagaRepetida["ativa"] == "N") {
@@ -140,6 +140,11 @@ if ($buscaVagaRepetida["ativa"] == "N") {
 		    die();
 		}
 	}
+
+	$listaEmail = listaCandidatoEnviarEmail($conexao, $categoria, $arrayRestricoes);
+	var_dump($listaEmail);
+	sleep(20);
+
 	commitTransacao($conexao, "commitTransacao", "form-cadastro-vaga.php");
 	sucesso("Vaga ativada com sucesso!", "form-cadastro-vaga.php");
 /*
@@ -232,6 +237,10 @@ if ($DefVisual != 0) {
 	    die();
 	}
 }
+
+$listaEmail = listaCandidatoEnviarEmail($conexao, $categoria, $arrayRestricoes);
+var_dump($listaEmail);
+sleep(20);
 
 commitTransacao($conexao, "commitTransacao", "form-cadastro-vaga.php");
 sucesso("Vaga cadastrada com sucesso!", "form-cadastro-vaga.php");

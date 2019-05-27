@@ -15,6 +15,8 @@ $date = new DateTime($dataNascimento);
 $interval = $date->diff( new DateTime( date('Y-m-d') ) ); 
 $idadeCandidato = $interval->format( '%Y' );
 
+$padding = "padding-top: 30px;";
+
 ?>
 
 <div class="container-fluid" style="background-color: #6f42c1;">
@@ -54,22 +56,29 @@ $idadeCandidato = $interval->format( '%Y' );
 			</div>
 
 			<ul class="nav" style="padding: 10px; padding-left: 0px;">
-				<!--li class="nav-item">
-					<i class="nav-link fas fa-coins rounded float-left text-primary" style="font-size: 25px;"><span class="text-dark"><?php echo " ".$curriculoAtual["salario"]; ?></span></i>
-				</li-->
 				<li class="nav-item">
 					<button type="button" class="btn border-0" data-toggle="modal" data-target="#modalExemplo" style="background-color: transparent; padding: 0px;">
 					  <i class="nav-link fas fa-map-marker-alt rounded float-left text-success" style="font-size: 25px;"><span class="text-dark"><?php echo " ".$curriculoAtual["cidade"]; ?></span></i>
 					</button>
 				</li>
-				<!--li class="nav-item">
-					<i class="nav-link fas fa-address-card rounded float-left text-primary" style="font-size: 25px;"><span class="text-dark"><?php echo " ".$curriculoAtual["desc_categoria"]; ?></span></i>
-				</li-->
 			</ul>
 
 			<div class="container border-bottom border-primary" style="padding-bottom: 20px;"></div>	
-
-			<div class="form-group" style="padding-top: 30px;">
+			<?php
+			if ($curriculoAtual["Responsavel_idResponsavel"] != 1) {
+				$padding = "padding-top: 10px;";
+			?>
+				<div class="form-group" style="padding-top: 30px;">
+				<h5 class="text-dark">Responsável</h5>
+				<p class="text-left"><?php echo $curriculoAtual["nome_responsavel"]; ?></p>
+				<p class="text-left"><?php echo "CPF: ".$curriculoAtual["cpf_responsavel"]; ?></p>
+				<p class="text-left"><?php echo "Contato: ".$curriculoAtual["contato_responsavel"]; ?></p>
+				<p class="text-left"><?php echo "E-mail: ".$curriculoAtual["email_responsavel"]; ?></p>
+			</div>
+			<?php
+			}
+			?>
+			<div class="form-group" style="<?php echo $padding; ?>">
 				<h5 class="text-dark">Deficiências</h5>
 				<?php
 					foreach ($deficiencias as $def) {

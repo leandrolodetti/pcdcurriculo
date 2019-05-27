@@ -28,9 +28,11 @@ if (isset($_SESSION["candidato_logado"])) {
 </div>
 
 <div class="border-bottom border-primary" style="padding-bottom: 20px;"></div>
-<div class="container"><a class="text-danger text-bold" onClick="history.go(-1)"><i class="far fa-arrow-alt-circle-left" style="font-size: 45px; padding: 10px;"></i></a></div>
+<div class="container">
+	<a class="text-danger text-bold" href="candidato.php"><i class="far fa-arrow-alt-circle-left" style="font-size: 45px; padding: 10px;"></i></a>
+</div>
 
-<div class="container" style="padding-top: 30px; padding-bottom: 401px;">
+<div class="container" style="padding-top: 30px; padding-bottom: 520px;">
 	<div class="table-responsive-sm">
 		<table class="table">
 		  <thead>
@@ -64,7 +66,7 @@ if (isset($_SESSION["candidato_logado"])) {
 		  </tbody>
 		</table>
 	</div>
-	<button class="btn btn-primary" onClick="history.go(-1)">Voltar</button>
+	<a class="btn btn-primary" href="candidato.php">Voltar</a>
 </div>
 
 <?php require_once("rodape.php"); ?>

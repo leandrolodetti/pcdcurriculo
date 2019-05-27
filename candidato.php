@@ -17,7 +17,7 @@ $CurriculoAtual = buscaUmRegistro($conexao, $usuarioAtual["idCandidato"], "Curri
 
 <div class="container-fluid border-bottom border-primary" style="padding-bottom: 20px;"></div>
 
-<div class="container" style="padding-top: 30px; padding-bottom: 131px;">
+<div class="container" style="padding-top: 30px; padding-bottom: 190px;">
 	<div class="row">
 		<div class="col-sm-4">
 			<h3 class="text-left font-weight-normal"><?php echo $usuarioAtual ["nome"]; ?></h3>

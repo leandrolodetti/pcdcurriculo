@@ -18,7 +18,7 @@ verificaCandidato();
 <div class="container-fluid border-bottom border-primary" style="padding-bottom: 20px;"></div>
 <div class="container"><a class="text-danger text-bold" href="candidato.php"><i class="far fa-arrow-alt-circle-left" style="font-size: 45px; padding: 10px;"></i></a></div>
 
-<div class="container">
+<div class="container" style="padding-bottom: 210px;">
     <div class="row">
         <div class="col-sm-4">
             <div class="btn-group-vertical" style="padding-top: 30px;">

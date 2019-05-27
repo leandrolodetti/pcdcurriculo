@@ -46,7 +46,7 @@ if (isset($_SESSION["empresa_logada"])) {
 	  	<link href="fontawesome/css/all.css" rel="stylesheet"> <!--load all styles -->
 	</head>
 
-<body style="background: #F4F4F4;">
+<body style="background: #F4F4F4; padding-bottom: 100px;">
   	<div class="container-fluid" style="background-color: #F4F4F4;">
   		<div class="container" style="padding: 8px;">
   			<div class="row">

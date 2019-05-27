@@ -207,7 +207,7 @@ function updateHistoricoProf($conexao, $txtHistoricoProf, $data, $idCurriculo) {
 
 function listaHistorico($conexao, $idCandidato) {
 	$candidaturas = array();
-	$query = "SELECT * FROM Vaga INNER JOIN Candidatura ON Vaga_idVaga=Candidatura.Vaga_idVaga WHERE Candidatura.Candidato_idCandidato = {$idCandidato}";
+	$query = "SELECT * FROM Vaga INNER JOIN Candidatura ON Vaga.idVaga=Candidatura.Vaga_idVaga WHERE Candidatura.Candidato_idCandidato = {$idCandidato}";
 	$resultado = mysqli_query($conexao, $query);
 
 	while ($candidatura = mysqli_fetch_assoc($resultado)) {

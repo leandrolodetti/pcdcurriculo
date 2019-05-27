@@ -50,12 +50,14 @@ if (isset($_GET["parametro"]) && $_GET["parametro"] != null) {
 			  		<ol class="breadcrumb" id="idCandidatoBreadcrumb" style="background-color: transparent; padding-left: 0;">
 			  			<?php
 			  			if (isset($_SESSION["candidato_logado"])) {
+			  				$href = "candidato.php";
 			  			?>
 			  				<li class="breadcrumb-item font-weight-bold"><a href="candidato.php">Área do Candidato</a></li>
 			  				<li class="breadcrumb-item active font-weight-bold" style="color: white;" aria-current="page">Resultado Vagas</li>
 			  			<?php	
 			  			}
 			  			else {
+			  				$href = "index.php";
 			  			?>
 			  				<li class="breadcrumb-item font-weight-bold"><a href="index.php">Página Inicial</a></li>
 			  				<li class="breadcrumb-item active font-weight-bold" style="color: white;" aria-current="page">Resultado Vagas</li>
@@ -67,10 +69,10 @@ if (isset($_GET["parametro"]) && $_GET["parametro"] != null) {
 			</div>
 		</div>
 		<div class="container">
-			<a class="text-danger text-bold" onClick="history.go(-1)"><i class="far fa-arrow-alt-circle-left" style="font-size: 45px; padding: 10px;"></i></a>
+			<a class="text-danger text-bold" href="<?php echo $href; ?>"><i class="far fa-arrow-alt-circle-left" style="font-size: 45px; padding: 10px;"></i></a>
 		</div>
 
-		<div class="container">
+		<div class="container" style="padding-bottom: 250px;">
 			<div class="border-bottom" style="padding-top: 15px;">
 			  <h4 class="text-left font-weight-normal"><?php echo count($vagasEncontradas)." vagas encontradas para ".$parametro; ?></h4>
 			</div>

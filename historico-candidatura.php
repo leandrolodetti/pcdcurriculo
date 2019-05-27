@@ -60,10 +60,11 @@ $candidaturas = listaCandidaturaCandidato($conexao, $idEmpresa);
 					<td><?php echo $cand["titulo"]; ?></td>
 					<td><?php echo $dataBr; ?></td>
 					<td><?php echo $dataBr2; ?></td>
-					<td><a class="btn btn-danger btn-sm" href="<?php echo "update-empresa.php?dispensar-candidatura&cand=".$cand["Candidato_idCandidato"]; ?>">Dispensar</a></td>
+					<td><a class="btn btn-danger btn-sm" href="<?php echo "update-empresa.php?dispensar-candidatura&idCandidato=".$cand["Candidato_idCandidato"]."&idVaga=".$cand["Vaga_idVaga"]; ?>">Dispensar</a></td>
 					<td>
-						<form method="post" onsubmit="return validaContratacao();" action="update-empresa.php">
-							<input type="hidden" name="contratar" value="<?php echo "contratar-candidato&cand=".$cand["Candidato_idCandidato"]; ?>">
+						<form method="post" onsubmit="return validaContratacao();" action="update-empresa.php?contratar-candidato">
+							<input type="hidden" name="idCandidato" value="<?php echo $cand["Candidato_idCandidato"]; ?>">
+							<input type="hidden" name="idVaga" value="<?php echo $cand["Vaga_idVaga"]; ?>">
 							<button type="submit" class="btn btn-success btn-sm">Contratar</button>
 						</form>
 					</td>

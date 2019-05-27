@@ -1,6 +1,7 @@
 <?php
 require_once("cabecalho.php");
 require_once("logica-empresa.php");
+require_once("banco-empresa.php");
 verificaEmpresa();
 
 if (isset($_GET["remover-conta"])) {
@@ -110,6 +111,9 @@ if (isset($_GET["id"]) && isset($_GET["update-vaga"])) {
 	$DefMental = 0; $DefMental = $_POST["DefMental"];
 	$DefVisual = 0; $DefVisual = $_POST["DefVisual"];
 
+	//$arrayRestricoes = array("0","1");
+	$arrayRestricoes = array($DefFisica, $DefFala, $DefAuditiva, $DefMental, $DefVisual);
+
 /*
 	$DefFisica = 0;
 	$DefFala = 0;
@@ -200,7 +204,43 @@ if (isset($_GET["id"]) && isset($_GET["update-vaga"])) {
 		}
 	}
 
+		$listaEmail = listaCandidatoEnviarEmail($conexao, $categoria);
+		$arrayDispararEmail = array();
+
+		foreach ($listaEmail as $lista) {
+
+			foreach ($arrayRestricoes as $rest) {
+				if ($rest != $lista["TiposDeficiencia_idTiposDeficiencia"]) {
+					if (in_array($lista["email"], $arrayDispararEmail)) {
+						$c=1;
+					}
+					else {
+						array_push($arrayDispararEmail, $lista["email"]);
+					}
+				}
+			}
+		}
+
+		foreach ($listaEmail as $lista) {
+
+			foreach ($arrayRestricoes as $rest) {
+				if ($rest == $lista["TiposDeficiencia_idTiposDeficiencia"]) {
+					$key = array_search($lista["email"], $arrayDispararEmail);
+					if($key !== false){
+	    				unset($arrayDispararEmail[$key]);
+					}
+				}
+			}
+		}
+
 	commitTransacao($conexao, "Ocorreu um erro, tente novamente mais tarde! Erro: commitTransacao", "form-cadastro-vaga.php");
+	
+		if (count($arrayDispararEmail) > 0) {
+			popen(dispararEmail($arrayDispararEmail, $idVaga), "w");
+			//$enviou = dispararEmail($arrayDispararEmail, $idVaga);
+		}
+	
+	//commitTransacao($conexao, "Ocorreu um erro, tente novamente mais tarde! Erro: commitTransacao", "form-cadastro-vaga.php");
 	sucesso("Vaga atualizada com sucesso!", "gerenciar-vagas.php");
 /*
 	if (!commit($conexao)) {
@@ -266,4 +306,39 @@ if (isset($_GET["contato"]) && $_POST["confirmaUpdate"] == "yes") {
 
 	commitTransacao($conexao, "Ocorreu um erro, tente novamente mais tarde! Erro: commitTransacao", "altera-dados-empresa.php?contato");
 	sucesso("Cadastro atualizado com sucesso!", "altera-dados-empresa.php?contato");
+}
+
+if (isset($_GET["contratar-candidato"]) && $_POST["idCandidato"] != null) {
+
+	$idCandidato = $_POST["idCandidato"];
+	$data = date('Y/m/d');
+	$idVaga = $_POST["idVaga"];
+
+	iniciarTransacao($conexao, "$iniciarTransacao", "historico-candidatura.php");
+
+	if (!contratarCandidato($conexao, $idCandidato, $idVaga, $data)) {
+		$_SESSION["danger"] = "Ocorreu um erro, tente novamente mais tarde! Erro: contratarCandidato";
+		rollback($conexao);
+		header("Location: historico-candidatura.php");
+	    die();
+	}
+
+	commitTransacao($conexao, "Ocorreu um erro, tente novamente mais tarde! Erro: commitTransacao", "historico-candidatura.php");
+	sucesso("Candidato vinculado com sucesso!", "historico-candidatura.php");
+}
+
+if (isset($_GET["dispensar-candidatura"]) && $_GET["idCandidato"] != null) {
+		$idCandidato = $_GET["idCandidato"];
+		$idVaga = $_GET["idVaga"];
+
+	iniciarTransacao($conexao, "$iniciarTransacao", "historico-candidatura.php");
+			
+	if (!deleteCandidatura($conexao, $idCandidato, $idVaga)) {
+		$_SESSION["danger"] = "Ocorreu um erro, tente novamente mais tarde! Erro: updateUmCampoContrataData";
+		rollback($conexao);
+		header("Location: historico-candidatura.php");
+	    die();
+	}
+	commitTransacao($conexao, "Ocorreu um erro, tente novamente mais tarde! Erro: commitTransacao", "historico-candidatura.php");
+	sucesso("Candidato dispensado com sucesso!", "historico-candidatura.php");
 }

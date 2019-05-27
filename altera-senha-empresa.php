@@ -2,13 +2,13 @@
 require_once("logica-empresa.php");
 verificaEmpresa();
 ?>
-<div class="border-bottom border-primary" style="padding-top: 25px;">
+<div class="border-bottom border-primary" style="padding-top: 20px;">
   <h4 class="text-left font-weight-normal">Senha</h4>
   <p class="text-left font-weight-normal">Altere sua senha</p>
 </div>
 
 <div>
-	<form method="post" onsubmit="return validaAlteraSenha();" action="update-empresa.php?senha" style="min-width: 300px; max-width: 300px; padding-top: 15px;">
+	<form method="post" onsubmit="return validaAlteraSenha();" action="update-empresa.php?senha" style="min-width: 300px; max-width: 300px; padding-top: 15px; padding-bottom: 20px;">
 		<input type="hidden" name="confirmaUpdate" value="yes">
 			<div class="form-group">
 				<label for="idAlteraSenhaAtual">Senha Atual</label>

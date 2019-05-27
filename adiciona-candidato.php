@@ -19,7 +19,7 @@ $selectCandidatoCpf = buscaUmRegistro($conexao, $cpfCandidato, "Candidato", "cpf
 if ($selectCandidatoCpf["ativo"] == "S") {
 	$_SESSION["danger"] = "O CPF informado já está cadastrado!";
 	rollback($conexao);
-	header("Location: form-login-candidato.php");
+	header("Location: index.php");
     die();
 }
 
@@ -28,7 +28,7 @@ $selectCandidatoEmail = buscaUmRegistro($conexao, $emailCandidato, "Candidato", 
 if ($selectCandidatoEmail["ativo"] == "S") {
 	$_SESSION["danger"] = "O email informado já está cadastrado!";
 	rollback($conexao);
-	header("Location: form-login-candidato.php");
+	header("Location: index.php");
     die();
 }
 
@@ -101,6 +101,16 @@ $senhaMd5 = md5($senhaCandidato);
 
 if ($selectCandidatoEmail["ativo"] == "N") {
 	$idCandidato = $selectCandidatoEmail["idCandidato"];
+
+	if ($cpfCandidato != $selectCandidatoEmail["cpf"]) {
+		$jaExiste = buscaIdCandidato($conexao, $cpfCandidato);
+		if ($jaExiste != null) {
+			$_SESSION["danger"] = "O CPF informado já está cadastrado!";
+			rollback($conexao);
+			header("Location: index.php");
+    		die();
+		}
+	}
 	if (!updateCandidato($conexao, $cpfCandidato, $nomeCandidato, $sobrenomeCandidato, $dataNascimentoCandidato, $contatoCandidato,
 				   	   $genero, $emailCandidato, $estadoCivil, $cepCandidato, $ufCandidato, $cidadeCandidato,
 				       $ruaCandidato, $numeroRuaCandidato, $bairroCandidato, $ComplementoCandidato, $senhaMd5,
@@ -119,6 +129,13 @@ if ($selectCandidatoEmail["ativo"] == "N") {
 }
 
 if ($selectCandidatoEmail == null) {
+	$jaExiste = buscaIdCandidato($conexao, $cpfCandidato);
+	if ($jaExiste != null) {
+		$_SESSION["danger"] = "O CPF informado já está cadastrado!";
+		rollback($conexao);
+		header("Location: index.php");
+    	die();
+	}
 	if(!insereCandidato($conexao, $cpfCandidato, $nomeCandidato, $sobrenomeCandidato, $dataNascimentoCandidato, $contatoCandidato,
 					   	   $genero, $emailCandidato, $estadoCivil, $cepCandidato, $ufCandidato, $cidadeCandidato,
 					       $ruaCandidato, $numeroRuaCandidato, $bairroCandidato, $ComplementoCandidato, $senhaMd5,

@@ -60,7 +60,7 @@
           foreach ($ultimasVagas as $vaga) {
             $num = rand(0,3);
           ?>  
-            <a class="badge badge-pill <?php echo $cores[$num]; ?>" style="padding: 12px; margin-right: 10px; margin-top: 10px;" href=""><?php echo $vaga["titulo"]; ?></a>
+            <a class="badge badge-pill <?php echo $cores[$num]; ?>" style="padding: 12px; margin-right: 10px; margin-top: 10px;" href="<?php echo "vaga.php?id=".$vaga["idVaga"]; ?>"><?php echo $vaga["titulo"]; ?></a>
           <?php
           }
         ?>

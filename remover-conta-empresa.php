@@ -2,7 +2,7 @@
 require_once("logica-empresa.php");
 verificaEmpresa();
 ?>
-<div class="border-bottom border-success" style="padding-top: 25px;">
+<div class="border-bottom border-success" style="padding-top: 20px;">
   <h4 class="text-left font-weight-normal">Remover Conta</h4>
 </div>
 

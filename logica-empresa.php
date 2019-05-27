@@ -1,8 +1,15 @@
 <?php 
-require_once("banco.php");
 require_once("banco-empresa.php");
 require_once("cabecalho.php");
 session_start();
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\Exception;
+		
+require 'src/PHPMailer.php';
+require 'src/SMTP.php';
+require 'src/Exception.php';
 
 function logaEmpresa($cnpj) {
 	$_SESSION["empresa_logada"] = $cnpj;
@@ -48,6 +55,71 @@ function inativarEmpresa($conexao, $msgErro, $location, $id) {
 		header("Location: ".$location);
 	    die();
 	}
+}
+
+function dispararEmail($arrayDispararEmail, $idVaga) {
+	$count = 0;
+/*
+	$listaEmail = listaCandidatoEnviarEmail($conexao, $categoria);
+	$arrayDispararEmail = array();
+
+	foreach ($listaEmail as $lista) {
+
+		foreach ($arrayRestricoes as $rest) {
+			if (($rest != 0) && ($rest != $lista["TiposDeficiencia_idTiposDeficiencia"])) {
+				if (!array_key_exists($lista["email"], $arrayDispararEmail)) {
+					array_push($arrayDispararEmail, $lista["email"]);
+				}
+			}
+		}
+	}
+
+	foreach ($listaEmail as $lista) {
+
+		foreach ($arrayRestricoes as $rest) {
+			if (($rest != 0) && ($rest == $lista["TiposDeficiencia_idTiposDeficiencia"])) {
+				$key = array_search($lista["email"], $arrayDispararEmail);
+				if($key !== false){
+    				unset($arrayDispararEmail[$key]);
+				}
+			}
+		}
+	}
+*/
+	foreach ($arrayDispararEmail as $email) {
+
+		$mail = new PHPMailer;
+
+		$mail->isSMTP();
+		$mail->Host = 'SMTP.office365.com';
+		$mail->Port = 587;
+		$mail->SMTPSecure = 'STARTTLS';
+		$mail->SMTPAuth = true;
+		$mail->Username = "leandro_sampa_@hotmail.com";
+		$mail->Password = "yaxun881D";
+
+		$mail->setFrom("leandro_sampa_@hotmail.com");
+		$mail->addAddress($email);
+		$mail->Subject = "Nova Vaga Publicada!";
+
+		$mail->msgHTML("<html>Link: http://localhost/pcdcurriculo/vaga.php?id={$idVaga}&parametro=php<br/>email: {$email}</html>");
+		$mail->AltBody = "de: {$nome}\nemail:{$email}\nmensagem: {$mensagem}";
+		if($mail->send()) {
+			$count = $count + 1;
+			/*
+		    $_SESSION["success"] = "Mensagem enviada com sucesso";
+		    header("Location: index.php");
+		    */
+		} else {
+			$count = $count - 1;
+			/*
+		    $_SESSION["danger"] = "Erro ao enviar mensagem " . $mail->ErrorInfo;
+		    header("Location: index.php");
+		    */
+		}
+	}
+	return $count;
+die();
 }
 /*
 function commitTransacao($conexao, $msgErro, $location) {

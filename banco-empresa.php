@@ -18,6 +18,13 @@ function listaUltimasVagas($conexao, $limite) {
 	return $vagas;
 }
 
+function contratarCandidato($conexao, $idCandidato, $idVaga, $data) {
+	$query = "UPDATE Candidatura SET contratado='S', data_contratacao='{$data}'
+			WHERE Candidato_idCandidato={$idCandidato} AND Vaga_idVaga={$idVaga}";
+	$resultadoDaInsercao = mysqli_query($conexao, $query);
+    return $resultadoDaInsercao;
+}
+
 function listaCategoriaVaga($conexao, $idVaga) {
 	$query = "SELECT Categoria.idCategoria, Categoria.descricao FROM Categoria
 			INNER JOIN Vaga ON Categoria.idCategoria = Vaga.Categoria_idCategoria
@@ -47,7 +54,9 @@ function buscaCurriculo($conexao, $idCandidato) {
 				Candidato.estado, Candidato.bairro, Candidato.email AS email_candidato, Candidato.contato AS contato_candidato,
 				Candidato.cpf AS cpf_candidato, Candidato.estado_civil, Candidato.data_nascimento AS nasc_candidato, Candidato.cid10,
 				Curriculo.objetivo, Nivel.descricao AS nivel_descricao, Curriculo.resumo_profissional, Curriculo.nivel_escolar,
-				Curriculo.graduacao, Curriculo.curso_complemento, Curriculo.idiomas, Curriculo.historico_profissional
+				Curriculo.graduacao, Curriculo.curso_complemento, Curriculo.idiomas, Curriculo.historico_profissional,
+				Candidato.Responsavel_idResponsavel, Responsavel.nome AS nome_responsavel, Responsavel.cpf AS cpf_responsavel,
+				Responsavel.contato AS contato_responsavel, Responsavel.email AS email_responsavel
 				FROM Candidato INNER JOIN Responsavel ON Responsavel.idResponsavel=Candidato.Responsavel_idResponsavel
 				INNER JOIN Curriculo ON Curriculo.Candidato_idCandidato=Candidato.idCandidato
                 INNER JOIN Categoria ON Categoria.idCategoria=Curriculo.area
@@ -55,6 +64,24 @@ function buscaCurriculo($conexao, $idCandidato) {
 				WHERE Candidato.idCandidato={$idCandidato}";
 	$resultado = mysqli_query($conexao, $query);
 	return mysqli_fetch_assoc($resultado);			
+}
+
+function listaCandidatoEnviarEmail($conexao, $idCategoria/*, $restricoes*/) {
+	//$filtroRest = "AND Deficiencia.TiposDeficiencia_idTiposDeficiencia != '0'";
+	$candidatos = array();
+	/*
+	foreach ($restricoes as $rest) {
+		$filtroRest = $filtroRest." AND Deficiencia.TiposDeficiencia_idTiposDeficiencia != '{$rest}'";
+	}
+	*/
+	$query = "SELECT Candidato.email, Deficiencia.TiposDeficiencia_idTiposDeficiencia FROM Candidato INNER JOIN Curriculo ON Curriculo.Candidato_idCandidato=Candidato.idCandidato INNER JOIN Deficiencia ON Deficiencia.Candidato_idCandidato=Candidato.idCandidato WHERE Candidato.recebe_vagas='S' AND Curriculo.area={$idCategoria}";
+
+	$resultado = mysqli_query($conexao, $query);
+
+	while ($candidato = mysqli_fetch_assoc($resultado)) {
+		array_push($candidatos, $candidato);
+	}
+	return $candidatos;
 }
 
 function listaNivelVaga($conexao, $idNivel) {

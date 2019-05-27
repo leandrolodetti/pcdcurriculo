@@ -1,17 +1,22 @@
 <?php
 require_once("cabecalho.php");
-$parametro = $_GET["parametro"];
+//$parametro = $_GET["parametro"];
 $id = $_GET["id"];
 
-if($parametro == null || $id == null) {
+if(/*$parametro == null || */$id == null) {
 	header("Location: index.php");
 	die();
 }
 
 $botaoCandidatar = "<a class='btn btn-danger' href='form-login-candidato.php'>Faça login para se candidatar</a>";
 
+if (isset($_SESSION["candidato_logado"])) {
+	$botaoCandidatar = "<a class='btn btn-success' href='update-candidato.php?candidatar&vaga=".$id."&parametro=".$parametro."'>Candidatar-se</a>";
+}
+
 $vagaAtual = listaVagaEmpresa($conexao, $id);
 $categoriaAtual = listaCategoriaVaga($conexao, $id);
+$restricoes = listaRestricaoDeficiencia($conexao, $id);
 
 $data_atualizacao = $vagaAtual["data_atualizacao"];
 $datas = explode("-", $data_atualizacao);
@@ -102,10 +107,25 @@ $dataBr = $datas[2]."/".$datas[1]."/".$datas[0];
 
 			<div class="form-group" style="padding-top: 10px;">
 				<h5 class="text-dark">Carga Horária</h5>
-				<p class="text-left" name="beneficios" id="idVagaCargaHoraria"><?php echo $vagaAtual["carga_horaria"]; ?></p>
+				<p class="text-left" id="idVagaCargaHoraria"><?php echo $vagaAtual["carga_horaria"]; ?></p>
 			</div>
-
-			<?php echo $botaoCandidatar; ?>
+				<?php
+				if ($restricoes != null) {
+				?>
+					<div class="form-group" style="padding-top: 10px;">
+						<h5 class="text-dark">Restrições Deficiências</h5>
+				<?php
+					foreach ($restricoes as $rest) {
+					?>
+						<p class="text-left"><?php echo $rest["tipo_deficiencia"]; ?></p>
+					<?php
+					}
+					?>
+					</div>
+				<?php		
+				}
+				echo $botaoCandidatar;
+			?>
 		</div>
 		<div class="col-sm">
 			
