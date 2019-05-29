@@ -19,7 +19,7 @@ verificaEmpresa();
 <div class="container" style="padding-top: 30px;">
 	<div class="row">
 		<div class="col-sm-4">
-			<h3 class="text-left font-weight-normal"><?php echo $usuarioAtual ["razao_social"]; ?></h3>
+			<h3 class="text-left font-weight-normal"><?php echo $usuarioAtual["razao_social"]; ?></h3>
 			<br>
 			<h4 class="text-left font-weight-normal"><?php echo "CNPJ: ".$usuarioAtual["cnpj"]; ?></h4>
 			<br>

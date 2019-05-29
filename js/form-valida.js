@@ -3,6 +3,7 @@ $("#idNascResponsavel").mask("00/00/0000");
 $("#idAlteraNascimento").mask("00/00/0000");
 $("#cep").mask("00000-000");
 $("#idCpf").mask("000.000.000-00");
+$("#idRecuperarCpf").mask("000.000.000-00");
 $("#idCpfResponsavel").mask("000.000.000-00");
 $("#idAlteraCPF").mask("000.000.000-00");
 $("#idContato").mask("(00)000000000");
@@ -745,6 +746,15 @@ function validaAlteraGeralCandidato() {
 function validaAlteraSenha() {
 	if (!validaNumCaracteres("idAlteraSenhaAtual","idSmallAlteraSenha",6,"Campo inválido") ||
 		!validarSenha("idAlteraNovaSenha", "idSmallAlteraNovaSenha", 6, "Campo Inválido") ||
+		!confirmarSenha("idAlteraNovaSenha", "idConfirmarAlteraSenha", "idSmallConfirmaAlteraSenha", "Senhas não conferem!")
+		) {
+		return false;
+	}
+	return true;
+}
+
+function validaResetaSenha() {
+	if (!validarSenha("idAlteraNovaSenha", "idSmallAlteraNovaSenha", 6, "Campo Inválido") ||
 		!confirmarSenha("idAlteraNovaSenha", "idConfirmarAlteraSenha", "idSmallConfirmaAlteraSenha", "Senhas não conferem!")
 		) {
 		return false;

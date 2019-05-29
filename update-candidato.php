@@ -301,6 +301,19 @@ if (isset($_GET["candidatar"]) && $_GET["vaga"] != "") {
 	$idCandidato = $usuarioAtual["idCandidato"];
 	$dataAtual = date('Y/m/d');
 
+	$curriculo = buscaUmRegistro($conexao, $idCandidato, "Curriculo", "Candidato_idCandidato");
+	if ($curriculo["objetivo"] == "" || $curriculo["area"] == "" || $curriculo["nivel_area"] == "" || $curriculo["salario"] == "") {
+		$_SESSION["danger"] = "Para se candidatar, seu currículo precisa estar completo!";
+		header("Location: vaga.php?id=".$idVaga."&parametro=".$parametro);
+    	die();
+	}
+
+	$vagaAtual = buscaUmRegistro($conexao, $idVaga, "Vaga", "idVaga");
+	if ($vagaAtual["ativa"] == "N") {
+		$_SESSION["danger"] = "Esta vaga foi inativada :(";
+		header("Location: vaga.php?id=".$idVaga."&parametro=".$parametro);
+    	die();
+	}
 	$jaExiste = buscaCandidatura($conexao, $idVaga, $idCandidato);
 
 	if ($jaExiste != null) {

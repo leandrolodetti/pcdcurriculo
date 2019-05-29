@@ -15,6 +15,13 @@ if (isset($_SESSION["candidato_logado"])) {
 }
 
 $vagaAtual = listaVagaEmpresa($conexao, $id);
+
+if ($vagaAtual["ativa"] == 'N') {
+	$_SESSION["danger"] = "A vaga foi inativada";
+	header("Location: index.php");
+	die();
+}
+
 $categoriaAtual = listaCategoriaVaga($conexao, $id);
 $restricoes = listaRestricaoDeficiencia($conexao, $id);
 
@@ -76,7 +83,7 @@ $dataBr = $datas[2]."/".$datas[1]."/".$datas[0];
 					<i class="nav-link fas fa-coins rounded float-left text-primary" style="font-size: 25px;"><span class="text-dark"><?php echo " ".$vagaAtual["salario"]; ?></span></i>
 				</li>
 				<li class="nav-item">
-					<button type="button" class="btn border-0" data-toggle="modal" data-target="#modalExemplo" style="background-color: transparent; padding: 0px;">
+					<button type="button" class="btn border-0" data-toggle="modal" data-target="#modalEndereco" style="background-color: transparent; padding: 0px;">
 					  <i class="nav-link fas fa-map-marker-alt rounded float-left text-success" style="font-size: 25px;"><span class="text-dark"><?php echo " ".$vagaAtual["cidade"]; ?></span></i>
 					</button>
 				</li>
@@ -134,7 +141,7 @@ $dataBr = $datas[2]."/".$datas[1]."/".$datas[0];
 </div>	
 
 <!-- Modal -->
-<div class="modal fade" id="modalExemplo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="modalEndereco" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">

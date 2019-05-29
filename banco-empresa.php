@@ -8,7 +8,7 @@ function listaVagaEmpresa($conexao, $idVaga) {
 
 function listaUltimasVagas($conexao, $limite) {
 	$vagas = array();
-	$query = "SELECT * FROM Vaga ORDER BY data_atualizacao DESC LIMIT {$limite}";
+	$query = "SELECT * FROM Vaga WHERE ativa='S' ORDER BY data_atualizacao DESC LIMIT {$limite}";
 
 	$resultado = mysqli_query($conexao, $query);
 
@@ -286,6 +286,13 @@ function updateContatoEmpresa($conexao, $contato, $cep, $cidade, $estado, $logra
 	$query = "UPDATE Empresa SET contato='{$contato}', cep='{$cep}', cidade='{$cidade}', estado='{$estado}',
 			logradouro='{$logradouro}', num_logradouro='{$numero}', bairro='{$bairro}', complemento='{$complemento}'
 			WHERE idEmpresa={$idEmpresa}";
+	$resultado = mysqli_query($conexao, $query);
+	return $resultado;		
+}
+
+function insertUpdateTokenCandidato($conexao, $chavePrivada, $idCandidato) {
+	$query = "REPLACE INTO RecuperaLogin(token, data_criacao, Candidato_idCandidato)
+			VALUES('{$chavePrivada}', now(), {$idCandidato})";
 	$resultado = mysqli_query($conexao, $query);
 	return $resultado;		
 }

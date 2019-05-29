@@ -4,42 +4,48 @@
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
+		
+require_once("src/PHPMailer.php");
+require_once("src/SMTP.php");
+require_once("src/Exception.php");
 
-require 'src/PHPMailer.php';
-require 'src/SMTP.php';
-require 'src/Exception.php';
+$count = 0;
 
+try {
+		$emails = array("llcleandro@outlook.com", "12172100345@alunos.umc.br");
 
-$email = $_POST["email"];
-$nome = $_POST["nome"];
-$mensagem = $_POST["mensagem"];
+		foreach ($emails as $email) {
+			$mail = new PHPMailer;
 
-//$mail = new PHPMailer;
-//Create a new PHPMailer instance
-$mail = new PHPMailer;
+			$mail->isSMTP();
+			$mail->CharSet = 'UTF-8';
+			$mail->Encoding = 'base64';
+			$mail->Host = 'SMTP.office365.com';
+			$mail->Port = 587;
+			$mail->SMTPSecure = 'STARTTLS';
+			$mail->SMTPAuth = true;
+			$mail->Username = "leandro_sampa_@hotmail.com";
+			$mail->Password = "yaxun881D";
 
-$mail->isSMTP();
-$mail->Host = 'SMTP.office365.com';
-$mail->Port = 587;
-$mail->SMTPSecure = 'STARTTLS';
-$mail->SMTPAuth = true;
-$mail->Username = "leandro_sampa_@hotmail.com";
-$mail->Password = "yaxun881D";
+			$mail->setFrom("leandro_sampa_@hotmail.com");
+			$mail->addAddress($email);
+			$mail->Subject = "TESTE";
 
-$mail->setFrom("leandro_sampa_@hotmail.com");
-$mail->addAddress($email);
-$mail->Subject = "Email de contato da loja";
+			$mail->msgHTML("teste");
+			$mail->AltBody = "TESTE AltBody";
 
-$mail->msgHTML("<html>de: {$nome}<br/>email: {$email}<br/>mensagem: {$mensagem}</html>");
-$mail->AltBody = "de: {$nome}\nemail:{$email}\nmensagem: {$mensagem}";
+			if($mail->send()) {
+				$count++;
+			} else {
+				$count--;
+			}
+		}
+		die();
+		
+	} catch (Exception $e) {
+		die();
+	}
 
-if($mail->send()) {
-    $_SESSION["success"] = "Mensagem enviada com sucesso";
-    header("Location: index.php");
-} else {
-    $_SESSION["danger"] = "Erro ao enviar mensagem " . $mail->ErrorInfo;
-    header("Location: contato.php?erro!");
-}
 die();
 
 ?>

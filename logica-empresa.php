@@ -7,9 +7,9 @@ use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
 		
-require 'src/PHPMailer.php';
-require 'src/SMTP.php';
-require 'src/Exception.php';
+require_once("src/PHPMailer.php");
+require_once("src/SMTP.php");
+require_once("src/Exception.php");
 
 function logaEmpresa($cnpj) {
 	$_SESSION["empresa_logada"] = $cnpj;
@@ -104,8 +104,9 @@ function dispararEmail($arrayDispararEmail, $idVaga) {
 
 		$mail->msgHTML("<html>Link: http://localhost/pcdcurriculo/vaga.php?id={$idVaga}&parametro=php<br/>email: {$email}</html>");
 		$mail->AltBody = "de: {$nome}\nemail:{$email}\nmensagem: {$mensagem}";
+		
 		if($mail->send()) {
-			$count = $count + 1;
+			$count = $count++;
 			/*
 		    $_SESSION["success"] = "Mensagem enviada com sucesso";
 		    header("Location: index.php");
@@ -117,6 +118,7 @@ function dispararEmail($arrayDispararEmail, $idVaga) {
 		    header("Location: index.php");
 		    */
 		}
+		//$count++;
 	}
 	return $count;
 die();

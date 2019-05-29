@@ -6,7 +6,7 @@ verificaCandidato();
 $deficiencias = listaDeficienciasCandidato($conexao, $usuarioAtual ["idCandidato"]);
 $CurriculoAtual = buscaUmRegistro($conexao, $usuarioAtual["idCandidato"], "Curriculo", "Candidato_idCandidato");
 
-$data = $usuarioAtual ["data_nascimento"];
+$data = $usuarioAtual["data_nascimento"];
 $datas = explode("/", $data);
 $dataNascimento = $datas[2].$datas[1].$datas[0];
 $date = new DateTime($dataNascimento);

@@ -5,7 +5,7 @@ function listaDeficienciasCandidato($conexao, $id) {
 	$query = "SELECT Candidato.nome, Deficiencia.Candidato_idCandidato, Tiposdeficiencia.tipo_deficiencia
 			  FROM ((Candidato
 			  INNER JOIN Deficiencia ON Candidato.idCandidato = Deficiencia.Candidato_idCandidato)
-			  INNER JOIN Tiposdeficiencia ON Deficiencia.TiposDeficiencia_idTiposDeficiencia = Tiposdeficiencia.idTiposDeficiencia)
+			  INNER JOIN TiposDeficiencia ON Deficiencia.TiposDeficiencia_idTiposDeficiencia = Tiposdeficiencia.idTiposDeficiencia)
 			  WHERE Candidato_idCandidato = {$id}";
 	$resultado = mysqli_query($conexao, $query);
 
@@ -69,7 +69,7 @@ function updateCandidato($conexao, $cpfCandidato, $nomeCandidato, $sobrenomeCand
 }
 
 function deleteDeficiencias($conexao, $idCandidato) {
-	$query = "DELETE FROM deficiencia
+	$query = "DELETE FROM Deficiencia
 				WHERE Candidato_idCandidato = {$idCandidato}";
 	$resultado = mysqli_query($conexao, $query);
 	return $resultado;		

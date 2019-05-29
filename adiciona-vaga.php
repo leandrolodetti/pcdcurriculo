@@ -140,11 +140,11 @@ if ($buscaVagaRepetida["ativa"] == "N") {
 		    die();
 		}
 	}
-
+/*
 	$listaEmail = listaCandidatoEnviarEmail($conexao, $categoria, $arrayRestricoes);
 	var_dump($listaEmail);
 	sleep(20);
-
+*/
 	commitTransacao($conexao, "commitTransacao", "form-cadastro-vaga.php");
 	sucesso("Vaga ativada com sucesso!", "form-cadastro-vaga.php");
 /*
@@ -237,11 +237,11 @@ if ($DefVisual != 0) {
 	    die();
 	}
 }
-
+/*
 $listaEmail = listaCandidatoEnviarEmail($conexao, $categoria, $arrayRestricoes);
 var_dump($listaEmail);
 sleep(20);
-
+*/
 commitTransacao($conexao, "commitTransacao", "form-cadastro-vaga.php");
 sucesso("Vaga cadastrada com sucesso!", "form-cadastro-vaga.php");
 /*
