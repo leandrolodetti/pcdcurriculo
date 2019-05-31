@@ -10,6 +10,12 @@ if (isset($_GET["token"]) && $_GET["token"] != null && isset($_GET["candidato"])
 
 	if ($encontrou != null) {
 
+		if ($token != $encontrou["token"]) {
+			$_SESSION["danger"] = "Token inválido";
+			header("Location: index.php");
+		    die();
+		}
+		
 		$data = $encontrou["data_criacao"];
 		$dteStart = new DateTime($data);
    		$dteEnd   = new DateTime("now");
@@ -23,11 +29,13 @@ if (isset($_GET["token"]) && $_GET["token"] != null && isset($_GET["candidato"])
 		}
 
 		//$decodificada = base64_decode($token);
+		/*
 		if ($token != $encontrou["token"]) {
 			$_SESSION["danger"] = "Token inválido";
 			header("Location: index.php");
 		    die();
 		}
+		*/
 	}
 	else {
 		$_SESSION["danger"] = "Link inválido";

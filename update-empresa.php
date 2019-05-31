@@ -98,6 +98,7 @@ if (isset($_GET["id"]) && isset($_GET["update-vaga"])) {
 	$cargaHoraria = $_POST["cargaHoraria"];
 	$salario = $_POST["salario"];
 	$data = date('Y/m/d');
+	$cidadeEmpresa = $usuarioAtual["cidade"];
 
 	if ($titulo == null || $salario == null) {
 		$_SESSION["danger"] = "Ocorreu um erro, tente novamente mais tarde! Erro: FormNull";
@@ -111,38 +112,8 @@ if (isset($_GET["id"]) && isset($_GET["update-vaga"])) {
 	$DefMental = 0; $DefMental = $_POST["DefMental"];
 	$DefVisual = 0; $DefVisual = $_POST["DefVisual"];
 
-	//$arrayRestricoes = array("0","1");
 	$arrayRestricoes = array($DefFisica, $DefFala, $DefAuditiva, $DefMental, $DefVisual);
 
-/*
-	$DefFisica = 0;
-	$DefFala = 0;
-	$DefAuditiva = 0;
-	$DefMental = 0;
-	$DefVisual = 0;
-
-	if (isset($_POST["DefFisica"])) {
-		$DefFisica = $_POST["DefFisica"];
-	}
-	if (isset($_POST["DefFala"])) {
-		$DefFala = $_POST["DefFala"];
-	}
-	if (isset($_POST["DefAuditiva"])) {
-		$DefAuditiva = $_POST["DefAuditiva"];
-	}
-	if (isset($_POST["DefMental"])) {
-		$DefMental = $_POST["DefMental"];
-	}
-	if (isset($_POST["DefVisual"])) {
-		$DefVisual = $_POST["DefVisual"];
-	}
-
-	if (!starTransaction($conexao)) {
-		$_SESSION["danger"] = "Ocorreu um erro, tente novamente mais tarde! Erro: StartTransaction";
-		header("Location: form-cadastro-vaga.php");
-	    die();
-	}
-*/
 	iniciarTransacao($conexao, "$iniciarTransacao", "form-cadastro-vaga.php");
 
 	if (!updateVaga($conexao, $titulo, $descricaoVaga, $requisitoVaga, $beneficios, $salario, $cargaHoraria, $data, $idEmpresa, $categoria, $nivel, $idVaga, $ativa)) {
@@ -204,58 +175,21 @@ if (isset($_GET["id"]) && isset($_GET["update-vaga"])) {
 		}
 	}
 
-		//$listaEmail = listaCandidatoEnviarEmail($conexao, $categoria);
-		$arrayDispararEmail = listaCandidatoEnviarEmail($conexao, $categoria, $nivel, $titulo, $arrayRestricoes);
-/*
-		foreach ($listaEmail as $lista) {
+	$palavrasChaves = explode(" ", $titulo);
+	$arrayDispararEmail = listaCandidatoEnviarEmail($conexao, $categoria, $nivel, $cidadeEmpresa, $palavrasChaves, $arrayRestricoes);
 
-			foreach ($arrayRestricoes as $rest) {
-				if ($rest != $lista["TiposDeficiencia_idTiposDeficiencia"]) {
-					if (in_array($lista["email"], $arrayDispararEmail)) {
-						$c=1;
-					}
-					else {
-						array_push($arrayDispararEmail, $lista["email"]);
-					}
-				}
-			}
-		}
+	//$arrayDispararEmail = teste($conexao, $idCategoria, $idNivel);
 
-		foreach ($listaEmail as $lista) {
-
-			foreach ($arrayRestricoes as $rest) {
-				if ($rest == $lista["TiposDeficiencia_idTiposDeficiencia"]) {
-					$key = array_search($lista["email"], $arrayDispararEmail);
-					if($key !== false){
-	    				unset($arrayDispararEmail[$key]);
-					}
-				}
-			}
-		}
-*/
 	commitTransacao($conexao, "Ocorreu um erro, tente novamente mais tarde! Erro: commitTransacao", "form-cadastro-vaga.php");
 	
-		if (count($arrayDispararEmail) > 0) {
-			//popen(dispararEmail($arrayDispararEmail, $idVaga), "w");
-			//$enviou = dispararEmail($arrayDispararEmail, $idVaga);
-			//dispararEmail($arrayDispararEmail, $idVaga);
-			//sleep(10);
+	if (count($arrayDispararEmail) > 0) {
+		foreach ($arrayDispararEmail as $email) {
+			$resultado = insereReplaceDisparaEmail($conexao, $email, $titulo, $idVaga);
 		}
-	
-	//commitTransacao($conexao, "Ocorreu um erro, tente novamente mais tarde! Erro: commitTransacao", "form-cadastro-vaga.php");
-	sucesso("Vaga atualizada com sucesso!", "gerenciar-vagas.php");
-/*
-	if (!commit($conexao)) {
-		$_SESSION["danger"] = "Ocorreu um erro, tente novamente mais tarde! Erro: commit";
-		rollback($conexao);
-		header("Location: form-cadastro-vaga.php");
-	    die();
+		//sleep(10);
 	}
 
-	$_SESSION["success"] = "Vaga atualizada com sucesso!";
-	header("Location: gerenciar-vagas.php");
-	die();
-*/	
+	sucesso("Vaga atualizada com sucesso!", "gerenciar-vagas.php");
 }
 
 if (isset($_GET["senha"]) && $_POST["confirmaUpdate"] == "yes") {

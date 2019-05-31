@@ -66,11 +66,17 @@ function buscaCurriculo($conexao, $idCandidato) {
 	return mysqli_fetch_assoc($resultado);			
 }
 
-function listaCandidatoEnviarEmail($conexao, $idCategoria, $idNivel, $titulo, $arrayRestricoes) {
+function listaCandidatoEnviarEmail($conexao, $categoria, $nivel, $cidade, $palavrasChaves, $arrayRestricoes) {
+	
+	$arrayLike = " AND Curriculo.objetivo LIKE ''";
+
+	foreach ($palavrasChaves as $chave) {
+		$arrayLike = $arrayLike." OR Curriculo.objetivo LIKE '%{$chave}%'";
+	}
 	
 	$candidatos = array();
 
-	$query = "SELECT Candidato.email, Deficiencia.TiposDeficiencia_idTiposDeficiencia FROM Candidato INNER JOIN Curriculo ON Curriculo.Candidato_idCandidato=Candidato.idCandidato INNER JOIN Deficiencia ON Deficiencia.Candidato_idCandidato=Candidato.idCandidato WHERE Candidato.recebe_vagas='S' AND Curriculo.area='{$idCategoria}' AND Curriculo.nivel_area='{$idNivel}' AND Curriculo.objetivo LIKE '%{$titulo}%'";
+	$query = "SELECT Candidato.email, Deficiencia.TiposDeficiencia_idTiposDeficiencia FROM Candidato INNER JOIN Curriculo ON Curriculo.Candidato_idCandidato=Candidato.idCandidato INNER JOIN Deficiencia ON Deficiencia.Candidato_idCandidato=Candidato.idCandidato WHERE Candidato.recebe_vagas='S' AND Curriculo.area='{$categoria}' AND Curriculo.nivel_area='{$nivel}' AND Candidato.cidade='{$cidade}'".$arrayLike;
 
 	$resultado = mysqli_query($conexao, $query);
 
@@ -103,7 +109,7 @@ function listaCandidatoEnviarEmail($conexao, $idCategoria, $idNivel, $titulo, $a
 			}
 		}
 	}
-	return $listaEmail;
+	return $arrayDispararEmail;
 }
 
 function listaNivelVaga($conexao, $idNivel) {
@@ -137,7 +143,7 @@ function listaVagasPorTitulo($conexao, $parametro, $cidade, $categoria, $nivel) 
 		FROM ((Vaga INNER JOIN Nivel ON Nivel.idNivel = Vaga.Nivel_idNivel)
 		INNER JOIN Categoria ON Categoria.idCategoria = Vaga.Categoria_idCategoria)
 		INNER JOIN Empresa ON Vaga.Empresa_idEmpresa = Empresa.idEmpresa
-		WHERE Vaga.titulo LIKE '%{$parametro}%' AND Vaga.ativa='S'".$filtroCity.$filtroCat.$filtroNiv;
+		WHERE Vaga.titulo LIKE '%{$parametro}%' AND Vaga.ativa='S' AND Empresa.ativa='S' ".$filtroCity.$filtroCat.$filtroNiv;
 	$resultado = mysqli_query($conexao, $query);
 
 	while ($vaga = mysqli_fetch_assoc($resultado)) {
@@ -308,6 +314,13 @@ function updateContatoEmpresa($conexao, $contato, $cep, $cidade, $estado, $logra
 	$query = "UPDATE Empresa SET contato='{$contato}', cep='{$cep}', cidade='{$cidade}', estado='{$estado}',
 			logradouro='{$logradouro}', num_logradouro='{$numero}', bairro='{$bairro}', complemento='{$complemento}'
 			WHERE idEmpresa={$idEmpresa}";
+	$resultado = mysqli_query($conexao, $query);
+	return $resultado;		
+}
+
+function insereReplaceDisparaEmail($conexao, $email, $titulo, $idVaga) {
+	$query = "REPLACE INTO DisparaEmail(email_candidato, titulo_vaga, Vaga_idVaga)
+			VALUES('{$email}', '{$titulo}', {$idVaga})";
 	$resultado = mysqli_query($conexao, $query);
 	return $resultado;		
 }

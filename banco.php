@@ -229,7 +229,7 @@ function insertUpdateTokenCandidato($conexao, $chavePrivada, $idCandidato) {
 	$query = "REPLACE INTO RecuperaLogin(token, data_criacao, Candidato_idCandidato)
 			VALUES('{$chavePrivada}', now(), {$idCandidato})";
 	$resultado = mysqli_query($conexao, $query);
-	return $resultado;		
+	return $resultado;
 }
 
 function selectIndicadorProfissional() {

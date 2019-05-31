@@ -37,23 +37,7 @@ if ($buscaVagaRepetida["ativa"] == "S") {
 	header("Location: form-cadastro-vaga.php");
     die();
 }
-/*
-if (isset($_POST["DefFisica"])) {
-	$DefFisica = $_POST["DefFisica"];
-}
-if (isset($_POST["DefFala"])) {
-	$DefFala = $_POST["DefFala"];
-}
-if (isset($_POST["DefAuditiva"])) {
-	$DefAuditiva = $_POST["DefAuditiva"];
-}
-if (isset($_POST["DefMental"])) {
-	$DefMental = $_POST["DefMental"];
-}
-if (isset($_POST["DefVisual"])) {
-	$DefVisual = $_POST["DefVisual"];
-}
-*/
+
 iniciarTransacao($conexao, "iniciarTransacao", "form-cadastro-vaga.php");
 
 if ($buscaVagaRepetida["ativa"] == "N") {
@@ -69,19 +53,7 @@ if ($buscaVagaRepetida["ativa"] == "N") {
 		    die();
 		}
 	}
-/*
-	if ($titulo == null || $salario == null) {
-		$_SESSION["danger"] = "Ocorreu um erro, tente novamente mais tarde! Erro: FormNull";
-		header("Location: form-cadastro-vaga.php");
-	    die();
-	}
 
-	if (!starTransaction($conexao)) {
-		$_SESSION["danger"] = "Ocorreu um erro, tente novamente mais tarde! Erro: StartTransaction";
-		header("Location: form-cadastro-vaga.php");
-	    die();
-	}
-*/
 	if (!updateVaga($conexao, $titulo, $descricaoVaga, $requisitoVaga, $beneficios, $salario, $cargaHoraria, $data, $idEmpresa, $categoria, $nivel, $idVaga, $ativa)) {
 		$_SESSION["danger"] = "Ocorreu um erro, tente novamente mais tarde! Erro: Update".mysqli_error($conexao);
 		rollback($conexao);
@@ -140,49 +112,23 @@ if ($buscaVagaRepetida["ativa"] == "N") {
 		    die();
 		}
 	}
-/*
-	$listaEmail = listaCandidatoEnviarEmail($conexao, $categoria, $arrayRestricoes);
-	var_dump($listaEmail);
-	sleep(20);
-*/
+
+	$palavrasChaves = explode(" ", $titulo);
+	$arrayDispararEmail = listaCandidatoEnviarEmail($conexao, $categoria, $nivel, $cidadeEmpresa, $palavrasChaves, $arrayRestricoes);
+
 	commitTransacao($conexao, "commitTransacao", "form-cadastro-vaga.php");
-	sucesso("Vaga ativada com sucesso!", "form-cadastro-vaga.php");
-/*
-	if (!commit($conexao)) {
-		$_SESSION["danger"] = "Ocorreu um erro, tente novamente mais tarde! Erro: commit";
-		rollback($conexao);
-		header("Location: form-cadastro-vaga.php");
-	    die();
+
+	if (count($arrayDispararEmail) > 0) {
+		foreach ($arrayDispararEmail as $email) {
+			$resultado = insereReplaceDisparaEmail($conexao, $email, $titulo, $idVaga);
+		}
+		//sleep(10);
 	}
 
-	$_SESSION["success"] = "Vaga ativada com sucesso!";
-	header("Location: gerenciar-vagas.php");
-	die();
-*/	
-}
-/*
-if (isset($_POST["DefFisica"])) {
-	$DefFisica = $_POST["DefFisica"];
-}
-if (isset($_POST["DefFala"])) {
-	$DefFala = $_POST["DefFala"];
-}
-if (isset($_POST["DefAuditiva"])) {
-	$DefAuditiva = $_POST["DefAuditiva"];
-}
-if (isset($_POST["DefMental"])) {
-	$DefMental = $_POST["DefMental"];
-}
-if (isset($_POST["DefVisual"])) {
-	$DefVisual = $_POST["DefVisual"];
+	sucesso("Vaga ativada com sucesso!", "gerenciar-vagas.php");
+
 }
 
-if (!starTransaction($conexao)) {
-	$_SESSION["danger"] = "Ocorreu um erro, tente novamente mais tarde! Erro: StartTransaction";
-	header("Location: form-cadastro-vaga.php");
-    die();
-}
-*/
 if (!insereVaga($conexao, $titulo, $descricaoVaga, $requisitoVaga, $beneficios, $salario, $cargaHoraria, $data, $idEmpresa, $categoria, $nivel, $ativa)) {
 	$_SESSION["danger"] = "Ocorreu um erro, tente novamente mais tarde! Erro: Insert".mysqli_error($conexao);
 	rollback($conexao);
@@ -237,25 +183,21 @@ if ($DefVisual != 0) {
 	    die();
 	}
 }
-/*
-$listaEmail = listaCandidatoEnviarEmail($conexao, $categoria, $arrayRestricoes);
-var_dump($listaEmail);
-sleep(20);
-*/
+
+$palavrasChaves = explode(" ", $titulo);
+$arrayDispararEmail = listaCandidatoEnviarEmail($conexao, $categoria, $nivel, $cidadeEmpresa, $palavrasChaves, $arrayRestricoes);
+
 commitTransacao($conexao, "commitTransacao", "form-cadastro-vaga.php");
-sucesso("Vaga cadastrada com sucesso!", "form-cadastro-vaga.php");
-/*
-if (!commit($conexao)) {
-	$_SESSION["danger"] = "Ocorreu um erro, tente novamente mais tarde!";
-	rollback($conexao);
-	header("Location: form-cadastro-vaga.php");
-    die();
+
+if (count($arrayDispararEmail) > 0) {
+	foreach ($arrayDispararEmail as $email) {
+		$resultado = insereReplaceDisparaEmail($conexao, $email, $titulo, $idVaga);
+	}
+	//sleep(10);
 }
 
-$_SESSION["success"] = "Vaga cadastrada com sucesso!";
-header("Location: gerenciar-vagas.php");
-die();
-*/
+sucesso("Vaga cadastrada com sucesso!", "gerenciar-vagas.php");
+
 ?>
 
 <?php require_once("rodape.php"); ?>
