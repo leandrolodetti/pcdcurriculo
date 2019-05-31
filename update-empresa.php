@@ -204,9 +204,9 @@ if (isset($_GET["id"]) && isset($_GET["update-vaga"])) {
 		}
 	}
 
-		$listaEmail = listaCandidatoEnviarEmail($conexao, $categoria);
-		$arrayDispararEmail = array();
-
+		//$listaEmail = listaCandidatoEnviarEmail($conexao, $categoria);
+		$arrayDispararEmail = listaCandidatoEnviarEmail($conexao, $categoria, $nivel, $titulo, $arrayRestricoes);
+/*
 		foreach ($listaEmail as $lista) {
 
 			foreach ($arrayRestricoes as $rest) {
@@ -232,12 +232,14 @@ if (isset($_GET["id"]) && isset($_GET["update-vaga"])) {
 				}
 			}
 		}
-
+*/
 	commitTransacao($conexao, "Ocorreu um erro, tente novamente mais tarde! Erro: commitTransacao", "form-cadastro-vaga.php");
 	
 		if (count($arrayDispararEmail) > 0) {
-			popen(dispararEmail($arrayDispararEmail, $idVaga), "w");
+			//popen(dispararEmail($arrayDispararEmail, $idVaga), "w");
 			//$enviou = dispararEmail($arrayDispararEmail, $idVaga);
+			//dispararEmail($arrayDispararEmail, $idVaga);
+			//sleep(10);
 		}
 	
 	//commitTransacao($conexao, "Ocorreu um erro, tente novamente mais tarde! Erro: commitTransacao", "form-cadastro-vaga.php");

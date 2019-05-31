@@ -18,7 +18,7 @@ $selectCandidatoCpf = buscaUmRegistro($conexao, $cpfCandidato, "Candidato", "cpf
 
 if ($selectCandidatoCpf["ativo"] == "S") {
 	$_SESSION["danger"] = "O CPF informado já está cadastrado!";
-	rollback($conexao);
+	//rollback($conexao);
 	header("Location: index.php");
     die();
 }
@@ -27,7 +27,7 @@ $selectCandidatoEmail = buscaUmRegistro($conexao, $emailCandidato, "Candidato", 
 
 if ($selectCandidatoEmail["ativo"] == "S") {
 	$_SESSION["danger"] = "O email informado já está cadastrado!";
-	rollback($conexao);
+	//rollback($conexao);
 	header("Location: index.php");
     die();
 }
@@ -65,29 +65,7 @@ $DefFala = 0; $DefFala = $_POST["DefFala"];
 $DefAuditiva = 0; $DefAuditiva = $_POST["DefAuditiva"];
 $DefMental = 0; $DefMental = $_POST["DefMental"];
 $DefVisual = 0; $DefVisual = $_POST["DefVisual"];
-/*
-$DefFisica = 0;
-$DefFala = 0;
-$DefAuditiva = 0;
-$DefMental = 0;
-$DefVisual = 0;
 
-if (isset($_POST["DefFisica"])) {
-	$DefFisica = $_POST["DefFisica"];
-}
-if (isset($_POST["DefFala"])) {
-	$DefFala = $_POST["DefFala"];
-}
-if (isset($_POST["DefAuditiva"])) {
-	$DefAuditiva = $_POST["DefAuditiva"];
-}
-if (isset($_POST["DefMental"])) {
-	$DefMental = $_POST["DefMental"];
-}
-if (isset($_POST["DefVisual"])) {
-	$DefVisual = $_POST["DefVisual"];
-}
-*/
 $cepCandidato = $_POST["cepCandidato"];
 $cidadeCandidato = $_POST["cidadeCandidato"];
 $ufCandidato = $_POST["ufCandidato"];
@@ -128,6 +106,38 @@ if ($selectCandidatoEmail["ativo"] == "N") {
 	}
 }
 
+if ($selectCandidatoCpf["ativo"] == "N") {
+	$idCandidato = $selectCandidatoCpf["idCandidato"];
+
+	if ($emailCandidato != $selectCandidatoCpf["email"]) {
+		$jaExiste = buscaCandidatoAtual($conexao, $emailCandidato);
+		if ($jaExiste != null) {
+			$_SESSION["danger"] = "O e-mail informado já está cadastrado!";
+			rollback($conexao);
+			header("Location: index.php");
+	    	die();
+		}
+	}
+	
+	if (!updateCandidato($conexao, $cpfCandidato, $nomeCandidato, $sobrenomeCandidato, $dataNascimentoCandidato, $contatoCandidato,
+				   	   $genero, $emailCandidato, $estadoCivil, $cepCandidato, $ufCandidato, $cidadeCandidato,
+				       $ruaCandidato, $numeroRuaCandidato, $bairroCandidato, $ComplementoCandidato, $senhaMd5,
+				       $cidCandidato, $ativo, $idResponsavel, $idCandidato)) {
+		$_SESSION["danger"] = "Ocorreu um erro, tente novamente mais tarde! Erro: updateCandidato".mysqli_error($conexao);
+		rollback($conexao);
+		header("Location: index.php");
+    	die();
+	}
+	if (!deleteDeficiencias($conexao, $idCandidato)) {
+		$_SESSION["danger"] = "Ocorreu um erro, tente novamente mais tarde! Erro: deleteDeficiencias".mysqli_error($conexao);
+		rollback($conexao);
+		header("Location: index.php");
+    	die();
+	}
+}
+
+$selectCandidatoEmail = buscaUmRegistro($conexao, $emailCandidato, "Candidato", "email");
+
 if ($selectCandidatoEmail == null) {
 	$jaExiste = buscaIdCandidato($conexao, $cpfCandidato);
 	if ($jaExiste != null) {
@@ -136,6 +146,7 @@ if ($selectCandidatoEmail == null) {
 		header("Location: index.php");
     	die();
 	}
+	
 	if(!insereCandidato($conexao, $cpfCandidato, $nomeCandidato, $sobrenomeCandidato, $dataNascimentoCandidato, $contatoCandidato,
 					   	   $genero, $emailCandidato, $estadoCivil, $cepCandidato, $ufCandidato, $cidadeCandidato,
 					       $ruaCandidato, $numeroRuaCandidato, $bairroCandidato, $ComplementoCandidato, $senhaMd5,
@@ -154,6 +165,7 @@ if ($selectCandidatoEmail == null) {
 		header("Location: index.php");
 	    die();
 	}
+
 }
 
 if ($DefFisica != 0) {
@@ -201,52 +213,6 @@ if ($DefVisual != 0) {
 	}
 }
 
-/*
-if ($DefFisica != null) {
-	if (!insereDeficiencia($conexao, $DefFisica, $idCandidato)) {
-		$_SESSION["danger"] = "Ocorreu um erro, tente novamente mais tarde! Erro: DefFisica";
-		rollback($conexao);
-		header("Location: index.php");
-    	die();
-	}	
-}
-
-if ($DefAuditiva != null) {
-	if (!insereDeficiencia($conexao, $DefAuditiva, $idCandidato)) {
-		$_SESSION["danger"] = "Ocorreu um erro, tente novamente mais tarde! Erro: DefAuditiva";
-		rollback($conexao);
-		header("Location: index.php");
-    	die();
-	}
-}
-
-if ($DefFala != null) {
-	if (!insereDeficiencia($conexao, $DefFala, $idCandidato)) {
-		$_SESSION["danger"] = "Ocorreu um erro, tente novamente mais tarde! Erro: DefFala";
-		rollback($conexao);
-		header("Location: index.php");
-    	die();
-	}
-}
-
-if ($DefMental != null) {
-	if (!insereDeficiencia($conexao, $DefMental, $idCandidato)) {
-		$_SESSION["danger"] = "Ocorreu um erro, tente novamente mais tarde! Erro: DefMental";
-		rollback($conexao);
-		header("Location: index.php");
-    	die();
-	}
-}
-
-if ($DefVisual != null) {
-	if (!insereDeficiencia($conexao, $DefVisual, $idCandidato)) {
-		$_SESSION["danger"] = "Ocorreu um erro, tente novamente mais tarde! Erro: DefVisual";
-		rollback($conexao);
-		header("Location: index.php");
-    	die();
-	}
-}
-*/
 commitTransacao($conexao, "commitTransacao", "index.php");
 sucesso("Candidato cadastrado com sucesso!", "form-login-candidato.php");
 die();

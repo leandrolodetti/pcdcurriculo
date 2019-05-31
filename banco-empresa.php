@@ -66,22 +66,44 @@ function buscaCurriculo($conexao, $idCandidato) {
 	return mysqli_fetch_assoc($resultado);			
 }
 
-function listaCandidatoEnviarEmail($conexao, $idCategoria/*, $restricoes*/) {
-	//$filtroRest = "AND Deficiencia.TiposDeficiencia_idTiposDeficiencia != '0'";
+function listaCandidatoEnviarEmail($conexao, $idCategoria, $idNivel, $titulo, $arrayRestricoes) {
+	
 	$candidatos = array();
-	/*
-	foreach ($restricoes as $rest) {
-		$filtroRest = $filtroRest." AND Deficiencia.TiposDeficiencia_idTiposDeficiencia != '{$rest}'";
-	}
-	*/
-	$query = "SELECT Candidato.email, Deficiencia.TiposDeficiencia_idTiposDeficiencia FROM Candidato INNER JOIN Curriculo ON Curriculo.Candidato_idCandidato=Candidato.idCandidato INNER JOIN Deficiencia ON Deficiencia.Candidato_idCandidato=Candidato.idCandidato WHERE Candidato.recebe_vagas='S' AND Curriculo.area={$idCategoria}";
+
+	$query = "SELECT Candidato.email, Deficiencia.TiposDeficiencia_idTiposDeficiencia FROM Candidato INNER JOIN Curriculo ON Curriculo.Candidato_idCandidato=Candidato.idCandidato INNER JOIN Deficiencia ON Deficiencia.Candidato_idCandidato=Candidato.idCandidato WHERE Candidato.recebe_vagas='S' AND Curriculo.area='{$idCategoria}' AND Curriculo.nivel_area='{$idNivel}' AND Curriculo.objetivo LIKE '%{$titulo}%'";
 
 	$resultado = mysqli_query($conexao, $query);
 
 	while ($candidato = mysqli_fetch_assoc($resultado)) {
 		array_push($candidatos, $candidato);
 	}
-	return $candidatos;
+
+	$listaEmail = $candidatos;
+	$arrayDispararEmail = array();
+
+	foreach ($listaEmail as $lista) {
+		foreach ($arrayRestricoes as $rest) {
+			if ($rest != $lista["TiposDeficiencia_idTiposDeficiencia"]) {
+				if (in_array($lista["email"], $arrayDispararEmail)) {
+					$c=1;
+				}
+				else {
+					array_push($arrayDispararEmail, $lista["email"]);
+				}
+			}
+		}
+	}
+	foreach ($listaEmail as $lista) {
+		foreach ($arrayRestricoes as $rest) {
+			if ($rest == $lista["TiposDeficiencia_idTiposDeficiencia"]) {
+				$key = array_search($lista["email"], $arrayDispararEmail);
+				if($key !== false){
+    				unset($arrayDispararEmail[$key]);
+				}
+			}
+		}
+	}
+	return $listaEmail;
 }
 
 function listaNivelVaga($conexao, $idNivel) {
@@ -286,13 +308,6 @@ function updateContatoEmpresa($conexao, $contato, $cep, $cidade, $estado, $logra
 	$query = "UPDATE Empresa SET contato='{$contato}', cep='{$cep}', cidade='{$cidade}', estado='{$estado}',
 			logradouro='{$logradouro}', num_logradouro='{$numero}', bairro='{$bairro}', complemento='{$complemento}'
 			WHERE idEmpresa={$idEmpresa}";
-	$resultado = mysqli_query($conexao, $query);
-	return $resultado;		
-}
-
-function insertUpdateTokenCandidato($conexao, $chavePrivada, $idCandidato) {
-	$query = "REPLACE INTO RecuperaLogin(token, data_criacao, Candidato_idCandidato)
-			VALUES('{$chavePrivada}', now(), {$idCandidato})";
 	$resultado = mysqli_query($conexao, $query);
 	return $resultado;		
 }

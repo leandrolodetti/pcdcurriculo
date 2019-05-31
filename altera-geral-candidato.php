@@ -2,6 +2,8 @@
 require_once("logica-candidato.php");
 verificaCandidato();
 
+$idResponsavel = $usuarioAtual["Responsavel_idResponsavel"];
+
 $selectMasculino = "";
 $selectFeminino = "";
 if ($usuarioAtual["genero"] == "M") {
@@ -69,7 +71,7 @@ elseif ($usuarioAtual["estado_civil"] == "Viúvo(a)") {
     <p class="text-left font-weight-normal">Altere suas configurações básicas</p>
 </div>
 
-<form onsubmit="return validaAlteraGeralCandidato();" action="update-candidato.php?geral-candidato" method="post">
+<form onsubmit="return validaAlteraGeralCandidato(<?php echo $idResponsavel; ?>);" action="update-candidato.php?geral-candidato" method="post">
     <input type="hidden" name="confirmaUpdate" value="yes">
     <div class="row">
         <div class="col-sm">

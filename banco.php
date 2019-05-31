@@ -225,4 +225,15 @@ function updateGeralCandidato($conexao, $cpf, $nome, $sobrenome, $nascimento, $c
 	return $resultado;		
 }
 
+function insertUpdateTokenCandidato($conexao, $chavePrivada, $idCandidato) {
+	$query = "REPLACE INTO RecuperaLogin(token, data_criacao, Candidato_idCandidato)
+			VALUES('{$chavePrivada}', now(), {$idCandidato})";
+	$resultado = mysqli_query($conexao, $query);
+	return $resultado;		
+}
+
+function selectIndicadorProfissional() {
+	$query = "SELECT Candidato.email, Deficiencia.TiposDeficiencia_idTiposDeficiencia FROM Candidato INNER JOIN Curriculo ON Curriculo.Candidato_idCandidato=Candidato.idCandidato INNER JOIN Deficiencia ON Deficiencia.Candidato_idCandidato=Candidato.idCandidato WHERE Curriculo.area=1 AND Curriculo.nivel_area=3 AND Curriculo.objetivo LIKE '%Desenvolvedor PHP%'";
+}
+
 ?>

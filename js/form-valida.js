@@ -186,7 +186,9 @@ function validarGenero(idM,idF,idErro,msg) {
 	}
 }
 
-function calcularIdadeResponsavel(id) {
+function calcularIdadeResponsavel(id, idErro) {
+
+	var y = document.getElementById(idErro);
 	var id1 = document.getElementById(id);
 	var nascimento = document.getElementById(id).value.split("/");
 	//document.getElementById("idFormResponsavel").style.visibility = "hidden";
@@ -202,10 +204,15 @@ function calcularIdadeResponsavel(id) {
     	alert("Idade do responsável inferior a 18 anos!");
     	return false;
     }
-    else{
-		id1.style.backgroundColor = "white";
-		return true;
-	}
+    if (Math.abs(idade.getUTCFullYear() - 1970) > 80) {
+    	id1.style.backgroundColor = "#F08080";
+		id1.focus();
+		y.innerHTML = "Data inválida";
+		return false;
+    }
+    
+	id1.style.backgroundColor = "white";
+	return true;
 }
 
 function validarDeficiencia(idErro,msg) {
@@ -458,7 +465,9 @@ function validarContatoResponsavel() {
 	return false;
 }
 
-function calcularIdade(id) {
+function calcularIdade(id, idErro) {
+
+	var y = document.getElementById(idErro);
 	var id1 = document.getElementById(id);
 	var nascimento = document.getElementById(id).value.split("/");
 	document.getElementById("idFormResponsavel").style.visibility = "hidden";
@@ -526,7 +535,7 @@ function calcularIdade(id) {
 	   	 	!validarEmail("idEmailResponsavel", "idSmallEmailResponsavel", "E-mail Inválido") ||
 	   	 	!diferencaCampo("idEmail","idEmailResponsavel","idSmallEmailResponsavel","E-mail igual ao do candidato") ||
 	   	 	!validaNumCaracteres("idNascResponsavel","idSmallNascResponsavel",10,"Data Inválida") ||
-	   	 	!calcularIdadeResponsavel("idNascResponsavel")
+	   	 	!calcularIdadeResponsavel("idNascResponsavel" ,"idSmallNascResponsavel")
 	   	 	) {
 	   		return false;
 	   	}
@@ -534,11 +543,18 @@ function calcularIdade(id) {
 		id2.style.backgroundColor = "white";
 	   	return true;
 	}
+
+	if (Math.abs(idade.getUTCFullYear() - 1970) > 80) {
+    	id1.style.backgroundColor = "#F08080";
+		id1.focus();
+		y.innerHTML = "Data inválida";
+		return false;
+    }
 	return true;
 }
 
 function validarNascimento() {
-	if (calcularIdade("inputDataNascimento")) {
+	if (calcularIdade("inputDataNascimento", "idSmallNascimento")) {
 		return true;
 	}
 	return false;
@@ -703,8 +719,11 @@ function validaCurriculoFormacao() {
 	return true;
 }
 
-function calcularIdadeAltera(id) {
+function calcularIdadeAltera(id, idErro, idResponsavel) {
+
+	var y = document.getElementById(idErro);
 	var id1 = document.getElementById(id);
+
 	var nascimento = document.getElementById(id).value.split("/");
 	//document.getElementById("idFormResponsavel").style.visibility = "hidden";
     var dataNascimento = new Date(parseInt(nascimento[2], 10),
@@ -717,15 +736,26 @@ function calcularIdadeAltera(id) {
     	alert("Idade inferior a 16 anos!");
     	return false;
     }
-
-    if (Math.abs(idade.getUTCFullYear() - 1970) < 18) {
-    	alert("Para fazer esta alteração, será necessário apagar a conta e refazer o cadastro, pois a idade será inferior a 18 anos, necessitando do cadastro de um responsável");
+    else
+    if ((Math.abs(idade.getUTCFullYear() - 1970) < 18) && idResponsavel == "1")  {
+    	alert("Para fazer esta alteração, será necessário primeiro incluir um responsável, pois a idade será inferior a 18 anos");
+    	window.location.replace("http://localhost/pcdcurriculo/altera-dados-candidato.php?responsavel");
     	return false;
     }
-    return true;
+    else
+    if (Math.abs(idade.getUTCFullYear() - 1970) > 80) {
+    	id1.style.backgroundColor = "#F08080";
+		id1.focus();
+		y.innerHTML = "Data inválida";
+		return false;
+    }
+
+    id1.style.backgroundColor = white;
+	y.innerHTML = "";
+	return true;
 }
 
-function validaAlteraGeralCandidato() {
+function validaAlteraGeralCandidato(idResponsavel) {
 	if (!validaNumCaracteres("idAlteraNomeCandidato","idSmallAlteraNome",3,"Campo inválido") || //validar Nome
 		!validaNumCaracteres("idAlteraSobrenomeCandidato","idSmallAlteraSobrenome",3,"Campo inválido") || //validar Sobrenome
 		!validarCPF("idAlteraCPF","idSmallAlteraCPF","CPF Inválido") || //validar cpf
@@ -736,10 +766,18 @@ function validaAlteraGeralCandidato() {
 		/*!validaSelect("idAlteraEstadoCivil", "idSmallEstadoCivil", "Selecione uma opção!") ||*/
 		!validarEmail("idAlteraEmailCandidato", "idSmallAlteraEmail", "E-mail Inválido") ||
 		!confirmarEmail("idAlteraEmailCandidato","idConfirmarEmailAlteradoCandidato","idSmallConfirmaEmail","E-mails não conferem!") ||
-		!calcularIdadeAltera("idAlteraNascimento")
+		!calcularIdadeAltera("idAlteraNascimento","idSmallAlteraNascimento",idResponsavel)
 		) {
 		return false;
 	}
+	/*
+	if (idResponsavel == "1") {
+		if (!calcularIdadeAltera("idAlteraNascimento","idSmallAlteraNascimento",idResponsavel)) {
+			window.location.replace("http://localhost/pcdcurriculo/altera-dados-candidato.php?responsavel");
+			return false;
+		}
+	}
+	*/
 	return true;
 }
 
@@ -768,7 +806,7 @@ function validaAlteraResponsavel() {
 	 	!validaNumCaracteres("idContatoResponsavel","idSmallContatoResponsavel",12,"Número inválido") ||
 	 	!validarEmail("idEmailResponsavel", "idSmallEmailResponsavel", "E-mail Inválido") ||
 	 	!validaNumCaracteres("idNascResponsavel","idSmallNascResponsavel",10,"Data Inválida") ||
-	 	!calcularIdadeResponsavel("idNascResponsavel")
+	 	!calcularIdadeResponsavel("idNascResponsavel", "idSmallNascResponsavel")
 	 	) {
 		return false;
 	}

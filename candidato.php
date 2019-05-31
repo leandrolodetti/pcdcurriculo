@@ -17,7 +17,7 @@ $CurriculoAtual = buscaUmRegistro($conexao, $usuarioAtual["idCandidato"], "Curri
 
 <div class="container-fluid border-bottom border-primary" style="padding-bottom: 20px;"></div>
 
-<div class="container" style="padding-top: 30px; padding-bottom: 190px;">
+<div class="container" style="padding-top: 30px;">
 	<div class="row">
 		<div class="col-sm-4">
 			<h3 class="text-left font-weight-normal"><?php echo $usuarioAtual ["nome"]; ?></h3>
@@ -62,12 +62,12 @@ $CurriculoAtual = buscaUmRegistro($conexao, $usuarioAtual["idCandidato"], "Curri
 				</div>
 
 				<div class="col-sm-6">
-					<a class="nav-link" href="">
+					<a class="nav-link" href="indicador-profissional.php">
 				    	<div class="card text-center">
 					    	<i class="fas fa-chart-line rounded float-left text-success" style="font-size: 70px; padding: 10px;"></i>
 					      	<div class="card-body">
 					      		<h5 class="tit-box text-body">Indicador Profissional</h5>
-							    <p class="card-text text-body">Contratações por tipo de deficiência</p>
+							    <p class="card-text text-body">Vagas indicadas para o seu perfil</p>
 					      	</div>
 				    	</div>
 				    </a>
