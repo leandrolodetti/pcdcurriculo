@@ -47,19 +47,19 @@ $selectedSolteiro = "";
 $selectedSeparado = "";
 $selectedViuvo = "";
 
-if ($usuarioAtual["estado_civil"] == "Divorciado(a)") {
+if (strcasecmp($usuarioAtual["estado_civil"], "Divorciado(a)") == 0) {
     $selectedDivorciado = "selected='selected'";
 }
-elseif ($usuarioAtual["estado_civil"] == "Casado(a)") {
+elseif (strcasecmp($usuarioAtual["estado_civil"], "Casado(a)") == 0) {
     $selectedCasado = "selected='selected'";
 }
-elseif ($usuarioAtual["estado_civil"] == "Solteiro(a)") {
+elseif (strcasecmp($usuarioAtual["estado_civil"], "Solteiro(a)") == 0) {
     $selectedSolteiro = "selected='selected'";
 }
-elseif ($usuarioAtual["estado_civil"] == "Separado(a)") {
+elseif (strcasecmp($usuarioAtual["estado_civil"], "Separado(a)") == 0) {
     $selectedSeparado = "selected='selected'";
 }
-elseif ($usuarioAtual["estado_civil"] == "Viúvo(a)") {
+elseif (strcasecmp($usuarioAtual["estado_civil"], "Viúvo(a)") == 0) {
     $selectedViuvo = "selected='selected'";
 }
 
