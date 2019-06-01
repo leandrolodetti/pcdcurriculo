@@ -27,15 +27,6 @@ if (isset($_GET["token"]) && $_GET["token"] != null && isset($_GET["candidato"])
 			header("Location: form-login-candidato.php");
 		    die();
 		}
-
-		//$decodificada = base64_decode($token);
-		/*
-		if ($token != $encontrou["token"]) {
-			$_SESSION["danger"] = "Token inválido";
-			header("Location: index.php");
-		    die();
-		}
-		*/
 	}
 	else {
 		$_SESSION["danger"] = "Link inválido";

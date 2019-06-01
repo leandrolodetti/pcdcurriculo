@@ -68,7 +68,7 @@ function buscaCurriculo($conexao, $idCandidato) {
 
 function listaCandidatoEnviarEmail($conexao, $categoria, $nivel, $cidade, $palavrasChaves, $arrayRestricoes) {
 	
-	$arrayLike = " AND Curriculo.objetivo LIKE ''";
+	$arrayLike = " Curriculo.objetivo LIKE ''";
 
 	foreach ($palavrasChaves as $chave) {
 		$arrayLike = $arrayLike." OR Curriculo.objetivo LIKE '%{$chave}%'";
@@ -76,7 +76,7 @@ function listaCandidatoEnviarEmail($conexao, $categoria, $nivel, $cidade, $palav
 	
 	$candidatos = array();
 
-	$query = "SELECT Candidato.email, Deficiencia.TiposDeficiencia_idTiposDeficiencia FROM Candidato INNER JOIN Curriculo ON Curriculo.Candidato_idCandidato=Candidato.idCandidato INNER JOIN Deficiencia ON Deficiencia.Candidato_idCandidato=Candidato.idCandidato WHERE Candidato.recebe_vagas='S' AND Curriculo.area='{$categoria}' AND Curriculo.nivel_area='{$nivel}' AND Candidato.cidade='{$cidade}'".$arrayLike;
+	$query = "SELECT Candidato.email, Deficiencia.TiposDeficiencia_idTiposDeficiencia FROM Candidato INNER JOIN Curriculo ON Curriculo.Candidato_idCandidato=Candidato.idCandidato INNER JOIN Deficiencia ON Deficiencia.Candidato_idCandidato=Candidato.idCandidato WHERE Candidato.recebe_vagas='S' AND Curriculo.area='{$categoria}' AND Curriculo.nivel_area='{$nivel}' AND Candidato.cidade='{$cidade}' AND (".$arrayLike." )";
 
 	$resultado = mysqli_query($conexao, $query);
 
@@ -99,6 +99,7 @@ function listaCandidatoEnviarEmail($conexao, $categoria, $nivel, $cidade, $palav
 			}
 		}
 	}
+	
 	foreach ($listaEmail as $lista) {
 		foreach ($arrayRestricoes as $rest) {
 			if ($rest == $lista["TiposDeficiencia_idTiposDeficiencia"]) {

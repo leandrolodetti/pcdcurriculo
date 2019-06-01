@@ -1,5 +1,29 @@
-<?php require_once("cabecalho.php");
+<?php
 
+require_once("cabecalho.php");
+require_once("logica-candidato.php");
+verificaCandidato();
+
+$idCandidato = $usuarioAtual["idCandidato"];
+
+$arrayRestricoes = array();
+$arrayDef = listaIdDeficienciasCandidato($conexao, $idCandidato);
+
+foreach ($arrayDef as $def) {
+    array_push($arrayRestricoes, $def["TiposDeficiencia_idTiposDeficiencia"]);
+}
+
+$curriculo = buscaUmRegistro($conexao, $idCandidato, "Curriculo", "Candidato_idCandidato");
+
+$categoria = $curriculo["area"];
+$nivel = $curriculo["nivel_area"];
+$cidade = $usuarioAtual["cidade"];
+$titulo = $curriculo["objetivo"];
+
+$palavrasChaves = explode(" ", $titulo);
+
+
+$idVagasIndicadas = selectIndicadorProfissional($conexao, $categoria, $nivel, $cidade, $palavrasChaves, $arrayRestricoes, 50);
 
 
 ?>
@@ -32,11 +56,12 @@
       <div class="col-sm">
         <?php
           $cores = array("badge-secondary", "badge-primary", "badge-success", "badge-warning");
-          $ultimasVagas = listaUltimasVagas($conexao, 10);
-          foreach ($ultimasVagas as $vaga) {
+          //$ultimasVagas = listaUltimasVagas($conexao, 10);
+          foreach ($idVagasIndicadas as $id) {
             $num = rand(0,3);
+            $vagaAtual = listaUmaVaga($conexao, $id);
           ?>  
-            <a class="badge badge-pill <?php echo $cores[$num]; ?>" style="padding: 12px; margin-right: 10px; margin-top: 10px;" href="<?php echo "vaga.php?id=".$vaga["idVaga"]; ?>"><?php echo $vaga["titulo"]; ?></a>
+            <a class="badge badge-pill <?php echo $cores[$num]; ?>" style="padding: 12px; margin-right: 10px; margin-top: 10px;" href="<?php echo "vaga.php?id=".$vagaAtual["idVaga"]; ?>"><?php echo $vagaAtual["titulo"]; ?></a>
           <?php
           }
         ?>

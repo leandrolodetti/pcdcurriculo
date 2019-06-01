@@ -33,9 +33,9 @@ function sucesso($msg, $location) {
 	die();
 }
 
-function disparaEmailRecuperaLogin($email, $token, $idCandidato, $tipo) {
+function disparaEmailRecuperaLogin($email, $token, $id, $tipo) {
 
-    $link = "http://localhost/pcdcurriculo/form-recuperar-login.php?{$tipo}={$idCandidato}&token={$token}";
+    $link = "https://pcdcurriuclo.com.br/form-recuperar-login.php?{$tipo}={$id}&token={$token}";
 	$msg = corpoRecuperaSenha($link);
 
 	try {
@@ -43,7 +43,6 @@ function disparaEmailRecuperaLogin($email, $token, $idCandidato, $tipo) {
 
         $mail->isSMTP();
         $mail->CharSet = 'UTF-8';
-        //$mail->Encoding = 'base64';
         $mail->Host = 'smtp.gmail.com';
         $mail->Port = 587;
         $mail->SMTPSecure = 'startls';
@@ -56,7 +55,7 @@ function disparaEmailRecuperaLogin($email, $token, $idCandidato, $tipo) {
         $mail->Subject = "Recuperar Senha Pcdcurrículo";
 
 		$mail->msgHTML($msg);
-		$mail->AltBody = "Link: http://localhost/pcdcurriculo/recupera-login.php?{$tipo}={$idCandidato}&token={$token}";
+		$mail->AltBody = "Link: https://pcdcurriuclo.com.br/form-recuperar-login.php?{$tipo}={$id}&token={$token}";
 		
 		if($mail->send()) {
 			return true;

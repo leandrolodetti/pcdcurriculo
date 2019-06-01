@@ -15,6 +15,19 @@ function listaDeficienciasCandidato($conexao, $id) {
 	return $deficiencias;
 }
 
+function listaIdDeficienciasCandidato($conexao, $idCandidato) {
+	$deficiencias = array();
+
+	$query = "SELECT Deficiencia.TiposDeficiencia_idTiposDeficiencia FROM Deficiencia
+			WHERE Candidato_idCandidato={$idCandidato}";
+	$resultado = mysqli_query($conexao, $query);
+
+	while ($deficiencia = mysqli_fetch_assoc($resultado)) {
+		array_push($deficiencias, $deficiencia);
+	}
+	return $deficiencias;	
+}
+
 function updateUmCampo($conexao, $tabela, $set, $valor, $where, $condicao) {
 	$query = "UPDATE {$tabela} SET {$set}='{$valor}' WHERE {$where} = {$condicao}";
 	$resultadoDaInsercao = mysqli_query($conexao, $query);
@@ -232,8 +245,67 @@ function insertUpdateTokenCandidato($conexao, $chavePrivada, $idCandidato) {
 	return $resultado;
 }
 
-function selectIndicadorProfissional() {
-	$query = "SELECT Candidato.email, Deficiencia.TiposDeficiencia_idTiposDeficiencia FROM Candidato INNER JOIN Curriculo ON Curriculo.Candidato_idCandidato=Candidato.idCandidato INNER JOIN Deficiencia ON Deficiencia.Candidato_idCandidato=Candidato.idCandidato WHERE Curriculo.area=1 AND Curriculo.nivel_area=3 AND Curriculo.objetivo LIKE '%Desenvolvedor PHP%'";
+function selectIndicadorProfissional($conexao, $categoria, $nivel, $cidade, $palavrasChaves, $arrayRestricoes, $limite) {
+
+	$arrayLike = " Vaga.titulo LIKE ''";
+
+	foreach ($palavrasChaves as $chave) {
+		$arrayLike = $arrayLike." OR Vaga.titulo LIKE '%{$chave}%'";
+	}
+
+	$vagas = array();
+
+	$query = "SELECT Vaga.idVaga, RestricaoDeficiencia.TiposDeficiencia_idTiposDeficiencia FROM Vaga INNER JOIN RestricaoDeficiencia ON RestricaoDeficiencia.Vaga_idVaga=Vaga.idVaga INNER JOIN Empresa ON Empresa.idEmpresa=Vaga.Empresa_idEmpresa WHERE Vaga.Categoria_idCategoria={$categoria} AND Vaga.Nivel_idNivel={$nivel} AND Vaga.ativa='S' AND Empresa.cidade='{$cidade}' AND (".$arrayLike." ) LIMIT {$limite}";
+
+	$resultado = mysqli_query($conexao, $query);
+
+	while ($vaga = mysqli_fetch_assoc($resultado)) {
+		array_push($vagas, $vaga);
+	}
+
+	$arrayVagasIndicadas = array();
+
+	foreach ($vagas as $vagaAtual) {
+		foreach ($arrayRestricoes as $rest) {
+			if ($rest != $vagaAtual["TiposDeficiencia_idTiposDeficiencia"]) {
+				if (in_array($vagaAtual["idVaga"], $arrayVagasIndicadas)) {
+					$c=1;
+				}
+				else {
+					array_push($arrayVagasIndicadas, $vagaAtual["idVaga"]);
+				}
+			}
+		}
+	}
+
+	foreach ($vagas as $vagaAtual) {
+		foreach ($arrayRestricoes as $rest) {
+			if ($rest == $vagaAtual["TiposDeficiencia_idTiposDeficiencia"]) {
+				$key = array_search($vagaAtual["idVaga"], $arrayVagasIndicadas);
+				if($key !== false){
+    				unset($arrayVagasIndicadas[$key]);
+				}
+			}
+		}
+	}
+	return $arrayVagasIndicadas;
+}
+
+function listarContratados($conexao, $limite) {
+
+	$arrayContratacoes = array();
+
+	$query = "SELECT Candidatura.data_contratacao, Vaga.titulo, Empresa.cidade, Empresa.fantasia FROM Candidatura
+			INNER JOIN Vaga ON Candidatura.Vaga_idVaga=Vaga.idVaga INNER JOIN Empresa ON Vaga.Empresa_idEmpresa=Empresa.idEmpresa
+			WHERE Candidatura.contratado='S' LIMIT {$limite}";
+
+	$resultado = mysqli_query($conexao, $query);
+
+	while ($contratado = mysqli_fetch_assoc($resultado)) {
+		array_push($arrayContratacoes, $contratado);
+	}
+
+	return $arrayContratacoes;
 }
 
 ?>

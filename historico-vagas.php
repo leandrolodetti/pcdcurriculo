@@ -4,15 +4,10 @@ require_once("logica-candidato.php");
 
 verificaCandidato();
 
-if (isset($_SESSION["candidato_logado"])) {
-	$idCandidato = $usuarioAtual["idCandidato"];
-	$vagas = listaHistorico($conexao, $idCandidato);
-	//$href = "candidato.php";
-	//$msg = "Área do candidato";
-	$msgBotao = "Desfazer candidatura";
-	//$cor = "#5EC998";
-	$corBread = "text-primary";
-}
+$idCandidato = $usuarioAtual["idCandidato"];
+$vagas = listaHistorico($conexao, $idCandidato);
+$msgBotao = "Remover";
+$corBread = "text-primary";
 
 ?>
 
@@ -40,14 +35,18 @@ if (isset($_SESSION["candidato_logado"])) {
 		      <th scope="col">ID</th>
 		      <th scope="col">Título</th>
 		      <th scope="col">Data candidatura</th>
+		      <th scope="col">Status</th>
 		      <th scope="col"></th>
 		    </tr>
 		  </thead>
 		  <tbody>
 			<?php
 			foreach ($vagas as $vaga) {
+				$status = "Aguardando";
 				if ($vaga["ativa"] == "S") {
-
+					if ($vaga["contratado"] == "S") {
+						$status = "Contratado";
+					}
 					$data_atualizacao = $vaga["data_candidatura"];
 					$datas = explode("-", $data_atualizacao);
 					$dataBr = $datas[2]."/".$datas[1]."/".$datas[0];
@@ -55,8 +54,8 @@ if (isset($_SESSION["candidato_logado"])) {
 					<tr>
 						<th scope="row"><?php echo $vaga["idVaga"]; ?></th>
 						<td><a href="vaga.php?id=<?php echo $vaga["idVaga"]."&parametro=".$vaga["titulo"] ?>"><?php echo $vaga["titulo"]; ?></a></td>
-						
 						<td><?php echo $dataBr; ?></td>
+						<td><?php echo $status; ?></td>
 						<td><a class="btn btn-danger btn-sm" href="<?php echo "update-candidato.php?desfazer-candidatura&vaga=".$vaga["idVaga"]; ?>"><?php echo $msgBotao; ?></a></td>
 					</tr>
 			<?php

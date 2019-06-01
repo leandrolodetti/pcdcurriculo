@@ -11,13 +11,10 @@ if (isset($_POST["cpf"]) && $_POST["cpf"] != null && isset($_GET["recupera-candi
 		$emailCandidato = $Candidato["email"];
 		$idCandidato = $Candidato["idCandidato"];
 
-		//$random_string = chr(rand(65,90)) . chr(rand(65,90)) . chr(rand(65,90)) . chr(rand(65,90)) . chr(rand(65,90)) . chr(rand(65,90)) . chr(rand(65,90));
-
 		for ($i=0; $i < 100; $i++) { 
 			$random_string = $random_string.chr(rand(65,90));
 		}
 
-		//$codificada = md5(uniqid(rand(), true));
 		$codificada = crypt($random_string);
 
 		iniciarTransacao($conexao, "$iniciarTransacao", "form-login-candidato.php");
@@ -65,7 +62,6 @@ if (isset($_GET["resetPasswd"]) && $_POST["confirmaUpdate"] == "yes" && isset($_
 	sucesso("Senha resetada com sucesso!", "form-login-candidato.php");
 	die();
 }
-
 
 header("Location: index.php");
 die();

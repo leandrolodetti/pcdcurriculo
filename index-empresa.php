@@ -1,5 +1,6 @@
 <?php
 require_once("cabecalho.php");
+$listaContratados = listarContratados($conexao, 6);
 ?>
 
 <div class="container-fluid" style="background-color: #6f42c1; padding-bottom: 20px;">
@@ -24,15 +25,15 @@ require_once("cabecalho.php");
   <div class="container">
     <div class="row">
       <?php
-        for($i=0;$i<6;$i++) {
+        foreach ($listaContratados as $contratacao) {
       ?>
           <div class="col-sm-4" id="cardVagas">
             <div class="card">
-              <div class="card-body">
-                <h5 class="card-title">Desenvolvedor de Sistemas Sênior / Arquitetura</h5>
-                <p class="card-text">Data: 22/03/2019</p>
-                <p class="card-text">Empresa: Universidade de Mogi das Cruzes</p>
-                <p class="card-text">Local: São Paulo</p>
+              <div class="card-body" style="min-height: 230px;">
+                <h5 class="card-title"><?php echo $contratacao["titulo"]; ?></h5>
+                <p class="card-text"><?php echo "Data: ".$contratacao["data_contratacao"]; ?></p>
+                <p class="card-text"><?php echo "Empresa: ".$contratacao["fantasia"]; ?></p>
+                <p class="card-text"><?php echo "Local: ".$contratacao["cidade"]; ?></p>
               </div>
             </div>
           </div>
