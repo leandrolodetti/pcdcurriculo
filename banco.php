@@ -309,8 +309,27 @@ function listarContratados($conexao, $limite) {
 }
 
 function removerTokenRecuperaLogin($conexao, $where, $id) {
-	
-	$query = "DELETE FROM RecuperaLogin WHERE Empresa_idEmpresa={$id}";
+
+	$query = "DELETE FROM RecuperaLogin WHERE {$where}={$id}";
+	$resultado = mysqli_query($conexao, $query);
+	return $resultado;
+}
+
+function vagasParaDispararEmail($conexao) {
+	$vagas = array();
+
+	$query = "SELECT * FROM DisparaEmail";
+
+	$resultado = mysqli_query($conexao, $query);
+
+	while ($vaga = mysqli_fetch_assoc($resultado)) {
+		array_push($vagas, $vaga);
+	}
+	return $vagas;
+}
+
+function removeEmailEnviado($conexao, $email) {
+	$query = "DELETE FROM DisparaEmail WHERE email_candidato='{$email}'";
 	$resultado = mysqli_query($conexao, $query);
 	return $resultado;
 }

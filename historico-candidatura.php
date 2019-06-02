@@ -29,7 +29,7 @@ $candidaturas = listaCandidaturaCandidato($conexao, $idEmpresa);
 		<table class="table">
 		  <thead>
 		    <tr>
-		      <th scope="col">ID</th>
+		      <th scope="col">ID Vaga</th>
 		      <th scope="col">Candidato</th>
 		      <th scope="col">Vaga</th>
 		      <th scope="col">Data candidatura</th>

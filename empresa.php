@@ -28,7 +28,7 @@ verificaEmpresa();
 		<div class="col-sm-8">
 			<div class="row" style="padding: 15px;">
 
-				<div class="col-sm-6">
+				<div class="col-sm-7">
 					<a class="nav-link" href="gerenciar-vagas.php">
 				    	<div class="card text-center">
 					    	<i class="fas fa-folder-open rounded float-left text-success" style="font-size: 70px; padding: 10px;"></i>
@@ -40,7 +40,7 @@ verificaEmpresa();
 				    </a>
 				</div>
 
-				<div class="col-sm-6">
+				<div class="col-sm-7">
 					<a class="nav-link" href="altera-dados-empresa.php">
 				    	<div class="card text-center">
 
@@ -53,7 +53,7 @@ verificaEmpresa();
 				    </a>
 				</div>
 
-				<div class="col-sm-6">
+				<div class="col-sm-7">
 					<a class="nav-link" href="historico-candidatura.php">
 				    	<div class="card text-center">
 				    		
