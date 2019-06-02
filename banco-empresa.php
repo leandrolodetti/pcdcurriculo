@@ -325,3 +325,10 @@ function insereReplaceDisparaEmail($conexao, $email, $titulo, $idVaga) {
 	$resultado = mysqli_query($conexao, $query);
 	return $resultado;		
 }
+
+function insertUpdateTokenEmpresa($conexao, $chavePrivada, $idEmpresa) {
+	$query = "REPLACE INTO RecuperaLogin(token, data_criacao, Empresa_idEmpresa)
+			VALUES('{$chavePrivada}', now(), {$idEmpresa})";
+	$resultado = mysqli_query($conexao, $query);
+	return $resultado;
+}

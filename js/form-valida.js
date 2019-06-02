@@ -739,7 +739,7 @@ function calcularIdadeAltera(id, idErro, idResponsavel) {
     else
     if ((Math.abs(idade.getUTCFullYear() - 1970) < 18) && idResponsavel == "1")  {
     	alert("Para fazer esta alteração, será necessário primeiro incluir um responsável, pois a idade será inferior a 18 anos");
-    	window.location.replace("http://localhost/pcdcurriculo/altera-dados-candidato.php?responsavel");
+    	window.location.replace("https://pcdcurriculo.com.br/altera-dados-candidato.php?responsavel");
     	return false;
     }
     else

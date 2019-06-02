@@ -1,5 +1,6 @@
 <?php
 require_once("cabecalho.php");
+require_once("banco-empresa.php");
 
 if (isset($_POST["cpf"]) && $_POST["cpf"] != null && isset($_GET["recupera-candidato"]) && $_POST["confirmaUpdate"] == "yes") {
 
@@ -58,8 +59,83 @@ if (isset($_GET["resetPasswd"]) && $_POST["confirmaUpdate"] == "yes" && isset($_
 	    die();
 	}
 
+	if (!removerTokenRecuperaLogin($conexao, "Candidato_idCandidato", $idCandidato)) {
+		$_SESSION["danger"] = "Ocorreu um erro, tente novamente mais tarde! Erro: removerTokenRecuperaLogin";
+		rollback($conexao);
+		header("Location: form-login-candidato.php");
+	    die();
+	}
+
 	commitTransacao($conexao, "commitTransacao", "form-login-candidato.php");
 	sucesso("Senha resetada com sucesso!", "form-login-candidato.php");
+	die();
+}
+
+if (isset($_POST["cnpj"]) && $_POST["cnpj"] != null && isset($_GET["recupera-empresa"]) && $_POST["confirmaUpdate"] == "yes") {
+	
+	$cnpjEmpresa = $_POST["cnpj"];
+	$empresa = buscaUmRegistro($conexao, $cnpjEmpresa, "Empresa", "cnpj");
+
+	if ($empresa != null) {
+
+		$emailEmpresa = $empresa["email"];
+		$idEmpresa = $empresa["idEmpresa"];
+
+		for ($i=0; $i < 100; $i++) { 
+			$random_string = $random_string.chr(rand(65,90));
+		}
+
+		$codificada = crypt($random_string);
+
+		iniciarTransacao($conexao, "$iniciarTransacao", "form-login-empresa.php");
+
+		if (!insertUpdateTokenEmpresa($conexao, $codificada, $idEmpresa)) {
+			$_SESSION["danger"] = "Ocorreu um erro, tente novamente mais tarde! Erro: insertUpdateTokenEmpresa";
+			rollback($conexao);
+			header("Location: form-login-empresa.php");
+    		die();
+		}
+
+		if (!disparaEmailRecuperaLogin($emailEmpresa, $codificada, $idEmpresa, "empresa")) {
+			$_SESSION["danger"] = "Ocorreu um erro, tente novamente mais tarde! Erro: disparaEmailRecuperaLogin";
+			rollback($conexao);
+			header("Location: form-login-empresa.php");
+    		die();
+		}
+
+		commitTransacao($conexao, "commitTransacao", "form-login-empresa.php");
+		sucesso("Um e-mail foi enviado para {$emailEmpresa}. Clique no link para recuperar a senha", "form-login-empresa.php");
+		die();
+	}
+	else {
+		$_SESSION["danger"] = "CNPJ não encontrado!";
+		header("Location: form-login-empresa.php");
+    	die();
+	}
+}
+
+if (isset($_GET["resetPasswd"]) && $_POST["confirmaUpdate"] == "yes" && isset($_POST["idEmpresa"]) && $_POST["idEmpresa"] !=null) {
+	
+	$senhaMd5 = md5($_POST["senha"]);
+	$idEmpresa = $_POST["idEmpresa"];
+
+	iniciarTransacao($conexao, "$iniciarTransacao", "form-login-empresa.php");
+
+	if (!updateUmCampo($conexao, "Empresa", "senha", $senhaMd5, "idEmpresa", $idEmpresa)) {
+		$_SESSION["danger"] = "Ocorreu um erro, tente novamente mais tarde! Erro: updateUmCampoResetPasswd";
+		rollback($conexao);
+		header("Location: form-login-empresa.php");
+	    die();
+	}
+	if (!removerTokenRecuperaLogin($conexao, "Empresa_idEmpresa", $idEmpresa)) {
+		$_SESSION["danger"] = "Ocorreu um erro, tente novamente mais tarde! Erro: removerTokenRecuperaLogin";
+		rollback($conexao);
+		header("Location: form-login-empresa.php");
+	    die();
+	}
+
+	commitTransacao($conexao, "commitTransacao", "form-login-empresa.php");
+	sucesso("Senha resetada com sucesso!", "form-login-empresa.php");
 	die();
 }
 

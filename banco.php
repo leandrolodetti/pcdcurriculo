@@ -308,4 +308,11 @@ function listarContratados($conexao, $limite) {
 	return $arrayContratacoes;
 }
 
+function removerTokenRecuperaLogin($conexao, $where, $id) {
+	
+	$query = "DELETE FROM RecuperaLogin WHERE Empresa_idEmpresa={$id}";
+	$resultado = mysqli_query($conexao, $query);
+	return $resultado;
+}
+
 ?>

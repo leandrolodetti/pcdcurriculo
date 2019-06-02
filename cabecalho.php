@@ -37,7 +37,7 @@ if (isset($_SESSION["empresa_logada"])) {
 <html lang="pt-br">
 	<head>
 		<title>Tcc Vagas</title>
-
+		<link rel="shortcut icon" href="img/favicon-32x32.png">
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 

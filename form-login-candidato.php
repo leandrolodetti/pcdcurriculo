@@ -42,9 +42,7 @@ require_once("cabecalho.php");
 			    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Senha" name="senha">
 			  </div>
 			  <button type="submit" class="btn btn-primary">Entrar</button>
-			  <div class="form-group" style="padding-top: 10px;">
-			  	<a class="text-danger" data-toggle="modal" data-target="#modalSenha" href="#">Recuperar senha</a>
-			  </div>
+			  <a class="btn btn-danger" data-toggle="modal" data-target="#modalSenha" href="#">Recuperar senha</a>
 			</form>
 		</div>
 		<div class="col-sm-7">
