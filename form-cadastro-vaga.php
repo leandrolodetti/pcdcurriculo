@@ -78,8 +78,11 @@ if (isset($_GET["id"])) {
 </div>
 
 <div class="border-bottom border-primary" style="padding-bottom: 20px;"></div>
+<div class="container">
+	<a class="text-danger text-bold" href="gerenciar-vagas.php"><i class="far fa-arrow-alt-circle-left" style="font-size: 45px; padding: 10px;"></i></a>
+</div>
 
-<div class="container" style="padding-top: 30px;">
+<div class="container">
 	<div class="row">
 		<div class="col-sm-8">
 			<div class="container-fluid rounded" style="padding: 8px; background-color: #6f42c1;">

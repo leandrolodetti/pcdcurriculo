@@ -301,6 +301,19 @@ if (isset($_GET["candidatar"]) && $_GET["vaga"] != "") {
 	$idCandidato = $usuarioAtual["idCandidato"];
 	$dataAtual = date('Y/m/d');
 
+	$restricoesVaga = listaRestricaoDeficiencia($conexao, $idVaga);
+	$deficienciasCandidato = listaDeficienciasCandidato($conexao, $idCandidato);
+
+	foreach ($restricoesVaga as $restVaga) {
+		foreach ($deficienciasCandidato as $defCand) {
+			if ($restVaga["TiposDeficiencia_idTiposDeficiencia"] == $defCand["TiposDeficiencia_idTiposDeficiencia"]) {
+				$_SESSION["danger"] = "Vaga incompatível com seu tipo de deficiência";
+				header("Location: vaga.php?id=".$idVaga."&parametro=".$parametro);
+    			die();
+			}
+		}
+	}
+
 	$curriculo = buscaUmRegistro($conexao, $idCandidato, "Curriculo", "Candidato_idCandidato");
 	if ($curriculo["objetivo"] == "" || $curriculo["area"] == "" || $curriculo["nivel_area"] == "" || $curriculo["salario"] == "") {
 		$_SESSION["danger"] = "Para se candidatar, seu currículo precisa estar completo!";

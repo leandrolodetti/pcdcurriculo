@@ -2,8 +2,8 @@
 
 function listaDeficienciasCandidato($conexao, $id) {
 	$deficiencias = array();
-	$query = "SELECT Candidato.nome, Deficiencia.Candidato_idCandidato, TiposDeficiencia.tipo_deficiencia
-			  FROM ((Candidato
+	$query = "SELECT Candidato.nome, Deficiencia.Candidato_idCandidato, TiposDeficiencia.tipo_deficiencia,
+			  Deficiencia.TiposDeficiencia_idTiposDeficiencia FROM ((Candidato
 			  INNER JOIN Deficiencia ON Candidato.idCandidato = Deficiencia.Candidato_idCandidato)
 			  INNER JOIN TiposDeficiencia ON Deficiencia.TiposDeficiencia_idTiposDeficiencia = TiposDeficiencia.idTiposDeficiencia)
 			  WHERE Candidato_idCandidato = {$id}";

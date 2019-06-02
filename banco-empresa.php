@@ -155,7 +155,7 @@ function listaVagasPorTitulo($conexao, $parametro, $cidade, $categoria, $nivel) 
 
 function listaRestricaoDeficiencia($conexao, $id) {
 	$restricoes = array();
-	$query = "SELECT Vaga.idVaga, RestricaoDeficiencia.idRestricaoDeficiencia, TiposDeficiencia.tipo_deficiencia FROM ((Vaga
+	$query = "SELECT Vaga.idVaga, RestricaoDeficiencia.TiposDeficiencia_idTiposDeficiencia, TiposDeficiencia.tipo_deficiencia FROM ((Vaga
 			INNER JOIN RestricaoDeficiencia ON RestricaoDeficiencia.Vaga_idVaga = Vaga.idVaga)
 			INNER JOIN TiposDeficiencia ON RestricaoDeficiencia.TiposDeficiencia_idTiposDeficiencia = TiposDeficiencia.idTiposDeficiencia)
 			WHERE Vaga.idVaga = {$id}";

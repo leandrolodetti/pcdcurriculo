@@ -34,7 +34,7 @@ function corpoNovaVaga($titulo, $id) {
 
                     <span style="line-height:1.5;">Nova vaga publicada</span>
                     <br>
-                    <span style="font-size:15px; color:#4c4c4c;">Olá, selecionamos algumas oportunidades que podem lhe interessar</span>
+                    <span style="font-size:15px; color:#4c4c4c;">Olá, selecionamos uma nova oportunidade que pode lhe interessar</span>
                   </td>
                 </tr>
                 <tr>

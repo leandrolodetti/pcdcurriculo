@@ -18,6 +18,8 @@ $data = date('Y/m/d');
 $idEmpresa = $usuarioAtual["idEmpresa"];
 $buscaVagaRepetida = buscaVagaRepetida($conexao, $titulo, $idEmpresa);
 
+$cidadeEmpresa = $usuarioAtual["cidade"];
+
 $DefFisica = 0; $DefFisica = $_POST["DefFisica"];
 $DefFala = 0; $DefFala = $_POST["DefFala"];
 $DefAuditiva = 0; $DefAuditiva = $_POST["DefAuditiva"];
