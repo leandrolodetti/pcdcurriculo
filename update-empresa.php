@@ -215,7 +215,7 @@ if (isset($_GET["senha"]) && $_POST["confirmaUpdate"] == "yes") {
 	}
 
 	commitTransacao($conexao, "Ocorreu um erro, tente novamente mais tarde! Erro: commitTransacao", "altera-dados-empresa.php?senha");
-	sucesso("Cadastro atualizado com sucesso!", "altera-dados-empresa.php?senha");
+	sucesso("Senha atualizada com sucesso!", "altera-dados-empresa.php?senha");
 
 }
 

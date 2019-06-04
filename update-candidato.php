@@ -230,8 +230,8 @@ if (isset($_GET["geral-candidato"]) && $_POST["confirmaUpdate"] == "yes") {
 
 if (isset($_GET["senha"]) && $_POST["confirmaUpdate"] == "yes") {
 
-	$senhaAtual = md5($usuarioAtual["senha"]);
-	$confirmaSenha = $_POST["senhaAtual"];
+	$senhaAtual = $usuarioAtual["senha"];
+	$confirmaSenha = md5($_POST["senhaAtual"]);
 	$novaSenha = md5($_POST["senha"]);
 
 	if ($confirmaSenha != $senhaAtual) {
@@ -249,7 +249,7 @@ if (isset($_GET["senha"]) && $_POST["confirmaUpdate"] == "yes") {
     	die();
 	}
 	commitTransacao($conexao, "commitTransacao", "altera-dados-candidato.php?senha");
-	sucesso("Cadastro atualizado com sucesso!", "altera-dados-candidato.php?senha");
+	sucesso("Senha atualizada com sucesso!", "altera-dados-candidato.php?senha");
 	die();
 }
 
