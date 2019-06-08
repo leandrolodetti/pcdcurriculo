@@ -22,6 +22,12 @@ if ($vagaAtual["ativa"] == 'N') {
 	die();
 }
 
+if ($vagaAtual == null) {
+	$_SESSION["danger"] = "Vaga não encontrada";
+	header("Location: index.php");
+	die();
+}
+
 $categoriaAtual = listaCategoriaVaga($conexao, $id);
 $restricoes = listaRestricaoDeficiencia($conexao, $id);
 
