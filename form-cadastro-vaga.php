@@ -98,7 +98,7 @@ if (isset($_GET["id"])) {
 				
 				<div class="form-group">
 					<label for="idCurriculoCategoria">Categoria</label>
-					<select name="categoria" id="idCurriculoCategoria" class="form-control">
+					<select name="categoria" id="idCurriculoCategoria" class="form-control" required>
 						<option value="">Escolher...</option>
 					    <?php
 					    $categorias = listaCategoria($conexao);
@@ -118,7 +118,7 @@ if (isset($_GET["id"])) {
 				
 				<div class="form-group">
 					<label for="idVagaNivel">Nível</label>
-					<select name="nivel" id="idVagaNivel" class="form-control">
+					<select name="nivel" id="idVagaNivel" class="form-control" required>
 						<option value="" selected>Escolher...</option>
 						<?php
 						$niveis = listaNivel($conexao);

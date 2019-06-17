@@ -91,7 +91,7 @@ $dataBr = $dataExplode[2]."/".$dataExplode[1]."/".$dataExplode[0];
 				
 				<div class="form-group">
 					<label for="idCurriculoArea">Categoria</label>
-					<select id="idCurriculoArea" name="categoria" class="form-control">
+					<select id="idCurriculoArea" name="categoria" class="form-control" required>
 						<option value="" selected="selected">Escolher...</option>
 					    <?php
 					    $categorias = listaCategoria($conexao);
@@ -106,11 +106,12 @@ $dataBr = $dataExplode[2]."/".$dataExplode[1]."/".$dataExplode[0];
 						}
 						?>
 					</select>
+					<small id="idSmallArea" class="form-text text-muted"></small>
 				</div>
 				
 				<div class="form-group">
 					<label for="idCurriculoNivel">Nível</label>
-					<select name="nivel" id="idCurriculoNivel" class="form-control">
+					<select name="nivel" id="idCurriculoNivel" class="form-control" required>
 						<option value="" selected="selected">Escolher...</option>
 						<?php
 						$niveis = listaNivel($conexao);
@@ -125,6 +126,7 @@ $dataBr = $dataExplode[2]."/".$dataExplode[1]."/".$dataExplode[0];
 						}
 						?>
 					</select>
+					<small id="idSmallNivel" class="form-text text-muted"></small>
 				</div>
 
 				<div class="form-group">

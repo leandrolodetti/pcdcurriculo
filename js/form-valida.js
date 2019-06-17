@@ -586,20 +586,6 @@ function confirmarSenha(id, id2, idErro, msg) {
 	return false;
 }
 
-function validaSelect(id, idErro, msg) {
-	var y = document.getElementById(idErro);
-	var x = document.getElementById(id);
-	if (x.value == "") {
-		x.style.backgroundColor = "#F08080";
-		x.focus();
-		y.innerHTML = msg;
-		return false;
-	}
-	x.style.backgroundColor = white;
-	y.innerHTML = "";
-	return true;
-}
-
 function validaForm() {
 
 	if (!validaNumCaracteres("idNome","idSmallNome",3,"Nome inválido") || //validar nome candidato
@@ -695,7 +681,9 @@ function validaRemover() {
 
 function validaCurriculoObjetivo() {
 	if (!validaNumCaracteres("idCurriculoObjetivo","idSmallObjetivos",3,"Campo inválido") ||
-		!validaNumCaracteres("idCurriculoPretSalarial","idSmallPretensaoSalarial",3,"Campo inválido")
+		!validaNumCaracteres("idCurriculoPretSalarial","idSmallPretensaoSalarial",3,"Campo inválido") ||
+		!validaSelect("idCurriculoArea", "idSmallArea", "Selecione uma opção") ||
+		!validaSelect("idCurriculoNivel", "idSmallNivel", "Selecione uma opção")
 		) {
 		return false;
 	}
