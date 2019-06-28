@@ -61,6 +61,7 @@ if (isset($_GET["id"])) {
 							$chekVisual= "checked";
 						}
 	}
+
 }
 
 ?>
@@ -163,7 +164,7 @@ if (isset($_GET["id"])) {
 					<input type="text" name="salario" class="form-control" id="idVagaSalario" value="<?php echo $vagaAtual["salario"]; ?>">
 					<small id="idSmallSalario" class="form-text text-muted"></small>
 				</div>
-				<div class="form-group">
+				<!--div class="form-group">
 					<legend class="col-form-label col-sm-2 pt-0">Deficiência(s) Restritas</legend>
 				    <div class="form-group col-md-2">
 			        	<div class="form-check">
@@ -188,7 +189,7 @@ if (isset($_GET["id"])) {
 			        	</div>
 			        	<small id="idSmallDeficiencia" class="form-text text-danger"></small>
 			      	</div>		
-				</div>
+				</div-->
 				<button type="submit" id="btnSalvar" class="btn btn-primary">Salvar</button>
 				<a class="btn btn-danger" href="gerenciar-vagas.php">Cancelar</a>
 			</form>

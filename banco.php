@@ -255,14 +255,14 @@ function selectIndicadorProfissional($conexao, $categoria, $nivel, $cidade, $pal
 
 	$vagas = array();
 
-	$query = "SELECT Vaga.idVaga, RestricaoDeficiencia.TiposDeficiencia_idTiposDeficiencia FROM Vaga INNER JOIN RestricaoDeficiencia ON RestricaoDeficiencia.Vaga_idVaga=Vaga.idVaga INNER JOIN Empresa ON Empresa.idEmpresa=Vaga.Empresa_idEmpresa WHERE Vaga.Categoria_idCategoria={$categoria} AND Vaga.Nivel_idNivel={$nivel} AND Vaga.ativa='S' AND Empresa.cidade='{$cidade}' AND (".$arrayLike." ) LIMIT {$limite}";
+	$query = "SELECT Vaga.idVaga FROM Vaga INNER JOIN Empresa ON Empresa.idEmpresa=Vaga.Empresa_idEmpresa WHERE Vaga.Categoria_idCategoria={$categoria} AND Vaga.Nivel_idNivel={$nivel} AND Vaga.ativa='S' AND Empresa.cidade='{$cidade}' AND (".$arrayLike." ) LIMIT {$limite}";
 
 	$resultado = mysqli_query($conexao, $query);
 
 	while ($vaga = mysqli_fetch_assoc($resultado)) {
 		array_push($vagas, $vaga);
 	}
-
+/*
 	$arrayVagasIndicadas = array();
 
 	foreach ($vagas as $vagaAtual) {
@@ -288,7 +288,8 @@ function selectIndicadorProfissional($conexao, $categoria, $nivel, $cidade, $pal
 			}
 		}
 	}
-	return $arrayVagasIndicadas;
+*/	
+	return $vagas;
 }
 
 function listarContratados($conexao, $limite) {

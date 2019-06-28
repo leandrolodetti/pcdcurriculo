@@ -25,7 +25,6 @@ $palavrasChaves = explode(" ", $titulo);
 
 $idVagasIndicadas = selectIndicadorProfissional($conexao, $categoria, $nivel, $cidade, $palavrasChaves, $arrayRestricoes, 50);
 
-
 ?>
 <div id="idCandidatoContainer" class="container-fluid" style="background-color: #5EC998;">
 	<div class="container">
@@ -59,7 +58,7 @@ $idVagasIndicadas = selectIndicadorProfissional($conexao, $categoria, $nivel, $c
           //$ultimasVagas = listaUltimasVagas($conexao, 10);
           foreach ($idVagasIndicadas as $id) {
             $num = rand(0,3);
-            $vagaAtual = listaUmaVaga($conexao, $id);
+            $vagaAtual = listaUmaVaga($conexao, $id["idVaga"]);
           ?>  
             <a class="badge badge-pill <?php echo $cores[$num]; ?>" style="padding: 12px; margin-right: 10px; margin-top: 10px;" href="<?php echo "vaga.php?id=".$vagaAtual["idVaga"]; ?>"><?php echo $vagaAtual["titulo"]; ?></a>
           <?php

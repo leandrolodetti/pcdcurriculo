@@ -171,12 +171,13 @@ function validarEstadoCivil(idErro, msg) {
 	}
 }
 
-function validarGenero(idM,idF,idErro,msg) {
+function validarGenero(idM,idF,idO,idErro,msg) {
 	var idM = document.getElementById(idM);
 	var idF = document.getElementById(idF);
+	var idO = document.getElementById(idO);
 	var y = document.getElementById(idErro);
 
-	if ((idM.checked == true) || (idF.checked == true)) {
+	if ((idM.checked == true) || (idF.checked == true) || (idO.checked == true)) {
 		y.innerHTML = "";
 		return true;
 	}
@@ -592,7 +593,7 @@ function validaForm() {
 		!validaNumCaracteres("idSobrenome","idSmallSobrenome",3,"Sobrenome inválido") || //validar sobrenome candidato
 		!validaNumCaracteres("inputDataNascimento","idSmallNascimento",10,"Data Inválida") || //validar data nascimento candidato
 		!validaNumCaracteres("idContato","idSmallContato",12,"Número inválido") || //validar contato candidato
-		!validarGenero("idMasculino","idFeminino","idSmallGenero","Selecione uma opção!") ||
+		!validarGenero("idMasculino","idFeminino","idOutros","idSmallGenero","Selecione uma opção!") ||
 		!validarCPF("idCpf","idSmallCpf","CPF Inválido") ||
 		!validarEmail("idEmail","idSmallEmail","E-mail Inválido") ||
 		!confirmarEmail("idEmail","idConfirmarEmail","idSmallConfirmaEmail","E-mails não conferem!") ||
@@ -602,7 +603,6 @@ function validaForm() {
 		!validaNumCaracteres("inputNumero", "idSmallNumero", 1, "Número Inválido") || //validar numero logradouro candidato
 		!validaNumCaracteres("bairro", "idSmallBairro", 3, "Campo Inválido") || //validar bairro candidato
 		!validarDeficiencia("idSmallDeficiencia","Selecione uma opção") ||
-		!validaNumCaracteres("idCid","idSmallCid",3,"Código inválido") ||
 		!validarSenha("idSenha1", "idSmallSenha", 6, "Campo Inválido") ||
 		!confirmarSenha("idSenha1", "idConfirmarSenha", "idSmallConfirmaSenha", "Senhas não conferem!") ||
 		!validarNascimento()
@@ -749,8 +749,7 @@ function validaAlteraGeralCandidato(idResponsavel) {
 		!validarCPF("idAlteraCPF","idSmallAlteraCPF","CPF Inválido") || //validar cpf
 		!validaNumCaracteres("idAlteraNascimento","idSmallAlteraNascimento",10,"Data Inválida") || //validar data nascimento
 		!validarDeficiencia("idSmallDeficiencia","Selecione uma opção") ||
-		!validaNumCaracteres("idAlteraCid","idSmallAlteraCid",3,"Código inválido") || //validar cid
-		!validarGenero("idMasculino","idFeminino","idSmallGenero","Selecione uma opção!") ||
+		!validarGenero("idMasculino","idFeminino","idOutros","idSmallGenero","Selecione uma opção!") ||
 		/*!validaSelect("idAlteraEstadoCivil", "idSmallEstadoCivil", "Selecione uma opção!") ||*/
 		!validarEmail("idAlteraEmailCandidato", "idSmallAlteraEmail", "E-mail Inválido") ||
 		!confirmarEmail("idAlteraEmailCandidato","idConfirmarEmailAlteradoCandidato","idSmallConfirmaEmail","E-mails não conferem!") ||

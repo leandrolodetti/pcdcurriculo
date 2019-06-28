@@ -76,6 +76,10 @@ if ($usuarioAtual == null) {
 					          	<input class="form-check-input" type="radio" name="gridGenero" id="idFeminino" value="F">
 					          	<label class="form-check-label" for="idFeminino">Feminino</label>
 			        		</div>
+			        		<div class="form-check">
+					          	<input class="form-check-input" type="radio" name="gridGenero" id="idOutros" value="O">
+					          	<label class="form-check-label" for="idOutros">Outro(s)</label>
+			        		</div>
 			        		<small id="idSmallGenero" class="form-text text-danger"></small>
 			      		</div>
 			      		<div class="form-group col-md-2">

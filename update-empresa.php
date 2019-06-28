@@ -186,7 +186,7 @@ if (isset($_GET["id"]) && isset($_GET["update-vaga"])) {
 		foreach ($arrayDispararEmail as $email) {
 			$resultado = insereReplaceDisparaEmail($conexao, $email, $titulo, $idVaga);
 		}
-		//sleep(10);
+		sleep(10);
 	}
 
 	sucesso("Vaga atualizada com sucesso!", "gerenciar-vagas.php");

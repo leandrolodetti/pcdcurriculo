@@ -9,8 +9,11 @@ $selectFeminino = "";
 if ($usuarioAtual["genero"] == "M") {
     $selectMasculino = "checked='checked'";
 }
-else{
+elseif ($usuarioAtual["genero"] == "F"){
     $selectFeminino = "checked='checked'";
+}
+else {
+    $selectOutro = "checked='checked'";
 }
 
 $checkedAuditiva = "";
@@ -135,6 +138,10 @@ elseif (strcasecmp($usuarioAtual["estado_civil"], "Viúvo(a)") == 0) {
                 <div class="form-check">
                     <input class="form-check-input" <?php echo $selectFeminino; ?> type="radio" name="gridGenero" id="idFeminino" value="F">
                     <label class="form-check-label" for="idFeminino">Feminino</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" <?php echo $selectOutro; ?> type="radio" name="gridGenero" id="idOutros" value="O">
+                    <label class="form-check-label" for="idOutros">Outro(s)</label>
                 </div>
                 <small id="idSmallGenero" class="form-text text-danger"></small>
             </div>
